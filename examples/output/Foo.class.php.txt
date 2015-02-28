@@ -1,0 +1,24 @@
+Reflecting on class `Foo`
+A foo-like substance.
+@package Foo
+Takes two strings and returns a fooed string.
+@param string $baz A string.
+@param mixed $quux Anything.
+@return string The given string, plus "Foo".
+string bar(string $baz, mixed $quux);
+
+Bar constructor.
+@param string $ident An identifier.
+@param Foo[] $foos Optional array of Foos.
+@param int[] $ints Optional array of ints
+@return Bar
+Bar __construct(string $ident, Foo[] $foos, int[] $ints);
+
+Return this Bar's identifier.
+@return string This Bar's identifier.
+string identifier();
+
+Return this Bar's Foos.
+@return Foo[] This Bar's Foos.
+Foo[] foos();
+

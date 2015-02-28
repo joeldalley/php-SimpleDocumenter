@@ -1,0 +1,48 @@
+Reflecting on class `SimpleDocumenter`
+The World's simplest phpdoc-comment analyzer.
+@author Joel Dalley
+@version 2015/Feb/28
+@return array Tags array.
+array newParsed();
+
+Constructor
+@example 
+ 
+ $simple = new SimpleDocumenter('Foo');
+ echo $simple->classComment(), "\n";
+ 
+@param string $class A class name.
+@return SimpleDocumenter
+@throws InvalidArgumentException If $class isn't a class.
+SimpleDocumenter __construct(string $class);
+
+@return string The class being introspected.
+string className();
+
+@return string A re-constructed class doc comment.
+string classComment();
+
+@return string[] The methods of the introspected class.
+string[] methodNames();
+
+@param string $method A method name.
+@return string A re-constructed method doc comment.
+string methodComment(string $method);
+
+@param string $method A method name.
+@return string[] Zero or more example tag entries.
+string[] methodExamples(string $method);
+
+@param string $method A method name.
+@return string A function signature string.
+string methodSignature(string $method);
+
+Parse all doc comments, and return parsed data structure.
+@param int $filter A ReflectionMethod::x filter constant.
+@return array Parsed doc comments data structure.
+array parse(int $filter);
+
+@param string $comment A doc comment .
+@return array Parsed doc comment data structure.
+array parseDocComment(string $comment);
+

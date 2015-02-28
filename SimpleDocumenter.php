@@ -173,7 +173,6 @@ class SimpleDocumenter {
             }
             else {
                 $tag = $inTag ? $inTag : '@comment';
-
                 if (!isset($parsed[$tag][$tagIdx])) {
                     $parsed[$tag][$tagIdx] = array();
                 }
@@ -196,7 +195,6 @@ class SimpleDocumenter {
      * @return array A list of tag entries.
      */
     private function parse_tag($tag, $branch) {
-
         $config = array(
             '@param' => function($_) { 
                 return array(
@@ -227,79 +225,6 @@ class SimpleDocumenter {
             $list[] = $parser($node);
         }
         foreach ($list as &$_) { $_ = str_replace(NEWLINE, "\n", $_); }
-        return $list;
-    }
-
-    /**
-     * @param array $branch A branch of $this->tree.
-     * @return array A list of comment tag entries.
-     */
-    private function parse_comment($branch) {
-        $list = array();
-        foreach ($branch['@comment'] as $comment) {
-            $list[] = array(join(' ', $comment));
-        }
-        return $list;
-    }
-
-
-    /**
-     * @param array $branch A branch of $this->tree.
-     * @return array A list of author tag entries.
-     */
-    private function parse_author($branch) {
-        $list = array();
-        foreach ($branch['@author'] as $author) {
-            $list[] = array(join(' ', $author));
-        }
-        return $list;
-    }
-
-    /**
-     * @param array $branch A branch of $this->tree.
-     * @return array A list of version tag entries.
-     */
-    private function parse_version($branch) {
-        $list = array();
-        foreach ($branch['@version'] as $version) {
-            $list[] = array(join(' ', $version));
-        }
-        return $list;
-    }
-
-    /**
-     * @param array $branch A branch of $this->tree.
-     * @return array A list of example tag entries.
-     */
-    private function parse_example($branch) {
-        $list = array();
-        foreach ($branch['@example'] as $ex) {
-            $list[] = array(join(' ', $ex));
-        }
-        return $list;
-    }
-
-    /**
-     * @param array $branch A branch of $this->tree.
-     * @return array A list of see tag entries.
-     */
-    private function parse_see($branch) { 
-        $list = array();
-        foreach ($branch['@see'] as $see) {
-            $list[] = array(join(' ', $see));
-        }
-        return $list;
-    }
-
-    /**
-     * @param array $branch A branch of $this->tree.
-     * @return array A list of var tag entries.
-     */
-    private function parse_var($branch) {
-        $list = array();
-        foreach ($branch['@var'] as $var) {
-            $list[] = array(join(' ', $var));
-        }
         return $list;
     }
 

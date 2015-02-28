@@ -1,6 +1,7 @@
 Reflecting on class `Foo`
 A foo-like substance.
 @package Foo
+
 Takes two strings and returns a fooed string.
 @param string $baz A string.
 @param mixed $quux Anything.

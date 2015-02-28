@@ -1,5 +1,6 @@
 Reflecting on class `phpDocumentor\Configuration`
 The definition for the configuration of phpDocumentor.
+
 Initializes all settings with their default values.
 __construct();
 

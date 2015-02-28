@@ -2,6 +2,7 @@ Reflecting on class `SimpleDocumenter`
 The World's simplest phpdoc-comment analyzer.
 @author Joel Dalley
 @version 2015/Feb/28
+
 @return array Tags array.
 array newParsed();
 

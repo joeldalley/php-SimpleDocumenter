@@ -16,6 +16,7 @@ This class provides a bootstrap for all application who wish to interface with p
  $bootstrap = Bootstap::createInstance();
  $autoloader = $bootstrap->createAutoloader();
  $app = new Application($autoloader)
+
 Helper static function to get an instance of this class.
  
  Usually used to do a one-line initialization, such as:

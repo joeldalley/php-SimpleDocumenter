@@ -1,0 +1,100 @@
+Reflecting on class `CI_Calendar`
+ CodeIgniter Calendar Class
+
+ This class enables the creation of calendars
+@package  CodeIgniter
+ @subpackage Libraries
+ @category Libraries
+@author  ExpressionEngine Dev Team
+ @link  http://codeigniter.com/user_guide/libraries/calendar.html
+ 
+
+ Constructor
+
+ Loads the calendar language file and sets the default time reference
+  
+__construct();
+
+ Adjust Date
+
+ This function makes sure that we have a valid month/year.
+ For example, if you submit 13 as the month, the year will
+ increment and the month will become January.
+@param integer the month
+@param integer the year
+@return array
+  
+@access public
+array
+ adjust_date(integer , integer );
+
+ Set Default Template Data
+
+ This is used in the event that the user has not created their own template
+@return array
+  
+@access public
+array
+ default_template();
+
+ Generate the calendar
+@param integer the year
+@param integer the month
+@param array the data to be shown in the calendar cells
+@return string
+  
+@access public
+string
+ generate(integer , integer , array );
+
+ Get Day Names
+
+ Returns an array of day names (Sunday, Monday, etc.) based
+ on the type.  Options: long, short, abrev
+@param string
+@return array
+  
+@access public
+array
+ get_day_names(string );
+
+ Get Month Name
+
+ Generates a textual month name based on the numeric
+ month provided.
+@param integer the month
+@return string
+  
+@access public
+string
+ get_month_name(integer );
+
+ Total days in a given month
+@param integer the month
+@param integer the year
+@return integer
+  
+@access public
+integer
+ get_total_days(integer , integer );
+
+ Initialize the user preferences
+
+ Accepts an associative array as input, containing display preferences
+@param array config preferences
+@return void
+  
+@access public
+void
+ initialize(array );
+
+ Parse Template
+
+ Harvests the data within the template {pseudo-variables}
+ used to display the calendar
+@return void
+  
+@access public
+void
+ parse_template();
+

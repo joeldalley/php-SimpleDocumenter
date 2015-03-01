@@ -1,13 +1,13 @@
 <?php
 /**
- * The World's simplest phpdoc-comment analyzer.
+ * The World's simplest phpdoc comment analyzer.
  * @author Joel Dalley
  * @version 2015/Feb/28
  */
 class SimpleDocumenter {
 
-    /** @const NEWLINE Newline char placeholder. */
-    const NEWLINE = '__NEWLINE__';
+    /** @const PUBLIC_METHODS Alias ReflectionMethod::IS_PUBLIC. */
+    const PUBLIC_METHODS = ReflectionMethod::IS_PUBLIC;
 
     /** @var array $tags Phpdoc tags. */
     private static $tags = array(
@@ -20,6 +20,7 @@ class SimpleDocumenter {
         '@param'   => array(),
         '@return'  => array(),
         '@throws'  => array(),
+        '@access'  => array(),
         );
 
     /** @var string $class The class to introspect. */
@@ -48,15 +49,25 @@ class SimpleDocumenter {
     ////////////////////////////////////////////////////////////////
 
     /**
-     * Constructor
+     * Constructor.
+     *   Here is more about the constructor.
+     *   Here is even more. It just keeps going.
+     *
      * @param string $class A class name.
      * @example 
      *
-     *  $simple = new SimpleDocumenter('Foo');
-     *  echo $simple->classComment(), "\n";
+     * # Echoes the php doc comment for class Foo.
+     * $simple = new SimpleDocumenter('Foo');
+     * echo $simple->classComment(), "\n";
+     *
+     * # Print out public method names.
+     * foreach ($simple->methodNames() as $name) {
+     *     print "Public method Foo::{$name}\n";
+     * }
      *
      * @throws InvalidArgumentException If $class isn't a class.
      * @return SimpleDocumenter
+     *
      */
     public function __construct($class) {
         $this->class = (string) $class;
@@ -70,36 +81,99 @@ class SimpleDocumenter {
         $this->tree = $this->parse();
     }
 
-    /** @return string The class being introspected. */
+    /**
+     * Returns the name of the class being introspected.
+     * @return string The class being introspected. 
+     */
     public function className() { return $this->class; }
-
-    /** @return string A re-constructed class doc comment. */
-    public function classComment() {
-        return $this->reconstructComment($this->tree['class']);
-    }
 
     /** @return string[] The methods of the introspected class. */
     public function methodNames() {
-        return array_keys($this->tree['methods']);
+        $methods = array_keys($this->tree['methods']);
+        sort($methods);
+        return $methods;
+    }
+
+    /** 
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment, all tags, as string or array. 
+     */
+    public function classComment($toStr = FALSE) {
+        $node = $this->tree['class'];
+        return $toStr === TRUE
+             ? $this->reconstructComment($node)
+             : $this->parse_all($node, function($tag, $branch) {
+                   return array($tag => $branch);
+               });
     }
 
     /**
      * @param string $method A method name.
-     * @return string A re-constructed method doc comment. 
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment, all tags, as string or array.
      */
-    public function methodComment($method) {
-        $method = $this->verifyMethod($method);
-        return $this->reconstructComment($this->tree['methods'][$method]);
+    public function methodComment($method, $toStr = FALSE) {
+        $node = $this->methodNode($method);
+        return $toStr === TRUE
+             ? $this->reconstructComment($node)
+             : $this->parse_all($node, function($tag, $branch) {
+                   return array($tag => $branch);
+               });
     }
- 
+
     /**
      * @param string $method A method name.
-     * @return string[] Zero or more example tag entries.
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment '@return' as string or array.
      */
-    public function methodExamples($method) {
-        $method = $this->verifyMethod($method);
-        $branch = $this->tree['methods'][$method];
-        return $this->parse_tag('@example', $branch);
+    public function methodReturn($method, $toStr = FALSE) {
+        $return = $this->parse_tag('@return', $this->methodNode($method));
+        list($type, $note) = array($return[0][0], $return[0][1]);
+        return $toStr === TRUE ? $type . ($note ? " $note" : '') : $return[0];
+    }
+
+    /**
+     * @param string $method A method name.
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment '@throws' as string or array.
+     */
+    public function methodThrows($method, $toStr = FALSE) {
+        $throws = $this->parse_tag('@throws', $this->methodNode($method));
+        return $toStr === TRUE ? join(', ', $throws) : $throws;
+    }
+
+    /**
+     * @param string $method A method name.
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment '@example' as string or array.
+     */
+    public function methodExample($method, $toStr = FALSE) {
+        $ex = $this->parse_tag('@example', $this->methodNode($method));
+        return $toStr === TRUE ? join(', ', $ex) : $ex;
+    }
+
+    /**
+     * @param string $method A method name.
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment '@param' as string or array.
+     */
+    public function methodParams($method, $toStr = FALSE) {
+        $params = $this->parse_tag('@param', $this->methodNode($method));
+        return $toStr === TRUE ? join(', ', $params) : $params;
+    }
+
+    /**
+     * @param string $method A method name.
+     * @param bool $toStr TRUE for string, FALSE for array. Default: FALSE.
+     * @return string|array Parsed doc comment '@note' as string or array.
+     */
+    public function methodNote($method, $sep = "\n") {
+        try {
+            $node = $this->methodNode($method);
+            $note = $this->parse_tag('@note', $node);
+            return $note[0][0];
+        }
+        catch(InvalidArgumentException $e) { return ''; }
     }
 
     /**
@@ -107,26 +181,25 @@ class SimpleDocumenter {
      * @return string A function signature string.
      */
     public function methodSignature($method) {
-        $method = $this->verifyMethod($method);
-        $branch = $this->tree['methods'][$method];
-        $return = $this->parse_tag('@return', $branch);
+        list($type) = $this->methodReturn($method);
         $map = function($_) { return join(' ', array_slice($_, 0, 2)); };
-        $params = array_map($map, $this->parse_tag('@param', $branch));
-        return ($return[0][0] ? "{$return[0][0]} " : '')
-             . "$method(" . join(', ', $params) . ');';
+        $args = join(', ', array_map($map, $this->methodParams($method)));
+        return ($type ? "$type " : '') . "$method($args);";
     }
+
+
+    ////////////////////////////////////////////////////////////////
+    // Parsers.
+    ////////////////////////////////////////////////////////////////
 
     /**
      * Parse all doc comments, and return parsed data structure.
-     * @param int $filter A ReflectionMethod::x filter constant.
      * @return array Parsed doc comments data structure.
      */
-    public function parse($filter = ReflectionMethod::IS_PUBLIC) { 
+    private function parse() {
         $refl = $this->refl;
-
         $this->tree['class'] = $this->parseDocComment($refl->getDocComment());
-
-        foreach ($refl->getMethods($filter) as $obj) {
+        foreach ($refl->getMethods(self::PUBLIC_METHODS) as $obj) {
             $parsed = $this->parseDocComment($obj->getDocComment());
             $this->tree['methods'][$obj->name] = $parsed;
         }
@@ -138,41 +211,52 @@ class SimpleDocumenter {
      * @param string $comment A doc comment      .
      * @return array Parsed doc comment data structure.
      */
-    public function parseDocComment($comment) {
+    private function parseDocComment($comment) {
         $parsed = self::newParsed();
-        $parsed['@comment'] = array();
+        $parsed['@note'] = array();
 
         if (!$comment) { return $parsed; }
-
-        $regexes = array(
-            '/^\s*\/\*\**\s*/',
-            '/\s*\**\*\/\s*$/',
-            '/[\r\n]/', 
-            '/\s*\*\s*/',
+       
+        // Remove leading "/**" and trailing "*/".
+        $bounds = array(
+            '/^[[:space:]]*\/\*\*[[:space:]]*[\r\n]?/',
+            '/^[[:space:]]*\*\/[[:space:]]*$/',
+            '/^[[:space:]]*\/\*\*[\r\n]?$/',
+            '/\*\/[[:space:]]*[\r\n]?$/'
             );
-        $replacements = array(' ', ' ', NEWLINE, ' ');
-        $comment = preg_replace($regexes, $replacements,$comment);
-        $words = preg_split('/\s+/', $comment);
-
-        $tag = '@comment';
-        $inTag = FALSE;
-        $tagIdx = 0;
-
-        foreach ($words as $word) {
-            if (empty($word)) {
-                continue;
+        $comment = preg_replace($bounds, '', $comment);
+ 
+        // Remove leading "*" from lines within the comment body.
+        $lines = preg_split('/[\r\n]/', $comment);
+        if (count($lines) == 1) {
+            $lines[0] = trim($lines[0]);
+        }
+        elseif (count($lines) > 1) {
+            foreach ($lines as &$_) {
+                $_ = preg_replace('/^[[:blank:]]*\*/', '', $_);
             }
-            elseif (array_key_exists($word, self::$tags)) {
+        }
+
+        // Loop on word-ish chunks, looking for phpdoc tags,
+        // and organizing the comment contents by tag.
+        $tagIdx = 0;
+        $tag = '@note';
+        $inTag = FALSE;
+        $words = preg_split('/[[:blank:]]/', join("\n", $lines));
+        foreach ($words as $word) {
+            if (array_key_exists($word, self::$tags)) {
                 if (isset($parsed[$tag][$tagIdx])) {
-                    $tagCount = count($parsed[$tag][$tagIdx]);
-                    $_ = &$parsed[$tag][$tagIdx][$tagCount-1];
-                    $_ = str_replace(NEWLINE, '', $_);
+                    $count = count($parsed[$tag][$tagIdx]);
+                    $_ = &$parsed[$tag][$tagIdx][0];
+                    $_ = ltrim($_);
+                    $_ = &$parsed[$tag][$tagIdx][$count-1];
+                    $_ = rtrim($_);
                 }
                 $inTag = $word;
                 $tagIdx = count($parsed[$word]);
             }
             else {
-                $tag = $inTag ? $inTag : '@comment';
+                $tag = $inTag ? $inTag : '@note';
                 if (!isset($parsed[$tag][$tagIdx])) {
                     $parsed[$tag][$tagIdx] = array();
                 }
@@ -183,11 +267,6 @@ class SimpleDocumenter {
         return $parsed;
     }
 
-
-    ////////////////////////////////////////////////////////////////
-    // Individual tag parsers.
-    ////////////////////////////////////////////////////////////////
-
     /**
      * @param string $tag A tag name.
      * @param array $branch A branch of $this->tree.
@@ -197,10 +276,11 @@ class SimpleDocumenter {
     private function parse_tag($tag, $branch) {
         $config = array(
             '@param' => function($_) { 
+                $name = strpos((string) $_[1], '$') === 0 ? $_[1] : NULL;
                 return array(
-                    $_[0],                         // type
-                    $_[1],                         // name
-                    join(' ', array_slice($_, 2)), // note
+                    $_[0],                                     // type
+                    (string) $name,                            // name
+                    join(' ', array_slice($_, $name ? 2 : 1)), // note
                     );
                 },
             '@return' => function($_) {
@@ -224,7 +304,23 @@ class SimpleDocumenter {
                     : function($_) { return array(join(' ', $_)); };
             $list[] = $parser($node);
         }
-        foreach ($list as &$_) { $_ = str_replace(NEWLINE, "\n", $_); }
+        return $list;
+    }
+
+    /** 
+     * Parses the given branch, applying the given callback to each tag.
+     * @param array $branch A branch within $this->tree.
+     * @param function $callback A function to apply to each tag.
+     * @return array A list of the processed tags, from the given branch.
+     */
+    private function parse_all($branch, $callback) {
+        $tags = array_merge(array('@note'), array_keys(self::$tags));
+        $list = array();
+        foreach ($tags as $tag) {
+            foreach ($this->parse_tag($tag, $branch) as $parsed) { 
+                $list[] = $callback($tag, $parsed);
+            }
+        }
         return $list;
     }
 
@@ -235,41 +331,29 @@ class SimpleDocumenter {
 
     /**
      * @param array $branch A branch within $this->tree.
-     * @param array|NULL $exclude Zero or more tags to exclude.
      * @return string Reconstructed doc comment.
      */
-    private function reconstructComment($branch, $exclude = array()) {
-        $tags = array();
-        $list = array_merge(array('@comment'), array_keys(self::$tags));
-
-        foreach ($list as $tag) {
-            try {
-                $list = $this->parse_tag($tag, $branch);
-                foreach ($list as $parsed) {
-                    $sift = function($_) { return !empty($_); };
-                    $tags[] = ($tag == '@comment' ? '' : "$tag ")
-                            . join(' ', array_filter($parsed, $sift));
-                }
-            }
-            catch(Exception $e) {
-                trigger_error("Warning: No parser for tag `$tag`");
-            }
-        }
-
+    private function reconstructComment($branch) {
+        $toString = function($tag, $parsed) { 
+            $sift = function($_) { return !empty($_); };
+            return ($tag == '@note' ? '' : "$tag ")
+                 . join(' ', array_filter($parsed, $sift));
+        };
+        $tags = $this->parse_all($branch, $toString);
         return join("\n", $tags);
     }
-
+ 
     /**
      * @param string $method A method name.
+     * @return array Parsed doc comment data structure.
      * @throws InvalidArgumentException If method isn't valid.
-     * @return string The given method.
      */
-    private function verifyMethod($method) {
+    private function methodNode($method) {
         $method = (string) $method;
         if (!isset($this->tree['methods'][$method])) {
             $e = "No method `$method` in parse tree";
             throw new InvalidArgumentException($e);
         }
-        return $method;
+        return $this->tree['methods'][$method];
     }
 }

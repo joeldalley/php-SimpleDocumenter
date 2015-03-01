@@ -1,51 +1,62 @@
 Reflecting on class `phpDocumentor\Configuration`
-The definition for the configuration of phpDocumentor.
+ The definition for the configuration of phpDocumentor.
+ 
 
-Initializes all settings with their default values.
+ Initializes all settings with their default values.
+     
 __construct();
 
-Returns the title for the generated documentation.
- 
-@return string
-string getTitle();
-
-Returns the configuration related to which files are to be parsed.
- 
+ Returns the configuration related to which files are to be parsed.
 @return Parser\Configuration\Files
-Parser\Configuration\Files getFiles();
+     
+Parser\Configuration\Files
+ getFiles();
 
-Returns the settings related to logging.
- 
+ Returns the settings related to logging.
 @return Configuration\Logging
-Configuration\Logging getLogging();
+     
+Configuration\Logging
+ getLogging();
 
-Returns the configuration used by the parser.
- 
+ Returns the configuration used by the parser.
 @return Parser\Configuration
-Parser\Configuration getParser();
+     
+Parser\Configuration
+ getParser();
 
-Returns all partials that can be imported in the application.
- 
+ Returns all partials that can be imported in the application.
 @return Partials\Partial[]
-Partials\Partial[] getPartials();
+     
+Partials\Partial[]
+ getPartials();
 
-Returns a list of all plugins that should be loaded by the application.
- 
+ Returns a list of all plugins that should be loaded by the application.
 @return Plugin[]
-Plugin[] getPlugins();
+     
+Plugin[]
+ getPlugins();
 
-Returns which templates and custom transformations need to be applied to the parsed data.
- 
+ Returns the title for the generated documentation.
+@return string
+     
+string
+ getTitle();
+
+ Returns which templates and custom transformations need to be applied to the parsed data.
 @return Transformer\Configuration\Transformations
-Transformer\Configuration\Transformations getTransformations();
+     
+Transformer\Configuration\Transformations
+ getTransformations();
 
-Returns the settings for the transformer.
- 
+ Returns the settings for the transformer.
 @return Transformer\Configuration
-Transformer\Configuration getTransformer();
+     
+Transformer\Configuration
+ getTransformer();
 
-Returns the settings for the translator.
- 
+ Returns the settings for the translator.
 @return Translator\Configuration
-Translator\Configuration getTranslator();
+     
+Translator\Configuration
+ getTranslator();
 

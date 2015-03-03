@@ -38,7 +38,6 @@ class SimpleDocumenter {
     private $refl = NULL;
 
 
-
     ////////////////////////////////////////////////////////////////
     // Interface.
     ////////////////////////////////////////////////////////////////
@@ -56,7 +55,6 @@ class SimpleDocumenter {
      * }
      *
      * @param string $class A class name.
-     *
      * @return SimpleDocumenter
      * @throws InvalidArgumentException If $class isn't loaded in memory.
      */
@@ -234,14 +232,11 @@ class SimpleDocumenter {
                 $_ = preg_replace($tagRegex, '', $_);
             }
 
-            // Either an empty line or a line that had only a tag on it.
-            if (empty($_)) { continue; }
-            
             // The cursor is either positioned inside of a multi-line tag, or
             // the current line is the first line for a new occurrence of $tag.
             // Initialize or re-establish "\n" from preg_split(), accordingly.
             if (!isset($node[$tag][$idx])) { $node[$tag][$idx] = ''; }
-            else { $_ = "\n$_"; }
+            elseif (strlen($node[$tag][$idx])) { $_ = "\n$_"; }
 
             // Append to current tag.
             $node[$tag][$idx] .= $_;

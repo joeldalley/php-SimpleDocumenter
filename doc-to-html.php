@@ -7,11 +7,12 @@
 
 require_once 'SimpleDocumenter.php';
 
-$classes = array(
-    'Test' => 'test-classes/Test.class.php'
+$config = array(
+    'Test' => 'test-classes/Test.class.php',
+    'SimpleDocumenter' => 'SimpleDocumenter.php'
     );
 
-foreach ($classes as $class => $file) { 
+foreach ($config as $class => $file) {
     require_once $file;
     $file = str_replace('\\', '-', basename($file)) . '.html';
     file_put_contents("html-output/$file", reflect($class));

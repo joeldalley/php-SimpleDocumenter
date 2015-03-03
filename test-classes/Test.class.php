@@ -134,8 +134,11 @@ class Test {
      * A more complex example.
      *    - Indented.
      *        (a) multi-level indent.
+     *
      *            * This
+     *
      *            * That
+     *
      *    - Back to this level.
      *
      * @param int $a A is an integer.

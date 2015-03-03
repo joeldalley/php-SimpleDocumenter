@@ -5,6 +5,7 @@
       body { 
         font-family:"klavika-web","Helvetica Neue",Helvetica,Arial,Geneva;
         font-size:14px; 
+        margin-top:12px 5% 12px 5%;
       }
 
       div { padding:6px; }
@@ -19,12 +20,10 @@
         font-size:13px;
         padding:18px;
         font-style:normal !important;
+        font-weight:normal !important;
         float:left;
       }
 
-      div.example-tag {
-        padding:0 0 6px 6px;
-      }
       div.tag { 
         padding-left:0;
         font-weight:bold;
@@ -45,8 +44,8 @@
 
       div.method { 
         font-weight:bold; 
+        padding-left:0;
         padding-bottom:12px;
-        margin:0 10px 0 10px; 
       }
 
       div.method-sig { 
@@ -111,6 +110,30 @@
       }
       div.method-return div.type { font-weight:bold; }
 
+      div.property {
+        border-radius:3px;
+        background-color:#A3D6F5;
+        margin-bottom:18px;
+        padding:0;
+      }
+      div.property div.type { float:left; }
+      div.property div.name { float:left;font-weight:bold; }
+      div.property div.var { 
+          padding:6px 0 6px 0;
+          background-color:#eee;
+      }
+      div.property div.var { 
+          border-radius:3px 3px 0 0;
+          background-color:#A3D6F5; 
+      }
+      div.property div.prop-note { background-color:#eee; }
+      div.property div.prop-note div.desc-label { float:left; }
+      div.property div.prop-note div.note { float:left; }
+      div.property div.prop-footer { 
+          background-color:#ddd;
+          border-radius:0 0 3px 3px;
+      }
+
       div.tagsets {
           padding:6px 0 6px 0;
           background-color:#eee;
@@ -120,32 +143,29 @@
         padding:0;
         background-color:#eee;
       }
-      div.method-tagset div.method-tag {
-        padding-left:12px;
-        padding-top:0;
-        padding-bottom:0;
-        background-color:#eee;
-        font-weight:normal;
+      div.param-tag {
+          font-weight:normal;
       }
-      div.method-tag div.type { 
+      div.param-tag div.type { 
           margin-left:6px;
           letter-spacing:0.1em;
           color:#183691;
           float:left;
        }
-      div.method-tag div.name { 
+      div.param-tag div.name { 
           margin-left:6px;
           font-weight:bold;
           color:#444; 
           float:left;
       }
+      div.property-tagset div.property-tag {
+      }
     </style>
   </head>
   <body>
-    <h1>{class} Documentation</h1>
-    <div>
-      <h2>API Documentation</h2>
-      {methods}
-    </div>
+    <h1>{class}</h1>
+    <div style="display:{display-constants}"><h2>Constants</h2>{constants}</div>
+    <div style="display:{display-props}"><h2>Properties</h2>{props}</div>
+    <div style="display:{display-methods}"><h2>Methods</h2>{methods}</div>
   </body>
 </html>

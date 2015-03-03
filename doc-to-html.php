@@ -5,22 +5,55 @@
  * @version 2015/Feb/28
  */
 
-require_once 'common.inc.php';
 require_once 'SimpleDocumenter.php';
 
-foreach (classes() as $class => $file) { 
+$classes = array(
+    'Test' => 'test-classes/Test.class.php'
+    );
+
+foreach ($classes as $class => $file) { 
     require_once $file;
     $file = str_replace('\\', '-', basename($file)) . '.html';
-    file_put_contents("output/$file", reflect($class));
+    file_put_contents("html-output/$file", reflect($class));
     echo "Wrote file output/$file\n";
 }
 
 function reflect($class) {
     $simple = new SimpleDocumenter($class);
+    $methodNames = $simple->methodNames();
+    $propNames = $simple->propertyNames();
+    $constants = $simple->getConstants();
 
     return template('page', array(
-        '{title}'   => "Class {class} Documentation",
-        '{class}'   => $class,
+        '{title}'              => "Class {class} Documentation",
+        '{class}'              => $class,
+        '{display-constants}'  => count($constants) ? '' : 'none',
+        '{display-methods}'    => count($methodNames) ? '' : 'none',
+        '{display-props}'      => count($propNames) ? '' : 'none',
+        '{props}' => implode('', array_map(function($_) use ($simple, $propNames) {
+                         $var = $simple->propertyVar($_);
+                         $ex = $simple->propertyExample($_);
+                         return template('property', array(
+                             '{display-note}'    => $var[2] ? '' : 'none',
+                             '{display-example}' => count($ex) ? '' : 'none',
+                             '{display-tagsets}' => count($ex) ? '' : 'none',
+                             '{type}' => (string) $var[0],
+                             '{name}' => (string) $var[1],
+                             '{note}' => $var[2],
+                             '{example}' => implode('', array_map(function($_) {
+                                               $tmpl = template('example', array(
+                                                   '{note}' => htmlentities($_)
+                                               ));
+                                               return trim($tmpl);
+                                           }, $ex)),
+                         ));
+                     }, $propNames)),
+        '{constants}' => implode('', array_map(function($_) use ($constants) {
+                             return template('constant', array(
+                                 '{name}'  => $_,
+                                 '{value}' => $constants[$_]
+                             ));
+                         }, array_keys($constants))),
         '{methods}' => implode('', array_map(function($name) use ($simple) {
                            $note = $simple->methodNote($name, $sep = '<br/>');
                            $params = $simple->methodParams($name);
@@ -50,9 +83,8 @@ function reflect($class) {
                                                  return trim($tmpl);
                                              }, $params)),
                                '{example}' => implode('', array_map(function($_) {
-                                                 $note = htmlentities((string) $_[0]);
                                                  $tmpl = template('example', array(
-                                                     '{note}' => $note
+                                                     '{note}' => htmlentities($_)
                                                  ));
                                                  return trim($tmpl);
                                              }, $ex)),
@@ -76,7 +108,7 @@ function reflect($class) {
                                               return trim($tmpl);
                                           }, $params))
                            ));
-                       }, $simple->methodNames())),
+                       }, $methodNames)),
     ));
 }
 

@@ -1,24 +1,33 @@
-Why php-SimpleDocumenter?
-=========================
+SimpleDocumenter
+================
 
-SimpleDocumenter is an extremely small, minimal and intentionally simple-minded phpdoc comment analyzer.
+SimpleDocumenter is a zero-dependency, single-file phpdoc comment analyzer.
 
-Example
-=======
+*Add SimpleDocumenter To Your Project:*<br/>
+```
+perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php"'
+```
 
+*Usage*
 ```php
 require 'SimpleDocumenter.php';
 $simple = new SimpleDocumenter('SimpleDocumenter');
 
-$tmpl = "REFLECTING ON CLASS: %s\n%s\n\n";
-echo sprintf($tmpl, $simple->className(), $simple->classComment());
+print_r($simple->classTag('@author'));
+// Array
+// ( 
+//     [0] => Joel Dalley 
+// )
 
-foreach ($simple->methodNames() as $name) {
-    $comment = $simple->methodComment($name);
-    echo $comment ? "$comment\n" : '';
-    echo $simple->methodSignature($name), "\n\n";
-}
+echo $simple->classTag('@author', $first = TRUE);
+// Joel Dalley
 ```
+
+Why SimpleDocumenter?
+=====================
+
+SimpleDocumenter provides only the part of phpDocumentor that I always found useful: the actual parsed phpdoc tags, so they can be used to make nice-looking API documentation Web pages. SimpleDocumenter is a single file, and has no dependencies.
+
 
 Copyright & License
 ===================

@@ -4,11 +4,22 @@
     <style>
       body { 
         font-family:"klavika-web","Helvetica Neue",Helvetica,Arial,Geneva;
-        font-size:14px; 
-        margin-top:12px 5% 12px 5%;
+        margin:0;
+      }
+
+      h1 {
+          background-color:#454545;
+          color:#A3D6F5; 
+          padding:20px;
       }
 
       div { padding:6px; }
+
+      div.body {
+        font-size:14px; 
+        margin:0 2.5% 12px 2.5%;
+      }
+
       div.clear { padding:0;clear:both; }
  
       div.pre {
@@ -39,10 +50,45 @@
         color:#444;
         float:left;
         margin-left:9px;
-        font-style:italic; 
+        /*font-style:italic;*/
+      }
+      div.footer { 
+          padding:3px;
+          background-color:#ccc;
+          border-radius:0 0 3px 3px;
       }
 
+      div.class-tag {
+        margin:6px;
+        padding:12px;
+        border-radius:3px;
+        border:1px solid #ddd;
+        background-color:#eee;
+      }
+      div.class-tag div.tag {
+          font-weight:bold;
+          float:left;
+      }
+      div.class-tag div.value { 
+          color:#444; 
+          float:left;
+      }
+
+      div.constant {
+        margin:6px;
+        padding:12px;
+        border-radius:3px;
+        border:1px solid #ddd;
+        background-color:#eee;
+      }
+      div.constant span.name { 
+          font-family:arial;
+          font-weight:bold;
+      }
+      div.constant span.value { color:#A71D5D; }
+
       div.method { 
+        margin-left:6px;
         font-weight:bold; 
         padding-left:0;
         padding-bottom:12px;
@@ -89,11 +135,8 @@
       }
       div.method-note div.note {
         border-radius:3px;
-        font-style:italic;
-        color:#444;
         background-color:#eee;
         border:1px solid #ddd;
-        float:left;
         margin-left:9px;
       }
       div.method-note div.desc-label {
@@ -110,6 +153,7 @@
       div.method-return div.type { font-weight:bold; }
 
       div.property {
+        margin-left:6px;
         border-radius:3px;
         background-color:#A3D6F5;
         margin-bottom:18px;
@@ -118,22 +162,14 @@
       div.property div.prop-note { background-color:#CEE4F2; }
       div.property div.prop-note div.note {
         border-radius:3px;
-        font-style:italic;
-        color:#444;
         background-color:#eee;
         border:1px solid #ddd;
-        float:left;
         margin-left:9px;
       }
       div.property div.prop-note div.desc-label {
           padding:0 0 6px 6px;
           font-weight:bold;
           float:left;
-      }
-      div.footer { 
-          padding:3px;
-          background-color:#ccc;
-          border-radius:0 0 3px 3px;
       }
       div.property div.type { float:left; }
       div.property div.name { float:left;font-weight:bold; }
@@ -179,8 +215,26 @@
   </head>
   <body>
     <h1>{class}</h1>
-    <div style="display:{display-constants}"><h2>Constants</h2>{constants}</div>
-    <div style="display:{display-props}"><h2>Properties</h2>{props}</div>
-    <div style="display:{display-methods}"><h2>Methods</h2>{methods}</div>
+    <div class="body">
+      <h2 style="margin-top:0">Tags</h2>
+      <div class="class-tag" style="display:{display-class-note}">
+        <div class="tag">Description:</div>
+        <div class="value">{note}</div>
+        <div class="clear"></div>
+      </div>
+      <div class="class-tag" style="display:{display-class-author}">
+        <div class="tag">@author</div>
+        <div class="value">{author}</div>
+        <div class="clear"></div>
+      </div>
+      <div class="class-tag" style="display:{display-class-version}">
+        <div class="tag">@version</div>
+        <div class="value">{version}</div>
+        <div class="clear"></div>
+      </div>
+      <div style="display:{display-constants}"><h2>Constants</h2>{constants}</div>
+      <div style="display:{display-props}"><h2>Properties</h2>{props}</div>
+      <div style="display:{display-methods}"><h2>Methods</h2>{methods}</div>
+    </div>
   </body>
 </html>

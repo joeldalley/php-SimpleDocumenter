@@ -1,8 +1,10 @@
 <?php
 /**
  * The World's simplest phpdoc comment analyzer.
+ *
  * @author Joel Dalley
  * @version 2015/Feb/28
+ * @see https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenter {
 
@@ -67,92 +69,51 @@ class SimpleDocumenter {
         }
 
         $this->refl = new ReflectionClass($this->class);
-        $this->tree = $this->parse();
+        $this->parse();
     }
 
     /** @return string The class being introspected. */
     public function className() { return $this->class; }
 
+    /**
+     * @param string $tag A tag name.
+     * @param bool $first Optionally request only the first array entry.
+     * @return array|string Either an array of entries, or only the first one.
+     */
+    public function classTag($tag, $first = FALSE) {
+        $entry = $this->parseNode($this->tree['class'], $tag, $name);
+        return $first ? $entry[0] : $entry;
+    }
+
     /** @return array Pairs of (constant name => constant value). */
     public function getConstants() { return $this->tree['constants']; }
 
-    /** @return string[] The methods of the introspected class. */
-    public function methodNames() { return $this->sortedNames('methods'); }
-
-    /** @return string[] The properties of the introspected class. */
+    /** @return string[] Property names per ReflectionClass::getProperties(). */
     public function propertyNames() { return $this->sortedNames('properties'); }
 
     /**
-     * @param string $name A property name.
-     * @return string[] All doc comment '@example' entries, for given property.
+     * @param string $name A property name (without the leading '$').
+     * @param string $tag A tag name.
+     * @param bool $first Optionally request only the first array entry.
+     * @return array|string Either an array of entries, or only the first one.
      */
-    public function propertyExamples($name) {
-        return $this->parseNode('@example', $this->propNode($name), $name);
+    public function propertyTag($name, $tag, $first = FALSE) {
+        $entry = $this->parseNode($this->node('properties', $name), $tag, $name);
+        return $first ? $entry[0] : $entry;
     }
 
-    /**
-     * @param string $name A property name.
-     * @return array The first doc comment '@var' entry, for given property.
-     */
-    public function propertyVar($name) {
-        $var = $this->parseNode('@var', $this->propNode($name), $name);
-        return $var[0];
-    }
+    /** @return string[] Property names per ReflectionClass::getMethods(). */
+    public function methodNames() { return $this->sortedNames('methods'); }
 
     /**
      * @param string $name A method name.
-     * @return array The first doc comment '@return' entries, for given method.
+     * @param string $tag A tag name.
+     * @param bool $first Optionally request only the first array entry.
+     * @return array|string Either an array of entries, or only the first one.
      */
-    public function methodReturn($name) {
-        $return = $this->parseNode('@return', $this->methodNode($name), $name);
-        return $return[0];
-    }
-
-    /**
-     * @param string $name A method name.
-     * @return array[] All doc comment '@throws' entries, for given method.
-     */
-    public function methodThrows($name) {
-        return $this->parseNode('@throws', $this->methodNode($name), $name);
-    }
-
-    /**
-     * @param string $name A method name.
-     * @return string[] All doc comment '@example' entries, for given method.
-     */
-    public function methodExamples($name) {
-        return $this->parseNode('@example', $this->methodNode($name), $name);
-    }
-
-    /**
-     * @param string $name A method name.
-     * @return array[] All doc comment '@param' entries, for given method.
-     */
-    public function methodParams($name) {
-        return $this->parseNode('@param', $this->methodNode($name), $name);
-    }
-
-    /**
-     * @param string $name A method name.
-     * @return string First doc comment '@note' entry, for given method.
-     */
-    public function methodNote($name) {
-        try {
-            $note = $this->parseNode('@note', $this->methodNode($name), $name);
-            return $note[0];
-        }
-        catch(InvalidArgumentException $e) { return ''; }
-    }
-
-    /**
-     * @param string $name A method name.
-     * @return string A function signature string.
-     */
-    public function methodSignature($name) {
-        list($type) = $this->methodReturn($name);
-        $map = function($_) { return implode(' ', array_slice($_, 0, 2)); };
-        $args = implode(', ', array_map($map, $this->methodParams($name)));
-        return ($type ? "$type " : '') . "$name($args);";
+    public function methodTag($name, $tag, $first = FALSE) {
+        $entry = $this->parseNode($this->node('methods', $name), $tag, $name);
+        return $first ? $entry[0] : $entry;
     }
 
 
@@ -161,13 +122,14 @@ class SimpleDocumenter {
     ////////////////////////////////////////////////////////////////
 
     /**
+     * Side-effect only, on $this->tree.
      * Parse all doc comments, and return parsed data structure.
-     * @return array Parsed doc comments data structure.
+     * @return void
      */
     private function parse() {
         $refl = $this->refl;
 
-        $this->parseDocComment($refl->getDocComment(), $this->tree['class']);
+        $this->parseDocComment($this->tree['class'], $refl->getDocComment());
 
         foreach ($refl->getConstants() as $name => $value) {
             $this->tree['constants'][$name] = $value;
@@ -183,21 +145,19 @@ class SimpleDocumenter {
             foreach ($refl->$method($filter) as $obj) {
                 $this->tree[$nodeName][$obj->name] = NULL;
                 $_ = &$this->tree[$nodeName][$obj->name];
-                $this->parseDocComment($obj->getDocComment(), $_, $obj->name);
+                $this->parseDocComment($_, $obj->getDocComment(), $obj->name);
             }
         }
-
-        return $this->tree;
     }
 
     /**
      * Side-effect only, on &$node reference.
-     * @param string $comment A doc comment.
      * @param array &$node A parse tree node.
+     * @param string $comment A doc comment.
      * @param string $name|NULL Optional ReflectionClass object name.
      * @return void
      */
-    private function parseDocComment($comment, &$node, $name = NULL) {
+    private function parseDocComment(&$node, $comment, $name = NULL) {
         $tags = array_merge(self::$tags, array('@note'));
         $node = array_combine($tags, array_fill(0, count($tags), array()));
 
@@ -244,12 +204,12 @@ class SimpleDocumenter {
     }
 
     /**
-     * @param string $tag A tag name.
      * @param array &$node A parse tree node.
+     * @param string $tag A tag name.
      * @param string $name ReflectionClass object name.
      * @return array A list of tag entries.
      */
-    private function parseNode($tag, &$node, $name) {
+    private function parseNode(&$node, $tag, $name) {
         // A commentless property can be made to look 
         // as if it had a doc comment like "@var $name".
         $tag == '@var' and $this->guaranteeMinimalVar($node, $name);
@@ -322,18 +282,6 @@ class SimpleDocumenter {
         }
         return $this->tree[$nodeName][$name];
     }
-
-    /**
-     * @param string $name A property name.
-     * @return array Parsed doc comment data structure.
-     */
-    private function propNode($name) { return $this->node('properties', $name); }
- 
-    /**
-     * @param string $name A method name.
-     * @return array Parsed doc comment data structure.
-     */
-    private function methodNode($name) { return $this->node('methods', $name); }
 
     /**
      * @param string $nodeName A tree node name, e.g. 'methods'.

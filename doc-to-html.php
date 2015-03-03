@@ -25,15 +25,25 @@ function reflect($class) {
     $propNames = $simple->propertyNames();
     $constants = $simple->getConstants();
 
+    $note = $simple->classTag('@note');
+    $author = $simple->classTag('@author');
+    $version = $simple->classTag('@version', TRUE);
+
     return template('page', array(
         '{title}'              => "Class {class} Documentation",
         '{class}'              => $class,
+        '{version}'            => $version,
+        '{author}'             => implode(', ', $author),
+        '{note}'               => implode(', ', $note),
+        '{display-class-author}' => strlen($author[0]) ? '' : 'none',
+        '{display-class-version}' => strlen($version) ? '' : 'none',
+        '{display-class-note}' => strlen($note[0]) ? '' : 'none',
         '{display-constants}'  => count($constants) ? '' : 'none',
         '{display-methods}'    => count($methodNames) ? '' : 'none',
         '{display-props}'      => count($propNames) ? '' : 'none',
         '{props}' => implode('', array_map(function($_) use ($simple, $propNames) {
-                         $var = $simple->propertyVar($_);
-                         $ex = $simple->propertyExamples($_);
+                         $var = $simple->propertyTag($_, '@var', TRUE);
+                         $ex = $simple->propertyTag($_, '@example');
                          return template('property', array(
                              '{display-note}'    => $note ? '' : 'none',
                              '{display-note}'    => strlen($var[2]) ? '' : 'none',
@@ -57,12 +67,12 @@ function reflect($class) {
                              ));
                          }, array_keys($constants))),
         '{methods}' => implode('', array_map(function($name) use ($simple) {
-                           $note = $simple->methodNote($name);
-                           $params = $simple->methodParams($name);
-                           $ex = $simple->methodExamples($name);
-                           $throws = $simple->methodThrows($name);
+                           $note = $simple->methodTag($name, '@note', TRUE);
+                           $params = $simple->methodTag($name, '@param');
+                           $ex = $simple->methodTag($name, '@example');
+                           $throws = $simple->methodTag($name, '@throws');
+                           $return = $simple->methodTag($name, '@return', TRUE);
                            $haveTags = count($params) || count($throws) || count($ex);
-                           $return = $simple->methodReturn($name);
                            return template('method', array(
                                '{type}'            => (string) $return[0],
                                '{name}'            => $name,

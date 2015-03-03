@@ -1,6 +1,10 @@
 <?php
 /**
  * Test php doc comments in various states of well-formedness.
+ *
+ * @author Joel Dalley
+ * @version 2015/Mar/03
+ * @see https://github.com/joeldalley/php-SimpleDocumenter
  */
 class Test {
     const A = 1;

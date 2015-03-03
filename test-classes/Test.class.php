@@ -13,6 +13,10 @@ class Test {
      * @example
      *   Multi-line, indented.
      *   Line 2.
+     * @example
+     *  Let's throw in some HTML...
+     *  <b>Bold</b><a href="#">Anchor</a>.
+     *  Other characters... <, >, &, ", '
      */
     var $a = 1;
 
@@ -38,6 +42,17 @@ class Test {
 
     /** @var int $f This is an int. */
     public $f = 32;
+
+    /** 
+     * @var int $g This is an int. 
+     */
+    public $g = 64;
+
+    /** 
+     * @var int $h This is an int. 
+     *             A second line about $h.  
+     */
+    public $h = 128;
 
     public function a() {}
 
@@ -85,6 +100,7 @@ class Test {
     /**
      * With a comment.
      * @param int $a A is an integer.
+     *            Here's a second line about $a.
      * @return void Nothing to return here.
      */
     public function i($a) {}
@@ -93,6 +109,7 @@ class Test {
      * With a mult-line comment.
      * Here's line 2.
      * @param int $a A is an integer.
+     *               Here is a second line about $a.
      * @return void Nothing to return here.
      */
     public function j($a) {}
@@ -103,9 +120,10 @@ class Test {
      * @example Two line comment.
      *     Here is line 2.
      * @param int $a A is an integer.
+     * @param int[] $b An array of is an integers.
      * @return void Nothing to return here.
      */
-    public function jj($a) {}
+    public function jj($a, $b) {}
 
     /**
      * With a mult-line comment.
@@ -121,7 +139,10 @@ class Test {
      *    - Back to this level.
      *
      * @param int $a A is an integer.
+     * @param int $b A is an integer.
+     *
      * @return void Nothing to return here.
+     *
      */
-    public function k($a) {}
+    public function k($a, $c) {}
 }

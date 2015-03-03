@@ -32,9 +32,10 @@ function reflect($class) {
         '{display-props}'      => count($propNames) ? '' : 'none',
         '{props}' => implode('', array_map(function($_) use ($simple, $propNames) {
                          $var = $simple->propertyVar($_);
-                         $ex = $simple->propertyExample($_);
+                         $ex = $simple->propertyExamples($_);
                          return template('property', array(
-                             '{display-note}'    => $var[2] ? '' : 'none',
+                             '{display-note}'    => $note ? '' : 'none',
+                             '{display-note}'    => strlen($var[2]) ? '' : 'none',
                              '{display-example}' => count($ex) ? '' : 'none',
                              '{display-tagsets}' => count($ex) ? '' : 'none',
                              '{type}' => (string) $var[0],
@@ -55,9 +56,9 @@ function reflect($class) {
                              ));
                          }, array_keys($constants))),
         '{methods}' => implode('', array_map(function($name) use ($simple) {
-                           $note = $simple->methodNote($name, $sep = '<br/>');
+                           $note = $simple->methodNote($name);
                            $params = $simple->methodParams($name);
-                           $ex = $simple->methodExample($name);
+                           $ex = $simple->methodExamples($name);
                            $throws = $simple->methodThrows($name);
                            $haveTags = count($params) || count($throws) || count($ex);
                            $return = $simple->methodReturn($name);
@@ -65,7 +66,7 @@ function reflect($class) {
                                '{type}'            => (string) $return[0],
                                '{name}'            => $name,
                                '{methodNote}'      => $note,
-                               '{display-note}'    => $note ? '' : 'none',
+                               '{display-note}'    => strlen($note) ? '' : 'none',
                                '{display-params}'  => count($params) ? '' : 'none',
                                '{display-return}'  => count($return) ? '' : 'none',
                                '{display-throws}'  => count($throws) ? '' : 'none',
@@ -79,6 +80,10 @@ function reflect($class) {
                                                      '{type}' => (string) $type,
                                                      '{name}' => (string) $name,
                                                      '{note}' => $note,
+                                                     '{display-param-name}' =>
+                                                         (bool) $name ? '' : 'none',
+                                                     '{display-param-type}' =>
+                                                         (bool) $type ? '' : 'none'
                                                  ));
                                                  return trim($tmpl);
                                              }, $params)),
@@ -103,7 +108,11 @@ function reflect($class) {
                                               $tmpl = template('sig-param', array(
                                                   '{type}' => $type,
                                                   '{name}' => $name ? " $name" : '',
-                                                  '{note}' => $note
+                                                  '{note}' => $note,
+                                                  '{display-param-type}' =>
+                                                      (bool) $type ? '' : 'none',
+                                                  '{display-param-name}' =>
+                                                      (bool) $name ? '' : 'none'
                                               ));
                                               return trim($tmpl);
                                           }, $params))

@@ -97,14 +97,13 @@
         margin-left:9px;
       }
       div.method-note div.desc-label {
-          padding:0 0 6px 6px;
+          padding:0 0 6px 0;
           font-weight:bold;
           float:left;
       }
       div.method-return {
         padding-top:6px;
         padding-left:12px;
-        border-radius:0 0 3px 3px;
         background-color:#ddd;
         font-weight:normal;
       }
@@ -116,6 +115,26 @@
         margin-bottom:18px;
         padding:0;
       }
+      div.property div.prop-note { background-color:#CEE4F2; }
+      div.property div.prop-note div.note {
+        border-radius:3px;
+        font-style:italic;
+        color:#444;
+        background-color:#eee;
+        border:1px solid #ddd;
+        float:left;
+        margin-left:9px;
+      }
+      div.property div.prop-note div.desc-label {
+          padding:0 0 6px 6px;
+          font-weight:bold;
+          float:left;
+      }
+      div.footer { 
+          padding:3px;
+          background-color:#ccc;
+          border-radius:0 0 3px 3px;
+      }
       div.property div.type { float:left; }
       div.property div.name { float:left;font-weight:bold; }
       div.property div.var { 
@@ -126,16 +145,9 @@
           border-radius:3px 3px 0 0;
           background-color:#A3D6F5; 
       }
-      div.property div.prop-note { background-color:#eee; }
-      div.property div.prop-note div.desc-label { float:left; }
-      div.property div.prop-note div.note { float:left; }
-      div.property div.prop-footer { 
-          background-color:#ddd;
-          border-radius:0 0 3px 3px;
-      }
 
       div.tagsets {
-          padding:6px 0 6px 0;
+          padding:6px 0 6px 6px;
           background-color:#eee;
       }
 
@@ -177,7 +189,7 @@
     <div class="name">$_a</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:none" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note"></div>
     <div class="clear"></div>
@@ -185,7 +197,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -193,7 +205,7 @@
     <div class="name">$a</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:none" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note"></div>
     <div class="clear"></div>
@@ -208,9 +220,15 @@
   <div class="note pre">  Multi-line, indented.
   Line 2.</div>
   <div class="clear"></div>
+</div><div class="example-tag">
+  <div class="tag">@example</div> 
+  <div class="note pre"> Let's throw in some HTML...
+ &lt;b&gt;Bold&lt;/b&gt;&lt;a href=&quot;#&quot;&gt;Anchor&lt;/a&gt;.
+ Other characters... &lt;, &gt;, &amp;, &quot;, '</div>
+  <div class="clear"></div>
 </div></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -218,7 +236,7 @@
     <div class="name">$aa</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:none" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note"></div>
     <div class="clear"></div>
@@ -226,7 +244,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -234,7 +252,7 @@
     <div class="name">$aaa</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:none" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note"></div>
     <div class="clear"></div>
@@ -242,7 +260,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -250,7 +268,7 @@
     <div class="name">$b</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:none" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note"></div>
     <div class="clear"></div>
@@ -258,7 +276,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -266,7 +284,7 @@
     <div class="name">$c</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:none" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note"></div>
     <div class="clear"></div>
@@ -274,7 +292,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -282,7 +300,7 @@
     <div class="name">$d</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note">This is an int.</div>
     <div class="clear"></div>
@@ -290,7 +308,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -298,7 +316,7 @@
     <div class="name">$e</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note">  This is an int.</div>
     <div class="clear"></div>
@@ -306,7 +324,7 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
 </div>
 <div class="property">
   <div class="var">
@@ -314,7 +332,7 @@
     <div class="name">$f</div>
     <div class="clear"></div>
   </div>
-  <div class="prop-note">
+  <div style="display:" class="prop-note">
     <div class="desc-label">Description:</div> 
     <div class="note">This is an int.</div>
     <div class="clear"></div>
@@ -322,7 +340,40 @@
   <div class="tagsets" style="display:none;">
     <div class="property-tagset" style="display:none"></div>
   </div>
-  <div class="prop-footer"></div>
+  <div class="footer"></div>
+</div>
+<div class="property">
+  <div class="var">
+    <div class="type">int</div>
+    <div class="name">$g</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note">This is an int.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none;">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div>
+<div class="property">
+  <div class="var">
+    <div class="type">int</div>
+    <div class="name">$h</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note">This is an int.
+            A second line about $h.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none;">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
 </div>
 </div>
     <div style="display:"><h2>Methods</h2><div class="method">
@@ -346,14 +397,13 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:none">
-      <div class="tag">@return</div> 
-      <div class="type"></div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
@@ -376,14 +426,13 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:none">
-      <div class="tag">@return</div> 
-      <div class="type"></div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
@@ -406,14 +455,13 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
@@ -436,14 +484,13 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
@@ -466,20 +513,22 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">e</span>(<span class="param-type">int</span><span class="param-name"></span>)
+      <span class="name">e</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:none"
+      class="param-name"></span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
@@ -494,28 +543,30 @@
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name"></div>
+  <div style="display:" class="type">int</div>
+  <div style="display:none" class="name"></div>
   <div class="note"></div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">f</span>(<span class="param-type"></span><span class="param-name"> $a</span>)
+      <span class="name">f</span>(<span style="display:none"
+      class="param-type"></span><span
+      style="display:"
+      class="param-name"> $a</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
@@ -530,28 +581,30 @@
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type"></div>
-  <div class="name">$a</div>
+  <div style="display:none" class="type"></div>
+  <div style="display:" class="name">$a</div>
   <div class="note"></div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">g</span>(<span class="param-type">int</span><span class="param-name"> $a</span>)
+      <span class="name">g</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $a</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
@@ -566,28 +619,30 @@
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name">$a</div>
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$a</div>
   <div class="note"></div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note"></div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">h</span>(<span class="param-type">int</span><span class="param-name"> $a</span>)
+      <span class="name">h</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $a</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
@@ -602,117 +657,136 @@
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name">$a</div>
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$a</div>
   <div class="note">A is an integer.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note">Nothing to return here.</div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note">Nothing to return here.</div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">i</span>(<span class="param-type">int</span><span class="param-name"> $a</span>)
+      <span class="name">i</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $a</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
     </div>
     <div class="clear"></div>
   </div>
-  <div class="method-note" style="display:none">
+  <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note"></div>
+    <div class="note">With a comment.</div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name">$a</div>
-  <div class="note">A is an integer.</div>
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$a</div>
+  <div class="note">A is an integer.
+           Here's a second line about $a.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note">Nothing to return here.</div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note">Nothing to return here.</div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">j</span>(<span class="param-type">int</span><span class="param-name"> $a</span>)
+      <span class="name">j</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $a</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
     </div>
     <div class="clear"></div>
   </div>
-  <div class="method-note" style="display:none">
+  <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note"></div>
+    <div class="note">With a mult-line comment.
+Here's line 2.</div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name">$a</div>
-  <div class="note">A is an integer.</div>
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$a</div>
+  <div class="note">A is an integer.
+              Here is a second line about $a.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note">Nothing to return here.</div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note">Nothing to return here.</div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">jj</span>(<span class="param-type">int</span><span class="param-name"> $a</span>)
+      <span class="name">jj</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $a</span>, <span style="display:"
+      class="param-type">int[]</span><span
+      style="display:"
+      class="param-name"> $b</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
     </div>
     <div class="clear"></div>
   </div>
-  <div class="method-note" style="display:none">
+  <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note"></div>
+    <div class="note">With a mult-line comment.
+Here's line 2.</div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name">$a</div>
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$a</div>
   <div class="note">A is an integer.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">int[]</div>
+  <div style="display:" class="name">$b</div>
+  <div class="note">An array of is an integers.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:"><div class="example-tag">
@@ -723,36 +797,48 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note">Nothing to return here.</div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note">Nothing to return here.</div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 <div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">k</span>(<span class="param-type">int</span><span class="param-name"> $a</span>)
+      <span class="name">k</span>(<span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $a</span>, <span style="display:"
+      class="param-type">int</span><span
+      style="display:"
+      class="param-name"> $b</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">void</span>
     </div>
     <div class="clear"></div>
   </div>
-  <div class="method-note" style="display:none">
+  <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note"></div>
+    <div class="note">With a mult-line comment.
+Here's line 2.</div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div class="type">int</div>
-  <div class="name">$a</div>
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$a</div>
+  <div class="note">A is an integer.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">int</div>
+  <div style="display:" class="name">$b</div>
   <div class="note">A is an integer.</div>
   <div class="clear"></div>
 </div></div>
@@ -772,14 +858,13 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return">
-    <div style="padding:0;display:">
-      <div class="tag">@return</div> 
-      <div class="type">void</div>
-      <div class="note">Nothing to return here.</div>
-      <div class="clear"></div>
-    </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note">Nothing to return here.</div>
+    <div class="clear"></div>
   </div>
+  <div class="footer"></div>
 </div>
 </div>
   </body>

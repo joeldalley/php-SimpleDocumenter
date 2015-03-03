@@ -81,8 +81,8 @@ class SimpleDocumenter {
      * @return array|string Either an array of entries, or only the first one.
      */
     public function classTag($tag, $first = FALSE) {
-        $entry = $this->parseNode($this->tree['class'], $tag, $name);
-        return $first ? $entry[0] : $entry;
+        $entry = $this->parseNode($this->tree['class'], $tag);
+        return $first && count($entry) ? $entry[0] : $entry;
     }
 
     /** @return array Pairs of (constant name => constant value). */
@@ -99,7 +99,7 @@ class SimpleDocumenter {
      */
     public function propertyTag($name, $tag, $first = FALSE) {
         $entry = $this->parseNode($this->node('properties', $name), $tag, $name);
-        return $first ? $entry[0] : $entry;
+        return $first && count($entry) ? $entry[0] : $entry;
     }
 
     /** @return string[] Property names per ReflectionClass::getMethods(). */
@@ -113,7 +113,7 @@ class SimpleDocumenter {
      */
     public function methodTag($name, $tag, $first = FALSE) {
         $entry = $this->parseNode($this->node('methods', $name), $tag, $name);
-        return $first ? $entry[0] : $entry;
+        return $first && count($entry) ? $entry[0] : $entry;
     }
 
 
@@ -161,7 +161,7 @@ class SimpleDocumenter {
         $tags = array_merge(self::$tags, array('@note'));
         $node = array_combine($tags, array_fill(0, count($tags), array()));
 
-        if (!$comment) { return $parsed; }
+        if (!$comment) { return $node; }
 
         // Remove leading "/**" and trailing "*/", and split into lines.
         $bounds = array(
@@ -206,10 +206,10 @@ class SimpleDocumenter {
     /**
      * @param array &$node A parse tree node.
      * @param string $tag A tag name.
-     * @param string $name ReflectionClass object name.
+     * @param string $name|NULL ReflectionClass object name, or NULL.
      * @return array A list of tag entries.
      */
-    private function parseNode(&$node, $tag, $name) {
+    private function parseNode(&$node, $tag, $name = NULL) {
         // A commentless property can be made to look 
         // as if it had a doc comment like "@var $name".
         $tag == '@var' and $this->guaranteeMinimalVar($node, $name);
@@ -227,7 +227,7 @@ class SimpleDocumenter {
                     return array(NULL, $m[1], $m[2]);
                 });
 
-            list($type, $var, $note) = array();
+            list($type, $var, $note) = array(NULL, NULL, NULL);
             foreach ($patterns as $pattern => $lister) {
                 if (preg_match($pattern, $text, $match)) { 
                     list($type, $var, $note) = $lister($match);

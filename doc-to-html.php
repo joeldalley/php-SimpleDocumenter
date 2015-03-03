@@ -5,6 +5,7 @@
  * @version 2015/Feb/28
  */
 
+error_reporting(E_ALL);
 require_once 'SimpleDocumenter.php';
 
 $config = array(
@@ -45,7 +46,7 @@ function reflect($class) {
                          $var = $simple->propertyTag($_, '@var', TRUE);
                          $ex = $simple->propertyTag($_, '@example');
                          return template('property', array(
-                             '{display-note}'    => $note ? '' : 'none',
+                             '{display-note}'    => $var[2] ? '' : 'none',
                              '{display-note}'    => strlen($var[2]) ? '' : 'none',
                              '{display-example}' => count($ex) ? '' : 'none',
                              '{display-tagsets}' => count($ex) ? '' : 'none',
@@ -69,21 +70,21 @@ function reflect($class) {
         '{methods}' => implode('', array_map(function($name) use ($simple) {
                            $note = $simple->methodTag($name, '@note', TRUE);
                            $params = $simple->methodTag($name, '@param');
-                           $ex = $simple->methodTag($name, '@example');
                            $throws = $simple->methodTag($name, '@throws');
-                           $return = $simple->methodTag($name, '@return', TRUE);
+                           $ret = $simple->methodTag($name, '@return', TRUE);
+                           $ex = $simple->methodTag($name, '@example');
                            $haveTags = count($params) || count($throws) || count($ex);
                            return template('method', array(
-                               '{type}'            => (string) $return[0],
+                               '{type}'            => count($ret) ? $ret[0] : '',
                                '{name}'            => $name,
-                               '{methodNote}'      => $note,
-                               '{display-note}'    => strlen($note) ? '' : 'none',
+                               '{methodNote}'      => implode(' ', (array) $note),
+                               '{display-note}'    => count($note) ? '' : 'none',
                                '{display-params}'  => count($params) ? '' : 'none',
-                               '{display-return}'  => count($return) ? '' : 'none',
+                               '{display-return}'  => count($ret) ? '' : 'none',
                                '{display-throws}'  => count($throws) ? '' : 'none',
                                '{display-example}' => count($ex) ? '' : 'none',
                                '{display-tagsets}' => $haveTags ? '' : 'none',
-                               '{returnNote}'      => (string) $return[1],
+                               '{returnNote}'      => count($ret) > 1 ? $ret[1] : '',
                                '{params}' => implode('', array_map(function($_) {
                                                  list($type, $name, $note) = $_;
                                                  $note = htmlentities((string) $note);

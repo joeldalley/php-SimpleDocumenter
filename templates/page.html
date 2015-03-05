@@ -125,6 +125,7 @@
         letter-spacing:0.1em;
         border-radius:2px;
         color:#183691;
+        margin-right:6px;
       }
       div.method-sig span.function { color:#A71D5D; }
 
@@ -173,10 +174,7 @@
       }
       div.property div.type { float:left; }
       div.property div.name { float:left;font-weight:bold; }
-      div.property div.var { 
-          padding:6px 0 6px 0;
-          background-color:#eee;
-      }
+
       div.property div.var { 
           border-radius:3px 3px 0 0;
           background-color:#A3D6F5; 
@@ -214,27 +212,28 @@
     </style>
   </head>
   <body>
-    <h1>{class} API</h1>
+    <h1>
+      <span style="color:#ddd">Class ::</span> {class}</h1>
     <div class="body">
       <h2 style="margin-top:0">Tags</h2>
-      <div class="class-tag" style="display:{display-class-note}">
+      <div class="class-tag" style="display:{show-note}">
         <div class="tag">Description:</div>
         <div class="value">{note}</div>
         <div class="clear"></div>
       </div>
-      <div class="class-tag" style="display:{display-class-author}">
+      <div class="class-tag" style="display:{show-author}">
         <div class="tag">@author</div>
         <div class="value">{author}</div>
         <div class="clear"></div>
       </div>
-      <div class="class-tag" style="display:{display-class-version}">
+      <div class="class-tag" style="display:{show-version}">
         <div class="tag">@version</div>
         <div class="value">{version}</div>
         <div class="clear"></div>
       </div>
-      <div style="display:{display-constants}"><h2>Constants</h2>{constants}</div>
-      <div style="display:{display-props}"><h2>Properties</h2>{props}</div>
-      <div style="display:{display-methods}"><h2>Methods</h2>{methods}</div>
+      <div style="display:{show-constants}"><h2>Constants</h2>{constants}</div>
+      <div style="display:{show-props}"><h2>Properties</h2>{props}</div>
+      <div style="display:{show-methods}"><h2>Methods</h2>{methods}</div>
     </div>
   </body>
 </html>

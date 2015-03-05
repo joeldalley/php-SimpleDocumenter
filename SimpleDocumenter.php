@@ -3,41 +3,41 @@
  * The World's simplest phpdoc comment analyzer.
  *
  * @author Joel Dalley
- * @version 2015/Feb/28
+ * @version 2015/Mar/05
  * @see https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenter {
 
-    const PUBLIC_METHODS = ReflectionMethod::IS_PUBLIC;
-    const PUBLIC_PROPERTIES = ReflectionProperty::IS_PUBLIC;
+    const BRANCH_CLASS   = 'class';
+    const BRANCH_CONST   = 'constants';
+    const BRANCH_PROPS   = 'properties';
+    const BRANCH_METHODS = 'methods';
+
+    /** @var array $tree Stores SimpleDocumenterTags, after parsing. */
+    private $tree = array(             # After parsing, values become:
+        self::BRANCH_CLASS   => NULL,    # A SimpleDocumenterTag
+        self::BRANCH_METHODS => array(), # Zero or more SimpleDocumenterTags
+        self::BRANCH_PROPS   => array(), # Zero or more SimpleDocumenterTags
+        self::BRANCH_CONST   => array()  # Zero or more SimpleDocumenterTags
+        );
+
+    
+    /** @var string $startsWithTag Regexp for matching tag names */
+    private $startsWithTag = NULL;
+
+    /** @var array $commentTrims Regexps that trim doc comments */
+    private static $commentTrims = array(
+        '/^[[:space:]]*\/\*\*[[:space:]]*/',
+        '/^[[:space:]]*\*\/[[:space:]]*$/',
+        '/^[[:space:]]*\/\*\*$/',
+        '/\*\/[[:space:]]*$/'
+        );
 
     /** @var array $tags Phpdoc tags. */
     private static $tags = array(
-        '@package',
-        '@author',
-        '@version',
-        '@var',
-        '@see',
-        '@example',
-        '@param',
-        '@return',
-        '@throws',
-        '@access',
+        '@access', '@author', '@const', '@example', '@package', 
+        '@param', '@return', '@see', '@throws', '@var', '@version'
         );
-
-    /** @var array $tree Doc comments parse tree */
-    private $tree = array(
-        'properties' => array(),
-        'constants'  => array(),
-        'methods'    => array(),
-        'class'      => array(),
-        );
-
-    /** @var string $class The class to introspect. */
-    private $class = NULL;
-
-    /** @var ReflectionClass $refl Helps in parsing. */
-    private $refl = NULL;
 
 
     ////////////////////////////////////////////////////////////////
@@ -56,64 +56,78 @@ class SimpleDocumenter {
      *     print "Public method Foo::{$name}\n";
      * }
      *
-     * @param string $class A class name.
+     * @param string|NULL $class If a class name is provided, then that class
+     *                           is parsed upon construction. Default: NULL.
+     * @throws ErrorException If given a class that doesn't exist in memory.
      * @return SimpleDocumenter
-     * @throws InvalidArgumentException If $class isn't loaded in memory.
      */
-    public function __construct($class) {
-        $this->class = (string) $class;
+    public function __construct($class = NULL) {
+        $class = (string) $class;
 
-        if (!class_exists($this->class)) {
-            $e = "Class `{$this->class}` doesn't exist";
-            throw new InvalidArgumentException($e);
+        // Matches a tag at the beginning of a line.
+        $this->startsWithTag = '/^(' . implode('|', self::$tags) . ')(\s|)/';
+
+        if (!empty($class)) {
+            // A couple simple-minded guesses to include it.
+            $ext = array('.php', '.class.php');
+            while (!class_exists($class) && count($ext)) {
+                @include $class . array_shift($ext);
+            }
+            // If it still doesn't exist, parsing cannot proceed.
+            if (!class_exists($class)) {
+                throw new ErrorException("Class `$class` doesn't exist");
+            }
+            $this->parseClass(new ReflectionClass($class));
         }
-
-        $this->refl = new ReflectionClass($this->class);
-        $this->parse();
     }
 
-    /** @return string The class being introspected. */
-    public function className() { return $this->class; }
+    /** @return SimpleDocumenterTag[] Zero or more SimpleDocumenterTags. */
+    public function constantTags() { return $this->tree[self::BRANCH_CONST]; }
 
-    /**
-     * @param string $tag A tag name.
-     * @param bool $first Optionally request only the first array entry.
-     * @return array|string Either an array of entries, or only the first one.
+    /** 
+     * @param string $name A class name.
+     * @param string $tag A doc comment tag name.
+     * @param bool $first TRUE to return the first SimpleDocumenterTag in
+     *                    the array for $tag, or FALSE for all of them.
+     * @return SimpleDocumenterTag|SimpleDocumenterTag[] 
      */
-    public function classTag($tag, $first = FALSE) {
-        $entry = $this->parseNode($this->tree['class'], $tag);
-        return $first && count($entry) ? $entry[0] : $entry;
+    public function classTags($name, $tag, $first = FALSE) {
+        $node = $this->node(self::BRANCH_CLASS, $name);
+        return $this->tags($node, $tag, $first);
     }
 
-    /** @return array Pairs of (constant name => constant value). */
-    public function getConstants() { return $this->tree['constants']; }
+    /** @return string[] The property names from the parsed class. */
+    public function propertyNames() {
+        return array_keys($this->tree[self::BRANCH_PROPS]);
+    }
 
-    /** @return string[] Property names per ReflectionClass::getProperties(). */
-    public function propertyNames() { return $this->sortedNames('properties'); }
-
-    /**
-     * @param string $name A property name (without the leading '$').
-     * @param string $tag A tag name.
-     * @param bool $first Optionally request only the first array entry.
-     * @return array|string Either an array of entries, or only the first one.
+    /** 
+     * @param string $name A property name.
+     * @param string $tag A doc comment tag name.
+     * @param bool $first TRUE to return the first SimpleDocumenterTag in
+     *                    the array for $tag, or FALSE for all of them.
+     * @return SimpleDocumenterTag|SimpleDocumenterTag[] 
      */
-    public function propertyTag($name, $tag, $first = FALSE) {
-        $entry = $this->parseNode($this->node('properties', $name), $tag, $name);
-        return $first && count($entry) ? $entry[0] : $entry;
+    public function propertyTags($name, $tag, $first = FALSE) {
+        $node = $this->node(self::BRANCH_PROPS, $name);
+        return $this->tags($node, $tag, $first);
     }
 
-    /** @return string[] Property names per ReflectionClass::getMethods(). */
-    public function methodNames() { return $this->sortedNames('methods'); }
+    /** @return string[] The method names from the parsed class. */
+    public function methodNames() {
+        return array_keys($this->tree[self::BRANCH_METHODS]);
+    }
 
-    /**
+    /** 
      * @param string $name A method name.
-     * @param string $tag A tag name.
-     * @param bool $first Optionally request only the first array entry.
-     * @return array|string Either an array of entries, or only the first one.
+     * @param string $tag A doc comment tag name.
+     * @param bool $first TRUE to return the first SimpleDocumenterTag in
+     *                    the array for $tag, or FALSE for all of them.
+     * @return SimpleDocumenterTag|SimpleDocumenterTag[] 
      */
-    public function methodTag($name, $tag, $first = FALSE) {
-        $entry = $this->parseNode($this->node('methods', $name), $tag, $name);
-        return $first && count($entry) ? $entry[0] : $entry;
+    public function methodTags($name, $tag, $first = FALSE) {
+        $node = $this->node(self::BRANCH_METHODS, $name);
+        return $this->tags($node, $tag, $first);
     }
 
 
@@ -122,143 +136,111 @@ class SimpleDocumenter {
     ////////////////////////////////////////////////////////////////
 
     /**
-     * Side-effect only, on $this->tree.
-     * Parse all doc comments, and return parsed data structure.
-     * @return void
+     * Side-effects only, on $this->tree.
+     * @param ReflectionClass $refl Instance of ReflectionClass.
+     * @return SimpleDocumenter Returns $this.
      */
-    private function parse() {
-        $refl = $this->refl;
+    public function parseClass($refl) {
+        $this->reflectToTags($refl, &$this->tree[self::BRANCH_CLASS]);
 
-        $this->parseDocComment($this->tree['class'], $refl->getDocComment());
+        foreach ($refl->getProperties() as $_) {
+            $this->reflectToTags($_, &$this->tree[self::BRANCH_PROPS]);
+        }
+
+        foreach ($refl->getMethods() as $_) {
+            $this->reflectToTags($_, &$this->tree[self::BRANCH_METHODS]);
+        }
 
         foreach ($refl->getConstants() as $name => $value) {
-            $this->tree['constants'][$name] = $value;
+            $simpDocTag = new SimpleDocumenterTag(array(
+                'tag'   => '@const',
+                'name'  => $name,
+                'value' => $value
+            ));
+            $this->tree[self::BRANCH_CONST][] = $simpDocTag;
         }
 
-        $config = array(
-            'properties' => array(self::PUBLIC_PROPERTIES, 'getProperties'),
-            'methods'    => array(self::PUBLIC_METHODS,    'getMethods')
-            );
-
-        foreach ($config as $nodeName => $entry) {
-            list($filter, $method) = $entry;
-            foreach ($refl->$method($filter) as $obj) {
-                $this->tree[$nodeName][$obj->name] = NULL;
-                $_ = &$this->tree[$nodeName][$obj->name];
-                $this->parseDocComment($_, $obj->getDocComment(), $obj->name);
-            }
-        }
+        return $this;
     }
 
     /**
-     * Side-effect only, on &$node reference.
-     * @param array &$node A parse tree node.
-     * @param string $comment A doc comment.
-     * @param string $name|NULL Optional ReflectionClass object name.
+     * Side-effect on $this->tree. 
+     * Parse a single doc comment into SimpleDocumenterTags, and store them.
+     *
+     * @param object $reflector A ReflectionX object.
+     * @param array $branch A branch of the SimpleDocumenterTag object tree.
      * @return void
      */
-    private function parseDocComment(&$node, $comment, $name = NULL) {
-        $tags = array_merge(self::$tags, array('@note'));
-        $node = array_combine($tags, array_fill(0, count($tags), array()));
+    private function reflectToTags($reflector, $branch) {
+        $comment = $reflector->getDocComment();
 
-        if (!$comment) { return $node; }
-
-        // Remove leading "/**" and trailing "*/", and split into lines.
-        $bounds = array(
-            '/^[[:space:]]*\/\*\*[[:space:]]*/',
-            '/^[[:space:]]*\*\/[[:space:]]*$/',
-            '/^[[:space:]]*\/\*\*$/',
-            '/\*\/[[:space:]]*$/'
-            );
-        $comment = preg_replace($bounds, '', $comment);
-        $lines = preg_split('/[\r\n]/', $comment);
-
-        // Matches a tag at the beginning of a line.
-        $tagRegex = '/^(' . implode('|', self::$tags) . ')(\s|)/';
+        if (!$comment) {
+            return; 
+        }
 
         // Parse state defaults.
-        list($idx, $tag) = array(0, '@note');
+        $keys = array_merge(self::$tags, array('@note'));
+        $values = array_fill(0, count($keys), array());
+        $tagObjs = array_combine($keys, $values);
+        list($idx, $tag, $objCount) = array(0, '@note', 0);
 
-        foreach ($lines as &$_) {
-            // Remove leading whitespace, any leading "*" or "* ".
+        // Trim and split comment; most parsing is done per-line.
+        $comment = preg_replace(self::$commentTrims, '', $comment);
+        $lines = preg_split('/[\r\n]/', $comment);
+
+        while (count($lines)) {
+            $_ = array_shift($lines);
+
+            // Trim line.
             $_ = preg_replace('/^[[:blank:]]*\*([[:blank:]]|)/', '', $_);
-            // Remove trailing spaces.
             $_ = preg_replace('/[[:space:]]*$/', '', $_);
 
-            // Entering a new tag?
-            if (!empty($_) && preg_match($tagRegex, $_, $match)) {
-                $tag = $match[1];
-                $idx = count($node[$tag]);
-                $_ = preg_replace($tagRegex, '', $_);
-            }
-
-            // The cursor is either positioned inside of a multi-line tag, or
-            // the current line is the first line for a new occurrence of $tag.
-            // Initialize or re-establish "\n" from preg_split(), accordingly.
-            if (!isset($node[$tag][$idx])) { $node[$tag][$idx] = ''; }
-            elseif (strlen($node[$tag][$idx])) { $_ = "\n$_"; }
-
-            // Append to current tag.
-            $node[$tag][$idx] .= $_;
-        }
-    }
-
-    /**
-     * @param array &$node A parse tree node.
-     * @param string $tag A tag name.
-     * @param string $name|NULL ReflectionClass object name, or NULL.
-     * @return array A list of tag entries.
-     */
-    private function parseNode(&$node, $tag, $name = NULL) {
-        // A commentless property can be made to look 
-        // as if it had a doc comment like "@var $name".
-        $tag == '@var' and $this->guaranteeMinimalVar($node, $name);
-
-        // Parse tag into (type, name, note).
-        $triplet = function($text) use ($name, $tag) {
-            $patterns = array(
-                '/^\s*([\w\|\[\]]+)\s+(\&?\$\w+)\s?(.*)/s' => function($m) {
-                    return array($m[1], $m[2], $m[3]);
-                },
-                '/^\s*([\w\|\[\]]+)\s?(.*)/s' => function($m) {
-                    return array($m[1], NULL, $m[2]);
-                },
-                '/^\s*(\$\w+)\s?(.*)/s' => function($m) {
-                    return array(NULL, $m[1], $m[2]);
-                });
-
-            list($type, $var, $note) = array(NULL, NULL, NULL);
-            foreach ($patterns as $pattern => $lister) {
-                if (preg_match($pattern, $text, $match)) { 
-                    list($type, $var, $note) = $lister($match);
-                    if ($tag == '@var' && !$var) { $var = "\$$name"; }
-                    break;
+            // Entering a new occurrence of a tag:
+            if (preg_match($this->startsWithTag, $_, $match)) {
+                if (isset($tagObjs[$tag][$idx])) {
+                    $simpDocTag = $tagObjs[$tag][$idx];
+                    $simpDocTag->analyzeText();
                 }
+                $tag = $match[1];
+                $idx = count($tagObjs[$tag]);
+                $_ = preg_replace($this->startsWithTag, '', $_);
             }
-            return array($type, $var, $note);
-        };
-        // Parse tag into (type, note).
-        $pair = function($text) use ($triplet) {
-            list($type, $var, $note) = $triplet($text);
-            return array($type, $note);
-        };
-        // Return the given text.
-        $identity = function($text) { return $text; };
 
-        // Complex tags require complex parsing. All others use $identity().
-        $config = array(
-            '@param'  => $triplet,
-            '@var'    => $triplet,
-            '@return' => $pair, 
-            '@throws' => $pair
-            );
+            if (!isset($tagObjs[$tag][$idx])) { 
+                $tagObjs[$tag][$idx] = new SimpleDocumenterTag(array(
+                    'refl' => $reflector,
+                    'tag'  => $tag,
+                    'text' => NULL
+                ));
+                $objCount += 1;
+            }
+            elseif (strlen($tagObjs[$tag][$idx]->text())) {
+                $_ = "\n$_"; // Replace horz. space from preg_split.
+            }
 
-        $list = array();
-        foreach ($node[$tag] as $text) {
-            $parser = isset($config[$tag]) ? $config[$tag] : $identity;
-            $list[] = $parser($text);
+            $tagObjs[$tag][$idx]->appendText($_);
+            count($lines) < 2 and $tagObjs[$tag][$idx]->analyzeText();
         }
-        return $list;
+
+        $isProp = $reflector instanceof ReflectionProperty;
+        $nodeName = ($isProp ? '$' : '') . $reflector->name;
+
+        // Special magic to make it so that if a class property
+        // has a doc comment, but is missing the @var entry, here
+        // it is made to look like it had "@var $PropertyName".
+        $noVar = !count($tagObjs['@var']) || !$tagObjs['@var'][0]->name();
+        if ($isProp && $noVar) {
+            $tagObjs['@var'][0] = new SimpleDocumenterTag(array(
+                'refl' => $reflector,
+                'tag'  => '@var',
+                'text' => $nodeName,
+                'name' => $nodeName,
+            ));
+            $objCount += 1;
+        }
+
+        // Store the node if the doc comment had at least one tag in it.
+        $objCount and $branch[$nodeName] = $tagObjs;
     }
 
 
@@ -267,41 +249,142 @@ class SimpleDocumenter {
     ////////////////////////////////////////////////////////////////
 
     /**
-     * @param string $nodeName A tree node name, e.g. 'methods'.
-     * @param string $name ReflectionClass object name.
-     * @throws InvalidArgumentException If ($nodeName, $name) don't locate a node.
-     * @return array Parsed doc comment data structure.
+     * @param string $branchName A SimplerDocumenterTag tree branch name.
+     * @param string $nodeName The name of node within a tree branch.
+     * @return array The SimpleDocumenterTags stored in the specified node.
+     * @throws InvalidArgumentException If the specified node can't be found.
      */
-    private function node($nodeName, $name) {
-        if (!isset($this->tree[$nodeName])) {
-            throw new InvalidArgumentException("No root `$nodeName`");
+    private function node($branchName, $nodeName) {
+        if (!isset($this->tree[$branchName][$nodeName])) {
+            throw new InvalidArgumentException("No $branchName `$nodeName`");
         }
-        if (!isset($this->tree[$nodeName][$name])) {
-            $e = "No `$name` in parse tree, under `$nodeName`";
-            throw new InvalidArgumentException($e);
+        return $this->tree[$branchName][$nodeName];
+    }
+
+    /** 
+     * @param array $node A tree node containing SimpleDocumenterTags.
+     * @param string $tag A tag name.
+     * @param bool $first TRUE to return only the first SimpleDocumenterTag
+     *                    found at $node for $tag, or FALSE for all of them.
+     * @return SimpleDocumenterTag|SimpleDocumenterTag[] One or all.
+     */
+    private function tags($node, $tag, $first = FALSE) {
+        if (!in_array($tag, array_merge(self::$tags, array('@note')))) {
+            throw new InvalidArgumentException("No tag `$tag`");
         }
-        return $this->tree[$nodeName][$name];
+
+        // Zero or more SimpleDocumenterTags.
+        $objs = !empty($node) && isset($node[$tag]) ? $node[$tag] : array();
+
+        // Type guarantee: ensure a SimpleDocumenterTag 
+        // is returned, if a single object was requested.
+        if ($first && empty($objs)) {
+             $objs[] = new SimpleDocumenterTag(array('tag' => $tag));
+        }
+
+        return $first ? array_shift($objs) : $objs;
+    }
+}
+
+/**
+ * Express a single doc comment tag as an object.
+ *
+ * @author Joel Dalley
+ * @version 2015/Mar/05
+ * @see https://github.com/joeldalley/php-SimpleDocumenter
+ */
+class SimpleDocumenterTag {
+
+    /** @var array $fields Object fields. */
+    private $fields = array(
+        'refl'  => NULL, 
+        'tag'   => '',
+        'text'  => '',
+        'name'  => '',
+        'value' => '',
+        'type'  => '',
+        'note'  => '',
+        );
+
+    /**
+     * Constructor.
+     * @param array $pairs Pairs of (field name => value).
+     * @return SimpleDocumenterTag 
+     */
+    public function __construct($pairs) {
+        foreach ($pairs as $key => $value) {
+            if (array_key_exists($key, $this->fields)) {
+                $this->fields[$key] = $value;
+            }
+        }
     }
 
     /**
-     * @param string $nodeName A tree node name, e.g. 'methods'.
-     * @return array Sorted array of ReflectionClass object names.
+     * @param string $fieldOrMethod An object field name or method name.
+     * @param array|NULL $args Optional arguments array (if calling a method).
+     * @return mixed One of: the object field value, the method return value,
+     *                       or NULL, depending on caller arguments.
      */
-    private function sortedNames($nodeName) {
-        $names = array_keys($this->tree[$nodeName]);
-        sort($names);
-        return $names;
+    public function __call($fieldOrMethod, $args = array()) {
+        if (array_key_exists($fieldOrMethod, $this->fields)) {
+            if (count($args) == 1) {
+                $this->fields[$fieldOrMethod] = array_shift($args);
+            }
+            return $this->fields[$fieldOrMethod];
+        }
+        try { 
+            $callable = array($this->refl(), $fieldOrMethod);
+            return call_user_func_array($fieldOrMethod, $args);
+        }
+        catch(Exception $e) { 
+            return NULL;
+        }
     }
 
-    /**
-     * Side-effect only, on &$node reference.
-     * @param array &$node A parse tree node.
-     * @param string $name ReflectionClass object name.
+    /** @return string The object's text field value */
+    public function __toString() { return (string) $this->text(); }
+
+    /** 
+     * @param string $text Text to append to the text field value.
      * @return void
      */
-    private function guaranteeMinimalVar(&$node, $name) {
-        $empty = !count($node['@var']) || 
-                 (count($node['@var']) == 1 && empty($node['@var'][0]));
-        $empty and $node['@var'] = array("\$$name");
+    public function appendText($text) { $this->fields['text'] .= $text; }
+ 
+    /**
+     * Side-effect on object's properties, per the analysis.
+     * Analyze the object's text, looking for pieces within certain tags.
+     * For instance, @param might have a type, a name and a descriptive note.
+     * @return void
+     */
+    public function analyzeText() {
+        $config = array('@param', '@var', '@return', '@throws');
+        $text = $this->text();
+
+        if (is_null($text) || !in_array($this->tag(), $config)) {
+            return;
+        }
+
+        // Try to find (type, name, note), from tag text.
+        $patterns = array(
+            '/^\s*([\w\|\[\]]+)\s+(\&?\$\w+)\s?(.*)/s' => function($m) {
+                return array($m[1], $m[2], $m[3]);
+            },
+            '/^\s*([\w\|\[\]]+)\s?(.*)/s' => function($m) {
+                return array($m[1], NULL, $m[2]);
+            },
+            '/^\s*(\&?\$\w+)\s?(.*)/s' => function($m) {
+                return array(NULL, $m[1], $m[2]);
+            });
+
+        foreach ($patterns as $pat => $sub) {
+            if (preg_match($pat, $text, $match)) {
+                // Matched: set object properties, and stop.
+                list($type, $name, $note) = $sub($match);
+                $this->type($type);
+                $this->name($name);
+                $this->note($note);
+                return;
+            }
+        }
     }
 }

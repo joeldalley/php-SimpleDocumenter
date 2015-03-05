@@ -125,6 +125,7 @@
         letter-spacing:0.1em;
         border-radius:2px;
         color:#183691;
+        margin-right:6px;
       }
       div.method-sig span.function { color:#A71D5D; }
 
@@ -173,10 +174,7 @@
       }
       div.property div.type { float:left; }
       div.property div.name { float:left;font-weight:bold; }
-      div.property div.var { 
-          padding:6px 0 6px 0;
-          background-color:#eee;
-      }
+
       div.property div.var { 
           border-radius:3px 3px 0 0;
           background-color:#A3D6F5; 
@@ -214,7 +212,8 @@
     </style>
   </head>
   <body>
-    <h1>SimpleDocumenter API</h1>
+    <h1>
+      <span style="color:#ddd">Class ::</span> SimpleDocumenter</h1>
     <div class="body">
       <h2 style="margin-top:0">Tags</h2>
       <div class="class-tag" style="display:">
@@ -230,25 +229,85 @@
       </div>
       <div class="class-tag" style="display:">
         <div class="tag">@version</div>
-        <div class="value">2015/Feb/28</div>
+        <div class="value">2015/Mar/05</div>
         <div class="clear"></div>
       </div>
       <div style="display:"><h2>Constants</h2><div class="constant">
-  <span class="name">PUBLIC_METHODS</span> = <span class="value">256</span>
-</div>
-<div class="constant">
-  <span class="name">PUBLIC_PROPERTIES</span> = <span class="value">256</span>
-</div>
-</div>
-      <div style="display:none"><h2>Properties</h2></div>
+  <span class="name">BRANCH_CLASS</span> = <span class="value">class</span>
+</div><div class="constant">
+  <span class="name">BRANCH_CONST</span> = <span class="value">constants</span>
+</div><div class="constant">
+  <span class="name">BRANCH_PROPS</span> = <span class="value">properties</span>
+</div><div class="constant">
+  <span class="name">BRANCH_METHODS</span> = <span class="value">methods</span>
+</div></div>
+      <div style="display:"><h2>Properties</h2><div class="property">
+  <div class="var">
+    <div style="display:" class="type">array</div>
+    <div class="name">$tree</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Stores SimpleDocumenterTags, after parsing.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div style="display:" class="type">string</div>
+    <div class="name">$startsWithTag</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Regexp for matching tag names</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div style="display:" class="type">array</div>
+    <div class="name">$commentTrims</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Regexps that trim doc comments</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div style="display:" class="type">array</div>
+    <div class="name">$tags</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Phpdoc tags.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div></div>
       <div style="display:"><h2>Methods</h2><div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">__construct</span>(<span style="display:"
-      class="param-type">string</span><span
-      style="display:"
-      class="param-name"> $class</span>)
+      <span class="name">__construct</span>(<span style="display:" class="param-type">string|NULL</span><span
+      style="display:" class="param-name">$class</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">SimpleDocumenter</span>
@@ -264,9 +323,10 @@
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div style="display:" class="type">string</div>
+  <div style="display:" class="type">string|NULL</div>
   <div style="display:" class="name">$class</div>
-  <div class="note">A class name.</div>
+  <div class="note">If a class name is provided, then that class
+                          is parsed upon construction. Default: NULL.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:"><div class="example-tag">
@@ -283,9 +343,8 @@ foreach ($simple-&gt;methodNames() as $name) {
 </div></div>
     <div class="method-tagset" style="display:"><div class="method-tag">
   <div class="tag">@throws</div> 
-  <div class="type">InvalidArgumentException</div>
-  <div class="note">If $class isn't loaded in memory.
-</div>
+  <div class="type">ErrorException</div>
+  <div class="note">If given a class that doesn't exist in memory.</div>
   <div class="clear"></div>
 </div></div>
   </div>
@@ -296,15 +355,14 @@ foreach ($simple-&gt;methodNames() as $name) {
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
-</div>
-<div class="method">
+</div><div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">className</span>()
+      <span class="name">constantTags</span>()
     </div>
     <div class="return" style="display:">
-      return <span class="return-type">string</span>
+      return <span class="return-type">SimpleDocumenterTag[]</span>
     </div>
     <div class="clear"></div>
   </div>
@@ -320,135 +378,22 @@ foreach ($simple-&gt;methodNames() as $name) {
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
-    <div class="type">string</div>
-    <div class="note">The class being introspected.</div>
+    <div class="type">SimpleDocumenterTag[]</div>
+    <div class="note">Zero or more SimpleDocumenterTags.</div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
-</div>
-<div class="method">
+</div><div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">classTag</span>(<span style="display:"
-      class="param-type">string</span><span
-      style="display:"
-      class="param-name"> $tag</span>, <span style="display:"
-      class="param-type">bool</span><span
-      style="display:"
-      class="param-name"> $first</span>)
+      <span class="name">classTags</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$name</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$tag</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$first</span>)
     </div>
     <div class="return" style="display:">
-      return <span class="return-type">array|string</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">string</div>
-  <div style="display:" class="name">$tag</div>
-  <div class="note">A tag name.</div>
-  <div class="clear"></div>
-</div><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">bool</div>
-  <div style="display:" class="name">$first</div>
-  <div class="note">Optionally request only the first array entry.</div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">array|string</div>
-    <div class="note">Either an array of entries, or only the first one.
-</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div>
-<div class="method">
-  <div class="method-sig">
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">getConstants</span>()
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">array</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">array</div>
-    <div class="note">Pairs of (constant name => constant value).</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div>
-<div class="method">
-  <div class="method-sig">
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">methodNames</span>()
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">string[]</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">string[]</div>
-    <div class="note">Property names per ReflectionClass::getMethods().</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div>
-<div class="method">
-  <div class="method-sig">
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">methodTag</span>(<span style="display:"
-      class="param-type">string</span><span
-      style="display:"
-      class="param-name"> $name</span>, <span style="display:"
-      class="param-type">string</span><span
-      style="display:"
-      class="param-name"> $tag</span>, <span style="display:"
-      class="param-type">bool</span><span
-      style="display:"
-      class="param-name"> $first</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">array|string</span>
+      return <span class="return-type">SimpleDocumenterTag|SimpleDocumenterTag[]</span>
     </div>
     <div class="clear"></div>
   </div>
@@ -462,19 +407,20 @@ foreach ($simple-&gt;methodNames() as $name) {
   <div class="tag">@param</div> 
   <div style="display:" class="type">string</div>
   <div style="display:" class="name">$name</div>
-  <div class="note">A method name.</div>
+  <div class="note">A class name.</div>
   <div class="clear"></div>
 </div><div class="param-tag">
   <div class="tag">@param</div> 
   <div style="display:" class="type">string</div>
   <div style="display:" class="name">$tag</div>
-  <div class="note">A tag name.</div>
+  <div class="note">A doc comment tag name.</div>
   <div class="clear"></div>
 </div><div class="param-tag">
   <div class="tag">@param</div> 
   <div style="display:" class="type">bool</div>
   <div style="display:" class="name">$first</div>
-  <div class="note">Optionally request only the first array entry.</div>
+  <div class="note">TRUE to return the first SimpleDocumenterTag in
+                   the array for $tag, or FALSE for all of them.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -482,14 +428,12 @@ foreach ($simple-&gt;methodNames() as $name) {
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
-    <div class="type">array|string</div>
-    <div class="note">Either an array of entries, or only the first one.
-</div>
+    <div class="type">SimpleDocumenterTag|SimpleDocumenterTag[]</div>
+    <div class="note"></div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
-</div>
-<div class="method">
+</div><div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
@@ -513,28 +457,21 @@ foreach ($simple-&gt;methodNames() as $name) {
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
     <div class="type">string[]</div>
-    <div class="note">Property names per ReflectionClass::getProperties().</div>
+    <div class="note">The property names from the parsed class.</div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
-</div>
-<div class="method">
+</div><div class="method">
   <div class="method-sig">
     <div class="function">
       <span class="function">function</span>
-      <span class="name">propertyTag</span>(<span style="display:"
-      class="param-type">string</span><span
-      style="display:"
-      class="param-name"> $name</span>, <span style="display:"
-      class="param-type">string</span><span
-      style="display:"
-      class="param-name"> $tag</span>, <span style="display:"
-      class="param-type">bool</span><span
-      style="display:"
-      class="param-name"> $first</span>)
+      <span class="name">propertyTags</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$name</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$tag</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$first</span>)
     </div>
     <div class="return" style="display:">
-      return <span class="return-type">array|string</span>
+      return <span class="return-type">SimpleDocumenterTag|SimpleDocumenterTag[]</span>
     </div>
     <div class="clear"></div>
   </div>
@@ -548,7 +485,263 @@ foreach ($simple-&gt;methodNames() as $name) {
   <div class="tag">@param</div> 
   <div style="display:" class="type">string</div>
   <div style="display:" class="name">$name</div>
-  <div class="note">A property name (without the leading '$').</div>
+  <div class="note">A property name.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$tag</div>
+  <div class="note">A doc comment tag name.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$first</div>
+  <div class="note">TRUE to return the first SimpleDocumenterTag in
+                   the array for $tag, or FALSE for all of them.</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">SimpleDocumenterTag|SimpleDocumenterTag[]</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">methodNames</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">string[]</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">string[]</div>
+    <div class="note">The method names from the parsed class.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">methodTags</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$name</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$tag</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$first</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">SimpleDocumenterTag|SimpleDocumenterTag[]</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$name</div>
+  <div class="note">A method name.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$tag</div>
+  <div class="note">A doc comment tag name.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$first</div>
+  <div class="note">TRUE to return the first SimpleDocumenterTag in
+                   the array for $tag, or FALSE for all of them.</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">SimpleDocumenterTag|SimpleDocumenterTag[]</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">parseClass</span>(<span style="display:" class="param-type">ReflectionClass</span><span
+      style="display:" class="param-name">$refl</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">SimpleDocumenter</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Side-effects only, on $this->tree.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">ReflectionClass</div>
+  <div style="display:" class="name">$refl</div>
+  <div class="note">Instance of ReflectionClass.</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">SimpleDocumenter</div>
+    <div class="note">Returns $this.
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">reflectToTags</span>(<span style="display:" class="param-type">object</span><span
+      style="display:" class="param-name">$reflector</span>, <span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$branch</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Side-effect on $this->tree.
+Parse a single doc comment into SimpleDocumenterTags, and store them.
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">object</div>
+  <div style="display:" class="name">$reflector</div>
+  <div class="note">A ReflectionX object.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$branch</div>
+  <div class="note">A branch of the SimpleDocumenterTag object tree.</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">node</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$branchName</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$nodeName</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">array</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$branchName</div>
+  <div class="note">A SimplerDocumenterTag tree branch name.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$nodeName</div>
+  <div class="note">The name of node within a tree branch.</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:"><div class="method-tag">
+  <div class="tag">@throws</div> 
+  <div class="type">InvalidArgumentException</div>
+  <div class="note">If the specified node can't be found.
+</div>
+  <div class="clear"></div>
+</div></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">array</div>
+    <div class="note">The SimpleDocumenterTags stored in the specified node.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">tags</span>(<span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$node</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$tag</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$first</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">SimpleDocumenterTag|SimpleDocumenterTag[]</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$node</div>
+  <div class="note">A tree node containing SimpleDocumenterTags.</div>
   <div class="clear"></div>
 </div><div class="param-tag">
   <div class="tag">@param</div> 
@@ -560,7 +753,8 @@ foreach ($simple-&gt;methodNames() as $name) {
   <div class="tag">@param</div> 
   <div style="display:" class="type">bool</div>
   <div style="display:" class="name">$first</div>
-  <div class="note">Optionally request only the first array entry.</div>
+  <div class="note">TRUE to return only the first SimpleDocumenterTag
+                   found at $node for $tag, or FALSE for all of them.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -568,14 +762,13 @@ foreach ($simple-&gt;methodNames() as $name) {
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
-    <div class="type">array|string</div>
-    <div class="note">Either an array of entries, or only the first one.
+    <div class="type">SimpleDocumenterTag|SimpleDocumenterTag[]</div>
+    <div class="note">One or all.
 </div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
-</div>
-</div>
+</div></div>
     </div>
   </body>
 </html>

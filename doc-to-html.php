@@ -24,109 +24,145 @@ foreach ($config as $class => $file) {
     }
 }
 
-function reflect($class) {
-    $simple = new SimpleDocumenter($class);
+function reflect($className) {
+    $simple = new SimpleDocumenter($className);
 
-    $note = $simple->classTags($class, '@note');
-    $author = $simple->classTags($class, '@author');
-    $version = $simple->classTags($class, '@version', TRUE);
-    $constants = $simple->constantTags();
-    $propNames = $simple->propertyNames();
-    $methodNames = $simple->methodNames();
+    $hasVarTag = function($node) {
+        $list = $node->tagList('@var');
+        return (bool) $list->first();
+    };
 
+    $classNode = $simple->classNode();
+    $constantNodes = $simple->constantNodes();
+    $propertyNodes = $simple->propertyNodes();
+    $methodNodes = $simple->methodNodes();
+
+    $constHtml = '';
+    foreach ($constantNodes as $name => $node) {
+        $const = $node->tagList('@const')->first();
+        $constHtml .= template('constant', array(
+            '{name}'  => $const ? $const->name : '',
+            '{value}' => $const ? $const->value : ''
+        ));
+    }
+
+    $propsHtml = '';
+    foreach ($propertyNodes as $name => $node) {
+        $var = $node->tagList('@var')->first();
+        $refl = $node->reflector();
+ 
+        // Skip class properties that don't have a @var tag.
+        if ($var) {
+            $exmplHtml = '';
+            foreach ($node->tagList('@example') as $exmpl) {
+                $exmplHtml .= template('example', array(
+                    '{note}' => htmlentities("$exmpl")
+                ));
+            }
+
+            // A little help here for a @var tag that didn't
+            // name the variable; the node's ReflectionProperty
+            // object has the property's name, and we prepend "$".
+            $var->name or $var->name = "\${$refl->name}";
+
+            $propsHtml .= template('property', array(
+                '{icon}'         => icon($refl),
+                '{show-note}'    => show($var->note),
+                '{note}'         => $var->note,
+                '{show-type}'    => show($var->type),
+                '{type}'         => $var->type,
+                '{name}'         => $var->name,
+                '{show-tagsets}' => show($exmplHtml),
+                '{show-example}' => show($exmplHtml),
+                '{example}'      => $exmplHtml
+            ));
+        }
+     }
+
+    $methodsHtml = '';
+    foreach ($methodNodes as $name => $node) {
+        $sigHtml = '';
+        foreach ($node->tagList('@param') as $param) {
+            $sigHtml .= ($sigHtml ? ', ' : '');
+            $sigHtml .= template('sig-param', array(
+                '{show-type}' => show($param->type),
+                '{type}'      => $param->type,
+                '{show-name}' => show($param->name),
+                '{name}'      => $param->name,
+                '{note}'      => $param->note
+            ));
+        }
+ 
+        $throwsHtml = '';
+        foreach ($node->tagList('@throws') as $throws) {
+            $throwsHtml .= template('throws', array(
+                '{type}' => $throws->type,
+                '{note}' => htmlentities($throws->note)
+            ));
+        }
+
+        $exmplHtml = '';
+        foreach ($node->tagList('@example') as $exmpl) {
+            $exmplHtml .= template('example', array(
+                '{note}' => htmlentities("$exmpl")
+            ));
+        }
+
+        $paramHtml = '';
+        foreach ($node->tagList('@param') as $param) {
+            $paramHtml .= template('param', array(
+                '{show-name}' => show($param->name),
+                '{name}'      => $param->name,
+                '{show-type}' => show($param->type),
+                '{type}'      => $param->type,
+                '{note}'      => htmlentities($param->note)
+            ));
+        }
+
+        $note = $node->tagList('@note')->first();
+        $return = $node->tagList('@return')->first();
+        $methodsHtml .= template('method', array(
+            '{icon}'         => icon($node->reflector()),
+            '{name}'         => $name,
+            '{show-note}'    => show($note && "$note"),
+            '{note}'         => $note ? "$note" : '',
+            '{show-return}'  => show($return && "$return"),
+            '{type}'         => $return ? $return->type : '',
+            '{return-note}'  => $return ? $return->note : '',
+            '{show-tagsets}' => show($throwsHtml || $exmplHtml || $paramHtml),
+            '{show-params}'  => show($paramHtml),
+            '{params}'       => $paramHtml,
+            '{show-example}' => show($exmplHtml),
+            '{example}'      => $exmplHtml,
+            '{show-throws}'  => show($throwsHtml),
+            '{throws}'       => $throwsHtml,
+            '{sig}'          => $sigHtml
+        ));
+    }
+
+    $note = $classNode->tagList('@note')->first();
+    $version = $classNode->tagList('@version')->first();
+    $authors = $classNode->tagList('@author')->join(', ');
+    $show = ($note && "$note") || ($version && "$version") || $authors;
     return template('page', array(
-        '{title}'        => "Class {class} Documentation",
-        '{class}'        => $class,
-        '{show-version}' => show("$version"),
-        '{version}'      => "$version",
-        '{show-author}'  => show($author),
-        '{author}'       => implode(', ', $author),
-        '{show-note}'    => show($note),
-        '{note}'         => implode(', ', $note),
-
-        '{show-props}' => show($propNames),
-        '{props}'      => implode('', array_map(function($_) use ($simple) {
-            $var = $simple->propertyTags($_, '@var', TRUE);
-            $exmpls = $simple->propertyTags($_, '@example');
-            return template('property', array(
-                '{show-note}'    => show($var->note()),
-                '{note}'         => $var->note(),
-                '{show-type}'    => show($var->type()),
-                '{type}'         => $var->type(),
-                '{name}'         => $var->name(),
-                '{show-tagsets}' => show($exmpls),
-                '{show-example}' => show($exmpls),
-                '{example}'      => implode('', array_map(function($_) {
-                    return template('example', array(
-                        '{note}' => htmlentities("$_")
-                    ));
-                }, $exmpls)),
-            ));
-         }, $propNames)),
-
-        '{show-constants}' => show($constants),
-        '{constants}'      => implode('', array_map(function($_) {
-            return template('constant', array(
-                '{name}'  => $_->name(),
-                '{value}' => $_->value()
-            ));
-        }, $constants)),
-
-        '{show-methods}' => show($methodNames),
-        '{methods}'      => implode('', array_map(function($name) use ($simple) {
-            $note = $simple->methodTags($name, '@note', TRUE);
-            $exmpls = $simple->methodTags($name, '@example');
-            $params = $simple->methodTags($name, '@param');
-            $throws = $simple->methodTags($name, '@throws');
-            $return = $simple->methodTags($name, '@return', TRUE);
-            $haveTags = count($params) || count($throws) || count($exmpls);
-            return template('method', array(
-                '{name}'         => $name,
-                '{show-note}'    => show("$note"),
-                '{note}'         => "$note",
-                '{show-return}'  => show("$return"),
-                '{type}'         => $return->type(),
-                '{return-note}'  => $return->note(),
-                '{show-tagsets}' => show($haveTags),
-                '{show-params}'  => show($params),
-                '{params}'       => implode('', array_map(function($_) {
-                    return template('param', array(
-                        '{show-name}' => show($_->name()),
-                        '{name}'      => $_->name(),
-                        '{show-type}' => show($_->type()),
-                        '{type}'      => $_->type(),
-                        '{note}'      => htmlentities($_->note())
-                    ));
-                }, $params)),
-
-                '{show-example}' => show($exmpls),
-                '{example}'      => implode('', array_map(function($_) {
-                    return template('example', array(
-                        '{note}' => htmlentities("$_")
-                    ));
-                }, $exmpls)),
-
-                '{show-throws}' => show($throws),
-                '{throws}'      => implode('', array_map(function($_) {
-                    return template('throws', array(
-                        '{type}' => $_->type(),
-                        '{note}' => htmlentities($_->note())
-                    ));
-                }, $throws)),
-
-                '{sig}' => implode(', ', array_map(function($_) {
-                    return template('sig-param', array(
-                        '{show-type}' => show($_->type()),
-                        '{type}'      => $_->type(),
-                        '{show-name}' => show($_->name()),
-                        '{name}'      => $_->name(),
-                        '{note}'      => $_->note()
-                    ));
-                }, $params))
-            ));
-        }, $methodNames)),
+        '{title}'           => "Class {class} Documentation",
+        '{class}'           => $className,
+        '{show-class-tags}' => show($show),
+        '{show-version}'    => show($version && "$version"),
+        '{version}'         => $version ? "$version" : '',
+        '{show-author}'     => show($authors),
+        '{author}'          => $authors,
+        '{show-note}'       => show($note && "$note"),
+        '{note}'            => $note ? "$note" : '',
+        '{show-props}'      => show($propsHtml),
+        '{props}'           => $propsHtml,
+        '{show-constants}'  => show($constHtml),
+        '{constants}'       => $constHtml,
+        '{show-methods}'    => show($methodsHtml),
+        '{methods}'         => $methodsHtml
     ));
 }
+
 
 function template($name, $replace = array()) {
     $tmpl = file_get_contents("templates/$name.html");
@@ -137,6 +173,8 @@ function template($name, $replace = array()) {
 }
 
 function show($val) { return empty($val) ? 'none' : ''; }
+
+function icon($refl) { return $refl->isPublic() ? 'open' : 'closed'; }
 
 function get_php_classes($text) {
     $tokens = token_get_all($text);

@@ -19,12 +19,12 @@ foreach ($config as $class => $file) {
     foreach ($classes as $class) {
         $name = str_replace('/', '-', $file);
         $outfile = "html-output/$name-$class.html";
-        file_put_contents($outfile, reflect($class));
+        file_put_contents($outfile, document($class));
         echo "Wrote file $outfile\n";
     }
 }
 
-function reflect($className) {
+function document($className) {
     $documenter = new SimpleDocumenter($className);
     $classNode = $documenter->classNode();
     $constantNodes = $documenter->constantNodes();

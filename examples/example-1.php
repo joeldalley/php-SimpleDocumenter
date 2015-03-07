@@ -5,7 +5,7 @@
  * @version 2015/Mar/07
  */
 
-require 'SimpleDocumenter.php';
+require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenter');
 
 // Only the public methods.

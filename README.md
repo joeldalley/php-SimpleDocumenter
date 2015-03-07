@@ -3,18 +3,27 @@ SimpleDocumenter
 
 SimpleDocumenter is a zero-dependency phpdoc comment analyzer, packaged as a single file.
 
-<b>Examples of API Documentation Web Pages:</b><br/>
+Examples
+========
+
+SimpleDocumenter + an HTML procedure produced the following API documentation Web pages:
+
 [Class: SimpleDocumenter](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenter.html)<br/>
 [Class: SimpleDocumenterNode](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterNode.html)<br/>
 [Class: SimpleDocumenterTagList](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTagList.html)<br/>
-[Class: SimpleDocumenterTag](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTag.html)
+[Class: SimpleDocumenterTag](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTag.html)<br/>
+[Class: SimpleDocumenterUtil](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterUtil.html)
 
-<b>Add SimpleDocumenter To Your Project:</b><br/>
+See [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)
+
+Add SimpleDocumenter To Your Project
+====================================
 ```
 perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php"'
 ```
 
-<b>Usage</b>
+Example Script
+==============
 ```php
 require 'SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenter');
@@ -44,11 +53,37 @@ foreach ($nodes as $name => $node) {
 // The method `methodNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
 ```
 
+For a more complex use case, see [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)
+
 Why SimpleDocumenter?
 =====================
 
-SimpleDocumenter provides only the part of phpDocumentor that I always found useful: the actual parsed phpdoc tags, so they can be used to make nice-looking API documentation Web pages. SimpleDocumenter is a single file, and has no dependencies.
+<b>Small and Simple</b>
 
+SimpleDocumenter is a single file with no dependencies, and as of this writing is under 400 source lines of code.
+
+<b>Callback Filtering</b>
+```php
+// Show only methods with no @return tag, or which specify return type 'void'.
+require 'SimpleDocumenter.php';
+$documenter = new SimpleDocumenter('SimpleDocumenterTag');
+
+$voidOrUndefined = function($node) {
+    $return = $node->tagList('@return')->first();
+    return !$return || $return->type == 'void';
+};
+foreach ($documenter->methodNodes($voidOrUndefined) as $name => $node) {
+    print "{$name}() either returns void or has no @return doc comment tag.\n";
+}
+
+// Outputs:
+// __set() either returns void or has no @return doc comment tag.
+// analyzeText() either returns void or has no @return doc comment tag.
+```
+
+<b>Trade-offs</b>
+
+SimpleDocumenter only works on classes.  It can't analyze functions in the global namespace.
 
 Copyright & License
 ===================

@@ -100,7 +100,7 @@ class SimpleDocumenter {
      */
     public function propertyNodes($filter = NULL) { 
         $nodes = $this->tree[self::BRANCH_PROPS]; 
-        return SimpleDocumenterUtil::maybeFilter($nodes, $filter);
+        return SimpleDocumenterUtil::filter($nodes, $filter);
     }
 
     /**
@@ -111,7 +111,7 @@ class SimpleDocumenter {
      */
     public function methodNodes($filter = NULL) {
         $nodes = $this->tree[self::BRANCH_METHODS]; 
-        return SimpleDocumenterUtil::maybeFilter($nodes, $filter);
+        return SimpleDocumenterUtil::filter($nodes, $filter);
     }
 
     /**
@@ -320,7 +320,10 @@ class SimpleDocumenterTagList implements Iterator {
      */
     public function next() { return next($this->tags); }
 
-    /** Rewind the iterator cursor. */
+    /** 
+     * Rewind the iterator cursor. 
+     * @return void
+     */
     public function rewind() { return reset($this->tags); }
 
     /** @return bool TRUE if cursor position is valid, or FALSE. */
@@ -439,7 +442,7 @@ class SimpleDocumenterUtil {
      * @return array|SimpleDocumenterTagList The given list, which may have
      *                                       been filtered by $callable.
      */
-    public static function maybeFilter($list, $callable = NULL) {
+    public static function filter($list, $callable = NULL) {
         if (!is_callable($callable)) { 
             return $list; 
         }

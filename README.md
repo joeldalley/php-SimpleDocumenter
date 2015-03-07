@@ -3,12 +3,18 @@ SimpleDocumenter
 
 SimpleDocumenter is a zero-dependency phpdoc comment analyzer, packaged as a single file.
 
-*Add SimpleDocumenter To Your Project:*<br/>
+<b>Examples of API Documentation Web Pages:</b><br/>
+[Class: SimpleDocumenter](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenter.html)
+[Class: SimpleDocumenterNode](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterNode.html)
+[Class: SimpleDocumenterTagList](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTagList.html)
+[Class: SimpleDocumenterTag](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTag.html)
+
+<b>Add SimpleDocumenter To Your Project:</b><br/>
 ```
 perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php"'
 ```
 
-*Usage*
+<b>Usage</b>
 ```php
 require 'SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenter');

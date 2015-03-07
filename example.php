@@ -1,22 +1,17 @@
-SimpleDocumenter
-================
+<?php
+/**
+ * README.md example.
+ * @author Joel Dalley
+ * @version 2015/Mar/07
+ */
 
-SimpleDocumenter is a zero-dependency phpdoc comment analyzer, packaged as a single file.
-
-*Add SimpleDocumenter To Your Project:*<br/>
-```
-perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php"'
-```
-
-*Usage*
-```php
 require 'SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenter');
 
+// Only the public methods.
 $filter = function($node) { return $node->reflector()->isPublic(); };
 $nodes = $documenter->methodNodes($filter);
 
-// Loop on public methods.
 foreach ($nodes as $name => $node) {
     // $return is NULL if the tag list is empty, otherwise 
     // it's the first SimpleDocumenterTag in the tag list.
@@ -36,16 +31,3 @@ foreach ($nodes as $name => $node) {
 // The method `constantNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
 // The method `propertyNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
 // The method `methodNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
-```
-
-Why SimpleDocumenter?
-=====================
-
-SimpleDocumenter provides only the part of phpDocumentor that I always found useful: the actual parsed phpdoc tags, so they can be used to make nice-looking API documentation Web pages. SimpleDocumenter is a single file, and has no dependencies.
-
-
-Copyright & License
-===================
-
-php-SimpleDocumenter is copyright &copy; Joel Dalley 2015.<br/>
-php-SimpleDocumenter is distributed under the same license as Perl.

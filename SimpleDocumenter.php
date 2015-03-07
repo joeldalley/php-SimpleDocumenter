@@ -445,7 +445,9 @@ class SimpleDocumenterUtil {
         }
 
         $filtered = array();
-        foreach ($list as $_) { $callable($_) and $filtered[] = $_; }
+        foreach ($list as $idx => $entry) {
+            $callable($entry) and $filtered[$idx] = $entry; 
+        }
         return $list instanceof SimpleDocumenterTagList
              ? new SimpleDocumenterTagList($list->reflector(), $filtered)
              : $filtered;

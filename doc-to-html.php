@@ -25,17 +25,11 @@ foreach ($config as $class => $file) {
 }
 
 function reflect($className) {
-    $simple = new SimpleDocumenter($className);
-
-    $hasVarTag = function($node) {
-        $list = $node->tagList('@var');
-        return (bool) $list->first();
-    };
-
-    $classNode = $simple->classNode();
-    $constantNodes = $simple->constantNodes();
-    $propertyNodes = $simple->propertyNodes();
-    $methodNodes = $simple->methodNodes();
+    $documenter = new SimpleDocumenter($className);
+    $classNode = $documenter->classNode();
+    $constantNodes = $documenter->constantNodes();
+    $propertyNodes = $documenter->propertyNodes();
+    $methodNodes = $documenter->methodNodes();
 
     $constHtml = '';
     foreach ($constantNodes as $name => $node) {

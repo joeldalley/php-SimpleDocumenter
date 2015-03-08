@@ -4,7 +4,7 @@
  *
  * @author Joel Dalley
  * @version 2015/Mar/03
- * @see https://github.com/joeldalley/php-SimpleDocumenter
+ * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class Test {
     const A = 1;

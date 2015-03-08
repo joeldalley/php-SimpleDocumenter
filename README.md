@@ -73,7 +73,7 @@ Why SimpleDocumenter?
 
 <b>Absolute Portability</b>
 
-SimpleDocumenter is a single file with no dependencies, and is only 377 source lines of code.
+SimpleDocumenter is a single file with no dependencies, and is only 380 source lines of code.
 
 As such, portability is absolute. A local copy of SimpleDocumenter can be gotten by copying & pasting 
 the [source file](https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php).

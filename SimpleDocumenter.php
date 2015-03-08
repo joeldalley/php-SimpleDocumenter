@@ -4,7 +4,7 @@
  *
  * @author Joel Dalley
  * @version 2015/Mar/05
- * @see https://github.com/joeldalley/php-SimpleDocumenter
+ * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenter {
     const BRANCH_CLASS   = 'class';
@@ -173,6 +173,7 @@ class SimpleDocumenter {
  *
  * @author Joel Dalley
  * @version 2015/Mar/06
+ * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenterNode {
 
@@ -224,6 +225,7 @@ class SimpleDocumenterNode {
  * The method, tags(), returns the internal array.
  * @author Joel Dalley
  * @version 2015/Mar/07
+ * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenterTagList implements Iterator {
 
@@ -313,7 +315,7 @@ class SimpleDocumenterTagList implements Iterator {
  *
  * @author Joel Dalley
  * @version 2015/Mar/05
- * @see https://github.com/joeldalley/php-SimpleDocumenter
+ * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenterTag {
     const FIELD_TAG = 'tag';
@@ -411,6 +413,7 @@ class SimpleDocumenterTag {
  * SimpleDocumenter-related utility functions.
  * @author Joel Dalley
  * @version 2015/Mar/07
+ * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenterUtil {
     /**

@@ -24,6 +24,15 @@
           margin:0;
       }
 
+      a.link {
+        color:#454545; 
+        text-decoration:underline;
+      }
+      a.link:hover { 
+        color:#A71D5D;;
+        text-decoration:none;
+      }
+
       div.heading {
           background-color:#454545;
           color:#A3D6F5; 
@@ -93,18 +102,18 @@
           border-radius:0 0 3px 3px;
       }
 
-      div.class-tag {
+      div.class-tags {
         margin:6px;
         padding:12px;
         border-radius:3px;
         border:1px solid #ddd;
         background-color:#eee;
       }
-      div.class-tag div.tag {
+      div.class-tags div.tag {
           font-weight:bold;
           float:left;
       }
-      div.class-tag div.value { 
+      div.class-tags div.value { 
           color:#444; 
           float:left;
       }
@@ -220,6 +229,9 @@
       div.method-tag { 
           font-weight:normal;
       }
+      div.see-tag div.see { 
+          font-weight:normal; 
+      }
       div.param-tag {
           font-weight:normal;
       }
@@ -245,21 +257,31 @@
       <div class="clear"></div>
     </div>
     <div class="body">
-      <div style="display:">
-        <h2 style="margin-top:0">Tags</h2>
-        <div class="class-tag" style="display:">
+      <h2 style="display:">Overview</h2>
+      <div class="class-tags" style="display:">
+        <div style="display:">
           <div class="tag">Description:</div>
           <div class="value">Input Class<br/><br/>Pre-processes global input data for security<br/></div>
           <div class="clear"></div>
         </div>
-        <div class="class-tag" style="display:">
+        <div style="display:">
           <div class="tag">@author</div>
           <div class="value">	EllisLab Dev Team</div>
           <div class="clear"></div>
         </div>
-        <div class="class-tag" style="display:none">
+        <div style="display:none">
           <div class="tag">@version</div>
           <div class="value"></div>
+          <div class="clear"></div>
+        </div>
+        <div style="display:none">
+          <div class="tag">@see</div>
+          <div class="value"></div>
+          <div class="clear"></div>
+        </div>
+        <div style="display:">
+          <div class="tag">@link</div>
+          <div class="value"><a href="http://codeigniter.com/user_guide/libraries/input.html" target="_blank" class="link">http://codeigniter.com/user_guide/libraries/input.html</a></div>
           <div class="clear"></div>
         </div>
       </div>
@@ -414,6 +436,8 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -464,6 +488,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -505,6 +531,8 @@
   <div class="note">Whether to apply XSS filtering</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -550,6 +578,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -591,6 +621,8 @@
   <div class="note">Whether to apply XSS filtering</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -636,6 +668,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -677,6 +711,8 @@
   <div class="note">Whether to apply XSS filtering</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -722,6 +758,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -763,6 +801,8 @@
   <div class="note">Whether to apply XSS filtering</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -850,6 +890,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -876,6 +918,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -923,6 +967,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -949,6 +995,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -979,6 +1027,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -1016,6 +1066,8 @@
   <div class="note">Input string(s)</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1061,6 +1113,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1095,6 +1149,8 @@
   <div class="note">Whether to apply XSS filtering</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1140,6 +1196,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1170,6 +1228,8 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1196,6 +1256,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -1235,6 +1297,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1269,6 +1333,8 @@
   <div class="note"></div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>

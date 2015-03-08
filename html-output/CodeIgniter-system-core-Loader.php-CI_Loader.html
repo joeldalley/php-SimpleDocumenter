@@ -24,6 +24,15 @@
           margin:0;
       }
 
+      a.link {
+        color:#454545; 
+        text-decoration:underline;
+      }
+      a.link:hover { 
+        color:#A71D5D;;
+        text-decoration:none;
+      }
+
       div.heading {
           background-color:#454545;
           color:#A3D6F5; 
@@ -93,18 +102,18 @@
           border-radius:0 0 3px 3px;
       }
 
-      div.class-tag {
+      div.class-tags {
         margin:6px;
         padding:12px;
         border-radius:3px;
         border:1px solid #ddd;
         background-color:#eee;
       }
-      div.class-tag div.tag {
+      div.class-tags div.tag {
           font-weight:bold;
           float:left;
       }
-      div.class-tag div.value { 
+      div.class-tags div.value { 
           color:#444; 
           float:left;
       }
@@ -220,6 +229,9 @@
       div.method-tag { 
           font-weight:normal;
       }
+      div.see-tag div.see { 
+          font-weight:normal; 
+      }
       div.param-tag {
           font-weight:normal;
       }
@@ -245,21 +257,31 @@
       <div class="clear"></div>
     </div>
     <div class="body">
-      <div style="display:">
-        <h2 style="margin-top:0">Tags</h2>
-        <div class="class-tag" style="display:">
+      <h2 style="display:">Overview</h2>
+      <div class="class-tags" style="display:">
+        <div style="display:">
           <div class="tag">Description:</div>
           <div class="value">Loader Class<br/><br/>Loads framework components.<br/></div>
           <div class="clear"></div>
         </div>
-        <div class="class-tag" style="display:">
+        <div style="display:">
           <div class="tag">@author</div>
           <div class="value">	EllisLab Dev Team</div>
           <div class="clear"></div>
         </div>
-        <div class="class-tag" style="display:none">
+        <div style="display:none">
           <div class="tag">@version</div>
           <div class="value"></div>
+          <div class="clear"></div>
+        </div>
+        <div style="display:none">
+          <div class="tag">@see</div>
+          <div class="value"></div>
+          <div class="clear"></div>
+        </div>
+        <div style="display:">
+          <div class="tag">@link</div>
+          <div class="value"><a href="http://codeigniter.com/user_guide/libraries/loader.html" target="_blank" class="link">http://codeigniter.com/user_guide/libraries/loader.html</a></div>
           <div class="clear"></div>
         </div>
       </div>
@@ -446,6 +468,8 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -472,6 +496,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -509,6 +535,8 @@
   <div class="note">Class name to check for</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -562,6 +590,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -610,6 +640,8 @@
   <div class="note">An optional database connection configuration to initialize</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -662,6 +694,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -707,6 +741,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -748,6 +784,8 @@
   <div class="note">Whether to return the DB Forge class object or not</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -800,6 +838,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -841,6 +881,8 @@
   <div class="note">Whether to return the file output</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -886,6 +928,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -912,6 +956,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -951,6 +997,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -978,6 +1026,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -1017,6 +1067,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1051,6 +1103,8 @@
   <div class="note">Helper name(s)</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1094,6 +1148,8 @@
   <div class="note">	Language name</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1144,6 +1200,8 @@
   <div class="note">Whether to just return FALSE or display an error message</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1197,6 +1255,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1242,6 +1302,25 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:"><div class="see-tag">
+  <div class="tag">@see</div> 
+  <div class="see">CI_Loader::$_ci_library_paths</div>
+  <div class="clear"></div>
+</div><div class="see-tag">
+  <div class="tag">@see</div> 
+  <div class="see">CI_Loader::$_ci_model_paths</div>
+  <div class="clear"></div>
+</div><div class="see-tag">
+  <div class="tag">@see</div> 
+  <div class="see">CI_Loader::$_ci_helper_paths</div>
+  <div class="clear"></div>
+</div><div class="see-tag">
+  <div class="tag">@see</div> 
+  <div class="see">CI_Config::$_config_paths
+</div>
+  <div class="clear"></div>
+</div></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1276,6 +1355,8 @@
   <div class="note">Whether to include BASEPATH (default: FALSE)</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1314,6 +1395,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1348,6 +1431,8 @@
   <div class="note">Data to load</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1398,6 +1483,8 @@
   <div class="note">Optional object name to assign to</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1457,6 +1544,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1514,6 +1603,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1540,6 +1631,8 @@
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
@@ -1579,6 +1672,8 @@
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
@@ -1613,6 +1708,8 @@
   <div class="note">Component name</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
@@ -1656,6 +1753,8 @@
   <div class="note">Filename extension</div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>

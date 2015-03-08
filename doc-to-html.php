@@ -151,8 +151,27 @@ function document($className) {
             ));
         }
 
+        $linkHtml = '';
+        foreach ($node->tagList('@link') as $link) {
+            $linkHtml .= template('link', array(
+                '{anchor}' => template('anchor', array(
+                    // In a more serious app, make sure $link->text a URL =)
+                    '{href}'   => trim($link->text), 
+                    '{text}'   => trim($link->text),
+                    '{class}'  => 'link',
+                    '{target}' => '_blank',
+                ))
+            ));
+        }
+
+        $seeHtml = '';
+        foreach ($node->tagList('@see') as $see) {
+            $seeHtml .= template('see', array('{see}' => "$see"));
+        }
+
         $note = $node->tagList('@note')->first();
         $return = $node->tagList('@return')->first();
+
         $methodsHtml .= template('method', array(
             '{icon}'         => icon($node->reflector()),
             '{name}'         => $name,
@@ -161,21 +180,44 @@ function document($className) {
             '{show-return}'  => show($return && "$return"),
             '{type}'         => $return ? $return->type : '',
             '{return-note}'  => $return ? $return->note : '',
-            '{show-tagsets}' => show($throwsHtml || $exmplHtml || $paramHtml),
+            '{show-tagsets}' => show($throwsHtml || $exmplHtml 
+                                  || $paramHtml || $linkHtml
+                                  || $seeHtml),
             '{show-params}'  => show($paramHtml),
             '{params}'       => $paramHtml,
             '{show-example}' => show($exmplHtml),
             '{example}'      => $exmplHtml,
             '{show-throws}'  => show($throwsHtml),
             '{throws}'       => $throwsHtml,
+            '{see}'          => $seeHtml,
+            '{show-see}'     => show($seeHtml),
+            '{link}'         => $linkHtml,
+            '{show-link}'    => show($linkHtml),
             '{sig}'          => $sigHtml
         ));
     }
 
+    $linkHtml = array();
+    foreach ($classNode->tagList('@link') as $link) {
+        $linkHtml[] = template('anchor', array(
+            // In a more serious app, make sure $link->text a URL =)
+            '{href}'   => trim($link->text), 
+            '{text}'   => trim($link->text),
+            '{class}'  => 'link',
+            '{target}' => '_blank',
+        ));
+    }
+    $linkHtml = implode('<br/>', $linkHtml);
+
     $note = $classNode->tagList('@note')->first();
     $version = $classNode->tagList('@version')->first();
     $authors = $classNode->tagList('@author')->join(', ');
-    $show = ($note && "$note") || ($version && "$version") || $authors;
+    $see = $classNode->tagList('@see')->join();
+
+    $show = ($note && "$note") 
+         || ($version && "$version") 
+         || $authors || $see || $linkHtml;
+
     return template('page', array(
         '{title}'           => "Class {class} Documentation",
         '{class}'           => $className,
@@ -186,6 +228,10 @@ function document($className) {
         '{author}'          => $authors,
         '{show-note}'       => show($note && "$note"),
         '{note}'            => $note ? br(htmlentities("$note")) : '',
+        '{see}'             => $see,
+        '{show-see}'        => show($see),
+        '{link}'            => $linkHtml,
+        '{show-link}'       => show($linkHtml),
         '{show-props}'      => show($propsHtml),
         '{props}'           => $propsHtml,
         '{show-constants}'  => show($constHtml),

@@ -71,9 +71,10 @@ For a more complex use case, see [doc-to-html.php](https://github.com/joeldalley
 Why SimpleDocumenter?
 =====================
 
-<b>Small and Simple</b>
+<b>Absolute Portability</b>
 
-SimpleDocumenter is a single file with no dependencies, and as of this writing is under 400 source lines of code.
+SimpleDocumenter is a single file with no dependencies, and is only 377 lines long.<br/>
+As such, portability is absolute, since a local copy of SimpleDocumenter can be gotten via HTTP GET. Or, if your environment is firewalled and HTTP isn't allowed, you can copy & paste the source code into a local file.
 
 <b>Callback Filtering</b>
 ```php

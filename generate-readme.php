@@ -15,6 +15,7 @@ $repl = array(
     '{vendor-html-examples}'            => NULL,
     '{example-1}'                       => example(1),
     '{example-2}'                       => example(2),
+    '{sloc}'                            => sloc('SimpleDocumenter.php'),
     );
 
 $examples = array(
@@ -61,3 +62,5 @@ function example($num) {
 function mdlink($class, $file) {
     global $SD; return "[$class](https://joeldalley.github.io/php-$SD/$file)";
 }
+
+function sloc($file) { return trim(shell_exec("sed '/^\s*\$/d' $file | wc -l")); }

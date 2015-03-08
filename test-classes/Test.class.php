@@ -6,7 +6,7 @@
  * @version 2015/Mar/03
  * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
-class Test {
+abstract class Test {
     const A = 1;
     const B = 2;
 
@@ -152,4 +152,22 @@ class Test {
      *
      */
     public function k($a, $c) {}
+
+    /**
+     * Final and static.
+     * @return void
+     */
+    final public static function m() {}
+
+    /**
+     * Abstract.
+     * @return void
+     */
+    public abstract function n();
+
+    /**
+     * Abstract and static.
+     * @return void
+     */
+    public abstract static function p();
 }

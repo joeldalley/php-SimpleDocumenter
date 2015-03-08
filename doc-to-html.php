@@ -171,9 +171,16 @@ function document($className) {
 
         $note = $node->tagList('@note')->first();
         $return = $node->tagList('@return')->first();
+        $prefix = array();
+        $prefix[] = $node->reflector()->isFinal() ? 'final' : '';
+        $prefix[] = $node->reflector()->isAbstract() ? 'abstract' : '';
+        $prefix[] = $node->reflector()->isStatic() ? ' static' : '';
+        $prefix = implode('', $prefix);
 
         $methodsHtml .= template('method', array(
             '{icon}'         => icon($node->reflector()),
+            '{show-prefix}'  => show($prefix),
+            '{prefix}'       => $prefix,
             '{name}'         => $name,
             '{show-note}'    => show($note && "$note"),
             '{note}'         => $note ? br(htmlentities("$note")) : '',

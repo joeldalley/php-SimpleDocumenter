@@ -40,7 +40,7 @@ unset($examples[$SD]);
 
 $vendorBlocks = array();
 foreach ($examples as $vendor => $links) {
-    $vendorBlocks[] = "<i>$vendor</i>\n" . implode('<br/>', $links);
+    $vendorBlocks[] = "<i>$vendor</i><br/>" . implode('<br/>', $links);
 }
 $repl['{vendor-html-examples}'] = implode("\n\n", $vendorBlocks);
 

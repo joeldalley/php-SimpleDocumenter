@@ -3,7 +3,7 @@ SimpleDocumenter
 
 SimpleDocumenter is a zero-dependency phpdoc comment analyzer, packaged as a single file.
 
-Generated API Doc Web Pages
+Generated API Documentation
 ===========================
 
 SimpleDocumenter + an HTML procedure produced the following API documentation Web pages:

@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Class CI_Loader Documentation</title>
+    <meta charset="UTF-8"/>
+    <style>
+      @font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'), 
+             url(assets/1.woff2) format('woff2'),
+             url(assets/1.woff) format('woff');
+      }
+      body { 
+        font-family:"Open Sans",Helvetica,Geneva,sans-serif;
+        font-size:14px;
+        margin:0;
+      }
+
+      h1 {
+          display:inline-block;
+          padding:10px;
+          margin:0;
+      }
+
+      div.heading {
+          background-color:#454545;
+          color:#A3D6F5; 
+          margin:0;
+      }
+      div.heading div.h1 { float:left; }
+      div.heading div.context {
+          float:right;
+          padding:20px;
+          letter-spacing:0.1em;
+          color:#eee;
+      }
+
+      div { padding:6px; }
+
+      div.body {
+        margin:0 2.5% 12px 2.5%;
+      }
+
+      div.clear { padding:0;clear:both; }
+ 
+      div.pre {
+        font-family:Consolas,Monaco,"Andale Mono",monospace;
+        white-space:pre;
+        background-color:#fff;
+        border:1px solid #ddd;
+        border-radius:3px;
+        font-size:13px;
+        padding:18px;
+        font-style:normal !important;
+        font-weight:normal !important;
+        float:left;
+      }
+
+      div.icon {
+          float:left;
+          height:22px;
+          width:22px;
+          padding:0;
+      }
+      img.icon {
+          border:0;
+          height:22px;
+          width:22px;
+      }
+
+      div.tag { 
+        padding-left:0;
+        font-weight:bold;
+        float:left;
+      }
+      div.type {
+        margin-left:6px;
+        letter-spacing:0.1em;
+        color:#A71D5D;
+        float:left;
+      }
+      div.note { 
+        color:#444;
+        float:left;
+        margin-left:9px;
+        letter-spacing:0.03em;
+      }
+      div.footer { 
+          padding:3px;
+          background-color:#ccc;
+          border-radius:0 0 3px 3px;
+      }
+
+      div.class-tag {
+        margin:6px;
+        padding:12px;
+        border-radius:3px;
+        border:1px solid #ddd;
+        background-color:#eee;
+      }
+      div.class-tag div.tag {
+          font-weight:bold;
+          float:left;
+      }
+      div.class-tag div.value { 
+          color:#444; 
+          float:left;
+      }
+
+      div.constant {
+        margin:6px;
+        padding:12px;
+        border-radius:3px;
+        border:1px solid #ddd;
+        background-color:#eee;
+      }
+      div.constant span.name { 
+          font-weight:bold;
+      }
+      div.constant span.value { color:#A71D5D; }
+
+      div.method { 
+        margin-left:6px;
+        font-weight:bold; 
+        padding-left:0;
+        padding-bottom:12px;
+      }
+
+      div.method-sig { 
+        background-color:#A3D6F5;
+        color:#454545;
+        letter-spacing:0.1em; 
+        border-radius:3px 3px 0 0;
+      }
+      div.method-sig div {
+        margin-left:6px;
+      }
+      div.method-sig div.function { float:left; }
+      div.method-sig div.return { float:right; }
+      div.method-sig span.return-type { 
+        display:inline-block;
+        background-color:#eee;
+        padding:2px;
+        border-radius:2px;
+        color:#A71D5D;
+      }
+      div.method-sig span.param-type { 
+        display:inline-block;
+        background-color:#eee;
+        padding:2px;
+        font-weight:normal;
+        border-radius:2px;
+        color:#183691;
+        margin-right:6px;
+      }
+      div.method-sig span.function { color:#A71D5D; }
+
+      div.method-note { 
+        padding:12px;
+        background-color:#CEE4F2;
+        font-weight:normal;
+      }
+      div.method-note div.note {
+        border-radius:3px;
+        background-color:#eee;
+        border:1px solid #ddd;
+        margin-left:9px;
+      }
+      div.method-note div.desc-label {
+          padding:0 0 6px 0;
+          font-weight:bold;
+          float:left;
+      }
+      div.method-return {
+        padding-top:6px;
+        padding-left:12px;
+        background-color:#ddd;
+        font-weight:normal;
+      }
+      div.method-return div.type { font-weight:bold; }
+
+      div.property {
+        margin-left:6px;
+        border-radius:3px;
+        background-color:#A3D6F5;
+        margin-bottom:18px;
+        padding:0;
+      }
+      div.property div.prop-note { background-color:#CEE4F2; }
+      div.property div.prop-note div.note {
+        border-radius:3px;
+        background-color:#eee;
+        border:1px solid #ddd;
+        margin-left:9px;
+      }
+      div.property div.prop-note div.desc-label {
+          padding:0 0 6px 6px;
+          font-weight:bold;
+          float:left;
+      }
+      div.property div.type { float:left; }
+      div.property div.name { float:left;font-weight:bold; }
+
+      div.property div.var { 
+          border-radius:3px 3px 0 0;
+          background-color:#A3D6F5; 
+      }
+
+      div.tagsets {
+          padding:6px 0 6px 6px;
+          background-color:#eee;
+      }
+
+      div.method-tagset { 
+        padding:0;
+        background-color:#eee;
+      }
+      div.method-tag { 
+          font-weight:normal;
+      }
+      div.param-tag {
+          font-weight:normal;
+      }
+      div.param-tag div.type { 
+          margin-left:6px;
+          color:#183691;
+          float:left;
+       }
+      div.param-tag div.name { 
+          margin-left:6px;
+          font-weight:bold;
+          color:#444; 
+          float:left;
+      }
+      div.property-tagset div.property-tag {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="heading">
+      <div class="h1"><h1>CI_Loader</h1></div>
+      <div class="context">API Documentation</div>
+      <div class="clear"></div>
+    </div>
+    <div class="body">
+      <div style="display:">
+        <h2 style="margin-top:0">Tags</h2>
+        <div class="class-tag" style="display:">
+          <div class="tag">Description:</div>
+          <div class="value">Loader Class<br/><br/>Loads framework components.<br/></div>
+          <div class="clear"></div>
+        </div>
+        <div class="class-tag" style="display:">
+          <div class="tag">@author</div>
+          <div class="value">	EllisLab Dev Team</div>
+          <div class="clear"></div>
+        </div>
+        <div class="class-tag" style="display:none">
+          <div class="tag">@version</div>
+          <div class="value"></div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div style="display:none"><h2>Constants</h2></div>
+      <div style="display:"><h2>Properties</h2><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">int</div>
+    <div class="name">$_ci_ob_level</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_view_paths</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_library_paths</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_model_paths</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_helper_paths</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_cached_vars</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_classes</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_models</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_helpers</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="property">
+  <div class="var">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div style="display:" class="type">array</div>
+    <div class="name">$_ci_varmap</div>
+    <div class="clear"></div>
+  </div>
+  <div style="display:none" class="prop-note">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="property-tagset" style="display:none"></div>
+  </div>
+  <div class="footer"></div>
+</div></div>
+      <div style="display:"><h2>Methods</h2><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">__construct</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Class constructor<br/><br/>Sets component load paths, gets the initial output buffering level.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">initialize</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Initializer<br/><br/>@todo	Figure out a way to move this to the constructor<br/>	without breaking *package_path*() methods.<br/>@uses	CI_Loader::_ci_autoloader()<br/>@used-by	CI_Controller::__construct()</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">is_loaded</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$class</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">string|bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Is Loaded<br/><br/>A utility method to test if a class is in the self::$_ci_classes array.<br/><br/>@used-by	Mainly used by Form Helper function _get_validation_object().<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$class</div>
+  <div class="note">Class name to check for</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">string|bool</div>
+    <div class="note">Class object name if loaded or FALSE
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">library</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$library</span>, <span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$params</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$object_name</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Library Loader<br/><br/>Loads and instantiates libraries.<br/>Designed to be called from application controllers.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$library</div>
+  <div class="note">Library name</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$params</div>
+  <div class="note">	Optional parameters to pass to the library class constructor</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$object_name</div>
+  <div class="note">An optional object name to assign to</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">model</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$model</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$name</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$db_conn</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Model Loader<br/><br/>Loads and instantiates models.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$model</div>
+  <div class="note">	Model name</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$name</div>
+  <div class="note">	An optional object name to assign to</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$db_conn</div>
+  <div class="note">An optional database connection configuration to initialize</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">database</span>(<span style="display:" class="param-type">mixed</span><span
+      style="display:" class="param-name">$params</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$return</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$query_builder</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object|bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Database Loader<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">mixed</div>
+  <div style="display:" class="name">$params</div>
+  <div class="note">	Database configuration options</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$return</div>
+  <div class="note">	Whether to return the database object</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$query_builder</div>
+  <div class="note">Whether to enable Query Builder<br/>				(overrides the configuration setting)<br/></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object|bool</div>
+    <div class="note">Database object if $return is set to TRUE,
+				FALSE on failure, CI_Loader instance in any other case
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">dbutil</span>(<span style="display:" class="param-type">object</span><span
+      style="display:" class="param-name">$db</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$return</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Load the Database Utilities Class<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">object</div>
+  <div style="display:" class="name">$db</div>
+  <div class="note">Database object</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$return</div>
+  <div class="note">Whether to return the DB Utilities class object or not</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">dbforge</span>(<span style="display:" class="param-type">object</span><span
+      style="display:" class="param-name">$db</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$return</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Load the Database Forge Class<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">object</div>
+  <div style="display:" class="name">$db</div>
+  <div class="note">Database object</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$return</div>
+  <div class="note">Whether to return the DB Forge class object or not</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">view</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$view</span>, <span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$vars</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$return</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object|string</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">View Loader<br/><br/>Loads &quot;view&quot; files.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$view</div>
+  <div class="note">View name</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$vars</div>
+  <div class="note">An associative array of data<br/>			to be extracted for use in the view</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$return</div>
+  <div class="note">Whether to return the view output<br/>			or leave it to the Output class</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object|string</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">file</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$path</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$return</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object|string</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Generic File Loader<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$path</div>
+  <div class="note">File path</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$return</div>
+  <div class="note">Whether to return the file output</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object|string</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">vars</span>(<span style="display:" class="param-type">array|object|string</span><span
+      style="display:" class="param-name">$vars</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$val</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Set Variables<br/><br/>Once variables are set they become available within<br/>the controller class and its &quot;view&quot; files.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array|object|string</div>
+  <div style="display:" class="name">$vars</div>
+  <div class="note">				An associative array or object containing values<br/>				to be set, or a value's name if string</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$val</div>
+  <div class="note">Value to set, only used if $vars is a string</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">clear_vars</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Clear Cached Variables<br/><br/>Clears the cached variables.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">get_var</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$key</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">mixed</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Get Variable<br/><br/>Check if a variable is set and retrieve it.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$key</div>
+  <div class="note">Variable name</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">mixed</div>
+    <div class="note">The variable or NULL if not found
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">get_vars</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">array</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Get Variables<br/><br/>Retrieves all loaded variables.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">array</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">helper</span>(<span style="display:" class="param-type">string|string[]</span><span
+      style="display:" class="param-name">$helpers</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Helper Loader<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string|string[]</div>
+  <div style="display:" class="name">$helpers</div>
+  <div class="note">Helper name(s)</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">helpers</span>(<span style="display:" class="param-type">string|string[]</span><span
+      style="display:" class="param-name">$helpers</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Load Helpers<br/><br/>An alias for the helper() method in case the developer has<br/>written the plural form of it.<br/><br/>@uses	CI_Loader::helper()</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string|string[]</div>
+  <div style="display:" class="name">$helpers</div>
+  <div class="note">Helper name(s)</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">language</span>(<span style="display:" class="param-type">string|string[]</span><span
+      style="display:" class="param-name">$files</span>, <span style="display:" class="param-type">string</span><span
+      style="display:none" class="param-name"></span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Language Loader<br/><br/>Loads language files.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string|string[]</div>
+  <div style="display:" class="name">$files</div>
+  <div class="note">List of language file names to load</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:none" class="name"></div>
+  <div class="note">	Language name</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">config</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$file</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$use_sections</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$fail_gracefully</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Config Loader<br/><br/>Loads a config file (an alias for CI_Config::load()).<br/><br/>@uses	CI_Config::load()</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$file</div>
+  <div class="note">		Configuration file name</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$use_sections</div>
+  <div class="note">	Whether configuration values should be loaded into their own section</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$fail_gracefully</div>
+  <div class="note">Whether to just return FALSE or display an error message</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">bool</div>
+    <div class="note">TRUE if the file was loaded correctly or FALSE on failure
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">driver</span>(<span style="display:" class="param-type">string|string[]</span><span
+      style="display:" class="param-name">$library</span>, <span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$params</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$object_name</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object|bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Driver Loader<br/><br/>Loads a driver library.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string|string[]</div>
+  <div style="display:" class="name">$library</div>
+  <div class="note">Driver name(s)</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$params</div>
+  <div class="note">	Optional parameters to pass to the driver</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$object_name</div>
+  <div class="note">An optional object name to assign to<br/></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object|bool</div>
+    <div class="note">Object or FALSE on failure if $library is a string
+			and $object_name is set. CI_Loader instance otherwise.
+</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">add_package_path</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$path</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$view_cascade</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Add Package Path<br/><br/>Prepends a parent path to the library, model, helper and config<br/>path arrays.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$path</div>
+  <div class="note">	Path to add</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$view_cascade</div>
+  <div class="note">(default: TRUE)</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">get_package_paths</span>(<span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$include_base</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">array</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Get Package Paths<br/><br/>Return a list of all package paths.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$include_base</div>
+  <div class="note">Whether to include BASEPATH (default: FALSE)</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">array</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">remove_package_path</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$path</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Remove Package Path<br/><br/>Remove a path from the library, model, helper and/or config<br/>path arrays if it exists. If no path is provided, the most recently<br/>added path will be removed removed.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$path</div>
+  <div class="note">Path to remove</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_load</span>(<span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$_ci_data</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">object</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Internal CI Data Loader<br/><br/>Used to load views and files.<br/><br/>Variables are prefixed with _ci_ to avoid symbol collision with<br/>variables made available to view files.<br/><br/>@used-by	CI_Loader::view()<br/>@used-by	CI_Loader::file()</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$_ci_data</div>
+  <div class="note">Data to load</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">object</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_load_library</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$class</span>, <span style="display:" class="param-type">mixed</span><span
+      style="display:" class="param-name">$params</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$object_name</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Internal CI Library Loader<br/><br/>@used-by	CI_Loader::library()<br/>@uses	CI_Loader::_ci_init_library()<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$class</div>
+  <div class="note">	Class name to load</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">mixed</div>
+  <div style="display:" class="name">$params</div>
+  <div class="note">	Optional parameters to pass to the class constructor</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$object_name</div>
+  <div class="note">Optional object name to assign to</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_load_stock_library</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$library</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$file_path</span>, <span style="display:" class="param-type">mixed</span><span
+      style="display:" class="param-name">$params</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$object_name</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Internal CI Stock Library Loader<br/><br/>@used-by	CI_Loader::_ci_load_library()<br/>@uses	CI_Loader::_ci_init_library()<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$library</div>
+  <div class="note">Library name to load</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$file_path</div>
+  <div class="note">Path to the library filename, relative to libraries/</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">mixed</div>
+  <div style="display:" class="name">$params</div>
+  <div class="note">	Optional parameters to pass to the class constructor</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$object_name</div>
+  <div class="note">Optional object name to assign to</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_init_library</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$class</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$prefix</span>, <span style="display:" class="param-type">array|null|bool</span><span
+      style="display:" class="param-name">$config</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$object_name</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Internal CI Library Instantiator<br/><br/>@used-by	CI_Loader::_ci_load_stock_library()<br/>@used-by	CI_Loader::_ci_load_library()<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$class</div>
+  <div class="note">	Class name</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$prefix</div>
+  <div class="note">	Class name prefix</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array|null|bool</div>
+  <div style="display:" class="name">$config</div>
+  <div class="note">	Optional configuration to pass to the class constructor:<br/>					FALSE to skip;<br/>					NULL to search in config paths;<br/>					array containing configuration data</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$object_name</div>
+  <div class="note">Optional object name to assign to</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_autoloader</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">void</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">CI Autoloader<br/><br/>Loads component listed in the config/autoload.php file.<br/><br/>@used-by	CI_Loader::initialize()</div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">void</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_object_to_array</span>(<span style="display:" class="param-type">object</span><span
+      style="display:" class="param-name">$object</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">array</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">CI Object to Array translator<br/><br/>Takes an object as input and converts the class variables to<br/>an associative array with key/value pairs.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">object</div>
+  <div style="display:" class="name">$object</div>
+  <div class="note">Object data to translate</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">array</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_get_component</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$component</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">CI Component getter<br/><br/>Get a reference to a specific library or model.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$component</div>
+  <div class="note">Component name</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">bool</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">_ci_prep_filename</span>(<span style="display:" class="param-type">string|string[]</span><span
+      style="display:" class="param-name">$filename</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$extension</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">array</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Prep filename<br/><br/>This function prepares filenames of various items to<br/>make their loading more reliable.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string|string[]</div>
+  <div style="display:" class="name">$filename</div>
+  <div class="note">Filename(s)</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$extension</div>
+  <div class="note">Filename extension</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">array</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div></div>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,10 @@
 <?php
+/**
+ * README.md example.
+ * @author Joel Dalley
+ * @version 2015/Mar/07
+ */
+
 // Show only methods with no @return tag, or which specify return type 'void'.
 require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenterTag');

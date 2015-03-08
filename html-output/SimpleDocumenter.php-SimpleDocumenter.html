@@ -1,9 +1,19 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Class SimpleDocumenter Documentation</title>
+    <meta charset="UTF-8"/>
     <style>
+      @font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'), 
+             url(assets/1.woff2) format('woff2'),
+             url(assets/1.woff) format('woff');
+      }
       body { 
-        font-family:"klavika-web","Helvetica Neue",Helvetica,Arial,Geneva;
+        font-family:"Open Sans",Helvetica,Geneva,sans-serif;
         font-size:14px;
         margin:0;
       }
@@ -36,7 +46,7 @@
       div.clear { padding:0;clear:both; }
  
       div.pre {
-        font-family:"Osaka Mono","Andale Mono",monospace,"Courier New",courier;
+        font-family:Consolas,Monaco,"Andale Mono",monospace;
         white-space:pre;
         background-color:#fff;
         border:1px solid #ddd;
@@ -75,7 +85,7 @@
         color:#444;
         float:left;
         margin-left:9px;
-        /*font-style:italic;*/
+        letter-spacing:0.03em;
       }
       div.footer { 
           padding:3px;
@@ -107,7 +117,6 @@
         background-color:#eee;
       }
       div.constant span.name { 
-          font-family:arial;
           font-weight:bold;
       }
       div.constant span.value { color:#A71D5D; }
@@ -120,7 +129,6 @@
       }
 
       div.method-sig { 
-        font-family:arial;
         background-color:#A3D6F5;
         color:#454545;
         letter-spacing:0.1em; 
@@ -135,7 +143,6 @@
         display:inline-block;
         background-color:#eee;
         padding:2px;
-        letter-spacing:0.1em;
         border-radius:2px;
         color:#A71D5D;
       }
@@ -144,7 +151,6 @@
         background-color:#eee;
         padding:2px;
         font-weight:normal;
-        letter-spacing:0.1em;
         border-radius:2px;
         color:#183691;
         margin-right:6px;
@@ -219,7 +225,6 @@
       }
       div.param-tag div.type { 
           margin-left:6px;
-          letter-spacing:0.1em;
           color:#183691;
           float:left;
        }
@@ -244,8 +249,7 @@
         <h2 style="margin-top:0">Tags</h2>
         <div class="class-tag" style="display:">
           <div class="tag">Description:</div>
-          <div class="value">The World's simplest phpdoc comment analyzer.
-</div>
+          <div class="value">The World's simplest phpdoc comment analyzer.<br/></div>
           <div class="clear"></div>
         </div>
         <div class="class-tag" style="display:">
@@ -270,14 +274,14 @@
 </div></div>
       <div style="display:"><h2>Properties</h2><div class="property">
   <div class="var">
-    <div class="icon"><img class="icon" src="lock-closed.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
     <div style="display:" class="type">array</div>
     <div class="name">$tree</div>
     <div class="clear"></div>
   </div>
   <div style="display:" class="prop-note">
     <div class="desc-label">Description:</div> 
-    <div class="note">Pairs of ( BRANCH_x => SimpleDocumenterNode(s) ).</div>
+    <div class="note">Pairs of ( BRANCH_x =&gt; SimpleDocumenterNode[] ).</div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">
@@ -286,7 +290,7 @@
   <div class="footer"></div>
 </div><div class="property">
   <div class="var">
-    <div class="icon"><img class="icon" src="lock-closed.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
     <div style="display:" class="type">string[]</div>
     <div class="name">$tags</div>
     <div class="clear"></div>
@@ -302,7 +306,7 @@
   <div class="footer"></div>
 </div><div class="property">
   <div class="var">
-    <div class="icon"><img class="icon" src="lock-closed.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
     <div style="display:" class="type">string[]</div>
     <div class="name">$commentTrims</div>
     <div class="clear"></div>
@@ -319,7 +323,7 @@
 </div></div>
       <div style="display:"><h2>Methods</h2><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">__construct</span>(<span style="display:" class="param-type">string</span><span
@@ -332,8 +336,7 @@
   </div>
   <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note">Parses the php doc comments of the given class, and stores the parse.
-</div>
+    <div class="note">Parses the php doc comments of the given class.<br/></div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
@@ -341,28 +344,28 @@
   <div class="tag">@param</div> 
   <div style="display:" class="type">string</div>
   <div style="display:" class="name">$class</div>
-  <div class="note">Produce a SimpleDocumenter analysis of this class.</div>
+  <div class="note">The name of an in-memory class.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:"><div class="method-tag">
   <div class="tag">@throws</div> 
   <div class="type">ErrorException</div>
-  <div class="note">If given a class that doesn't exist in memory.</div>
+  <div class="note">If given the name of a class that doesn't exist.</div>
   <div class="clear"></div>
 </div></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
     <div class="type">SimpleDocumenter</div>
-    <div class="note">Contains the parsed doc comments within $class.
+    <div class="note">Contains the doc comment parse of $class.
 </div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">classNode</span>()
@@ -385,18 +388,19 @@
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
     <div class="type">SimpleDocumenterNode</div>
-    <div class="note">A node containing the parsed class's tags.
+    <div class="note">A node containing the tags found in
+                             any doc comment for the class itself.
 </div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">constantNodes</span>(<span style="display:" class="param-type">callable|NULL</span><span
-      style="display:none" class="param-name"></span>)
+      style="display:" class="param-name">$filter</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">SimpleDocumenterNode[]</span>
@@ -412,9 +416,8 @@
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
   <div style="display:" class="type">callable|NULL</div>
-  <div style="display:none" class="name"></div>
-  <div class="note">Optional filter function, where each argument
-                     of the fitler is a SimpleDocumenterNode.</div>
+  <div style="display:" class="name">$filter</div>
+  <div class="note">Optional filter function, where each filter<br/>                             argument is a SimpleDocumenterNode.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -431,11 +434,11 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">propertyNodes</span>(<span style="display:" class="param-type">callable|NULL</span><span
-      style="display:none" class="param-name"></span>)
+      style="display:" class="param-name">$filter</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">SimpleDocumenterNode[]</span>
@@ -451,9 +454,8 @@
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
   <div style="display:" class="type">callable|NULL</div>
-  <div style="display:none" class="name"></div>
-  <div class="note">Optional filter function, where each argument
-                     of the fitler is a SimpleDocumenterNode.</div>
+  <div style="display:" class="name">$filter</div>
+  <div class="note">Optional filter function, where each filter<br/>                             argument is a SimpleDocumenterNode.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -470,11 +472,11 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">methodNodes</span>(<span style="display:" class="param-type">callable|NULL</span><span
-      style="display:none" class="param-name"></span>)
+      style="display:" class="param-name">$filter</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">SimpleDocumenterNode[]</span>
@@ -490,9 +492,8 @@
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
   <div style="display:" class="type">callable|NULL</div>
-  <div style="display:none" class="name"></div>
-  <div class="note">Optional filter function, where each argument
-                     of the fitler is a SimpleDocumenterNode.</div>
+  <div style="display:" class="name">$filter</div>
+  <div class="note">Optional filter function, where each filter<br/>                             argument is a SimpleDocumenterNode.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -509,7 +510,7 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-closed.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">node</span>(<span style="display:" class="param-type">object</span><span
@@ -530,9 +531,7 @@
   <div class="tag">@param</div> 
   <div style="display:" class="type">object</div>
   <div style="display:" class="name">$reflector</div>
-  <div class="note">An instance of one of { ReflectionClass,
-                                                 ReflectionMethod,
-                                                 ReflectionProperty }.</div>
+  <div class="note">A Reflection(Class|Method|Property) object.</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -542,7 +541,7 @@
     <div class="tag">@return</div> 
     <div class="type">SimpleDocumenterNode</div>
     <div class="note">A node containing all of the parsed phpdoc
-                             tags from the given Reflection* object's
+                             tags from the given Reflection object's
                              getDocComment() string.
 </div>
     <div class="clear"></div>

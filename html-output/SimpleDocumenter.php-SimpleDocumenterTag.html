@@ -1,9 +1,19 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Class SimpleDocumenterTag Documentation</title>
+    <meta charset="UTF-8"/>
     <style>
+      @font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'), 
+             url(assets/1.woff2) format('woff2'),
+             url(assets/1.woff) format('woff');
+      }
       body { 
-        font-family:"klavika-web","Helvetica Neue",Helvetica,Arial,Geneva;
+        font-family:"Open Sans",Helvetica,Geneva,sans-serif;
         font-size:14px;
         margin:0;
       }
@@ -36,7 +46,7 @@
       div.clear { padding:0;clear:both; }
  
       div.pre {
-        font-family:"Osaka Mono","Andale Mono",monospace,"Courier New",courier;
+        font-family:Consolas,Monaco,"Andale Mono",monospace;
         white-space:pre;
         background-color:#fff;
         border:1px solid #ddd;
@@ -75,7 +85,7 @@
         color:#444;
         float:left;
         margin-left:9px;
-        /*font-style:italic;*/
+        letter-spacing:0.03em;
       }
       div.footer { 
           padding:3px;
@@ -107,7 +117,6 @@
         background-color:#eee;
       }
       div.constant span.name { 
-          font-family:arial;
           font-weight:bold;
       }
       div.constant span.value { color:#A71D5D; }
@@ -120,7 +129,6 @@
       }
 
       div.method-sig { 
-        font-family:arial;
         background-color:#A3D6F5;
         color:#454545;
         letter-spacing:0.1em; 
@@ -135,7 +143,6 @@
         display:inline-block;
         background-color:#eee;
         padding:2px;
-        letter-spacing:0.1em;
         border-radius:2px;
         color:#A71D5D;
       }
@@ -144,7 +151,6 @@
         background-color:#eee;
         padding:2px;
         font-weight:normal;
-        letter-spacing:0.1em;
         border-radius:2px;
         color:#183691;
         margin-right:6px;
@@ -219,7 +225,6 @@
       }
       div.param-tag div.type { 
           margin-left:6px;
-          letter-spacing:0.1em;
           color:#183691;
           float:left;
        }
@@ -244,8 +249,7 @@
         <h2 style="margin-top:0">Tags</h2>
         <div class="class-tag" style="display:">
           <div class="tag">Description:</div>
-          <div class="value">Express a single doc comment tag as an object.
-</div>
+          <div class="value">Express a single doc comment tag as an object.<br/></div>
           <div class="clear"></div>
         </div>
         <div class="class-tag" style="display:">
@@ -274,7 +278,7 @@
 </div></div>
       <div style="display:"><h2>Properties</h2><div class="property">
   <div class="var">
-    <div class="icon"><img class="icon" src="lock-closed.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
     <div style="display:" class="type">array</div>
     <div class="name">$fields</div>
     <div class="clear"></div>
@@ -291,7 +295,7 @@
 </div></div>
       <div style="display:"><h2>Methods</h2><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">__construct</span>(<span style="display:" class="param-type">array|string</span><span
@@ -312,8 +316,7 @@
   <div class="tag">@param</div> 
   <div style="display:" class="type">array|string</div>
   <div style="display:" class="name">$arg</div>
-  <div class="note">Either a tag name, e.g. '@link', or
-                         pairs of ( FIELD_x =&gt; value ).</div>
+  <div class="note">Either a tag name, e.g. '@link', or<br/>                         pairs of ( FIELD_x =&gt; value ).</div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
@@ -328,7 +331,7 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">__get</span>(<span style="display:" class="param-type">string</span><span
@@ -365,7 +368,7 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">__set</span>(<span style="display:" class="param-type">string</span><span
@@ -408,7 +411,7 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">__toString</span>()
@@ -437,7 +440,7 @@
   <div class="footer"></div>
 </div><div class="method">
   <div class="method-sig">
-    <div class="icon"><img class="icon" src="lock-open.png"/></div>
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
       <span class="name">analyzeText</span>()
@@ -449,9 +452,7 @@
   </div>
   <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note">Side-effect on object's properties, per the analysis.
-Analyze the object's text, looking for pieces within certain tags.
-For instance, '@param' might have a type, a name and a descriptive note.</div>
+    <div class="note">Side-effect on object's properties, per the analysis.<br/>Analyze the object's text, looking for pieces within certain tags.<br/>For instance, '@param' might have a type, a name and a descriptive note.</div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:none">

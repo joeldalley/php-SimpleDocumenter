@@ -12,7 +12,7 @@ class SimpleDocumenter {
     const BRANCH_PROPS   = 'properties';
     const BRANCH_METHODS = 'methods';
 
-    /** @var array $tree Pairs of ( BRANCH_x => SimpleDocumenterNode(s) ). */
+    /** @var array $tree Pairs of ( BRANCH_x => SimpleDocumenterNode[] ). */
     private $tree = array(               
         self::BRANCH_CLASS   => NULL,
         self::BRANCH_METHODS => array(),
@@ -41,11 +41,11 @@ class SimpleDocumenter {
     ////////////////////////////////////////////////////////////////
 
     /**
-     * Parses the php doc comments of the given class, and stores the parse.
+     * Parses the php doc comments of the given class.
      *
-     * @param string $class Produce a SimpleDocumenter analysis of this class.
-     * @throws ErrorException If given a class that doesn't exist in memory.
-     * @return SimpleDocumenter Contains the parsed doc comments within $class.
+     * @param string $class The name of an in-memory class.
+     * @throws ErrorException If given the name of a class that doesn't exist.
+     * @return SimpleDocumenter Contains the doc comment parse of $class.
      */
     public function __construct($class) {
         $class = (string) $class;
@@ -77,13 +77,14 @@ class SimpleDocumenter {
     }
 
     /** 
-     * @return SimpleDocumenterNode A node containing the parsed class's tags.
+     * @return SimpleDocumenterNode A node containing the tags found in
+     *                              any doc comment for the class itself.
      */
     public function classNode() { return $this->tree[self::BRANCH_CLASS]; }
 
     /**
-     * @param callable|NULL Optional filter function, where each argument
-     *                      of the fitler is a SimpleDocumenterNode.
+     * @param callable|NULL $filter Optional filter function, where each filter
+     *                              argument is a SimpleDocumenterNode.
      * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
      *                                constants, possibly filtered.
      */
@@ -93,8 +94,8 @@ class SimpleDocumenter {
     }
 
     /**
-     * @param callable|NULL Optional filter function, where each argument
-     *                      of the fitler is a SimpleDocumenterNode.
+     * @param callable|NULL $filter Optional filter function, where each filter
+     *                              argument is a SimpleDocumenterNode.
      * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
      *                                properties, possibly filtered.
      */
@@ -104,8 +105,8 @@ class SimpleDocumenter {
     }
 
     /**
-     * @param callable|NULL Optional filter function, where each argument
-     *                      of the fitler is a SimpleDocumenterNode.
+     * @param callable|NULL $filter Optional filter function, where each filter
+     *                              argument is a SimpleDocumenterNode.
      * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
      *                                methods, possibly filtered.
      */
@@ -115,11 +116,9 @@ class SimpleDocumenter {
     }
 
     /**
-     * @param object $reflector An instance of one of { ReflectionClass,
-     *                                                  ReflectionMethod,
-     *                                                  ReflectionProperty }.
+     * @param object $reflector A Reflection(Class|Method|Property) object.
      * @return SimpleDocumenterNode A node containing all of the parsed phpdoc
-     *                              tags from the given Reflection* object's
+     *                              tags from the given Reflection object's
      *                              getDocComment() string.
      */
     private function node($reflector) {
@@ -169,7 +168,7 @@ class SimpleDocumenter {
 }
 
 /**
- * A SimpleDocumenterNode encapsulates a Reflection* object and the pairs
+ * A SimpleDocumenterNode encapsulates a Reflection object and the pairs
  * of ( Tag name => SimpleDocumenterTag[] ) from a php doc comment parse.
  *
  * @author Joel Dalley
@@ -177,11 +176,7 @@ class SimpleDocumenter {
  */
 class SimpleDocumenterNode {
 
-    /** 
-     * @var object $reflector An instance of one of { ReflectionClass,
-     *                                                ReflectionMethod,
-     *                                                ReflectionProperty }.
-     */
+    /** @param object $reflector A Reflection(Class|Method|Property) object. */
     private $reflector;
 
     /**
@@ -191,9 +186,7 @@ class SimpleDocumenterNode {
     private $struct;
 
     /**
-     * @param object $reflector An instance of one of { ReflectionClass,
-     *                                                  ReflectionMethod,
-     *                                                  ReflectionProperty }.
+     * @param object $reflector A Reflection(Class|Method|Property) object.
      * @param array $struct Pairs of ( Tag name => SimpleDocumenterTag[] ).
      * @return SimpleDocumenterNode
      */
@@ -202,11 +195,7 @@ class SimpleDocumenterNode {
         $this->struct = $struct;
     }
 
-    /** 
-     * @return object An instance of one of { ReflectionClass,
-     *                                        ReflectionMethod,
-     *                                        ReflectionProperty }.
-     */
+    /** @return object A Reflection(Class|Method|Property) object. */
     public function reflector() { return $this->reflector; }
 
     /**
@@ -227,7 +216,7 @@ class SimpleDocumenterNode {
 }
 
 /**
- * A SimpleDocumenterTagList holds a Reflection* object and an array of
+ * A SimpleDocumenterTagList holds a Reflection object and an array of
  * SimpleDocumenterTags. 
  *
  * This object is an iterator, and provides methods like first(), count()
@@ -238,24 +227,18 @@ class SimpleDocumenterNode {
  */
 class SimpleDocumenterTagList implements Iterator {
 
-    /** 
-     * @var object $reflector An instance of one of { ReflectionClass,
-     *                                                ReflectionMethod,
-     *                                                ReflectionProperty }.
-     */
+    /** @param object $reflector A Reflection(Class|Method|Property) object. */
     private $reflector;
 
     /** @var SimpleDocumenterTag[] $tags */
     private $tags = array();
 
     /**
-     * @param object $reflector An instance of one of { ReflectionClass,
-     *                                                  ReflectionMethod,
-     *                                                  ReflectionProperty }.
+     * @param object $reflector A Reflection(Class|Method|Property) object.
      * @param SimpleDocumenterTag[] $tags An array of SimpleDocumenterTags.
      *
      * @throws InvalidArgumentException If $tags isn't an array.
-     * @throws InvalidArgumentException If any of the entries in $tags 
+     * @throws InvalidArgumentException If any of the entries in $tags
      *                                  aren't SimpleDocumenterTags.
      * @return SimpleDocumenterTagList
      */
@@ -278,11 +261,7 @@ class SimpleDocumenterTagList implements Iterator {
         }
     }
 
-    /** 
-     * @return object An instance of one of { ReflectionClass,
-     *                                        ReflectionMethod,
-     *                                        ReflectionProperty }.
-     */
+    /** @return object A Reflection(Class|Method|Property) object. */
     public function reflector() { return $this->reflector; }
 
     /** 
@@ -300,10 +279,9 @@ class SimpleDocumenterTagList implements Iterator {
     public function first() { return count($this->tags) ? $this->tags[0] : NULL; }
 
     /**
-     * @param string $sep A join separator.
-     * @return string Joined SimpleDocumenterTags. Note that evaluating
-     *                a SimpleDocumenterTag in string context yields its
-     *                entire php doc comment text.
+     * @param string|NULL $sep A join separator. Default: " ".
+     * @return string Joined SimpleDocumenterTags. Note that evaluating a
+     *                SimpleDocumenterTag in string context yields its full text.
      */
     public function join($sep = ' ') { return implode($sep, $this->tags); }
 
@@ -409,10 +387,10 @@ class SimpleDocumenterTag {
 
         // Try to find (type, name, note), from tag text.
         $patterns = array(
-            '/^\s*([\w\|\[\]]+)\s+(\&?\$\w+)\s?(.*)/s' => function($m) {
+            '/^\s*([\\\\\w\|\[\]]+)\s+(\&?\$\w+)\s?(.*)/s' => function($m) {
                 return array($m[1], $m[2], $m[3]);
             },
-            '/^\s*([\w\|\[\]]+)\s?(.*)/s' => function($m) {
+            '/^\s*([\\\\\w\|\[\]]+)\s?(.*)/s' => function($m) {
                 return array($m[1], NULL, $m[2]);
             },
             '/^\s*(\&?\$\w+)\s?(.*)/s' => function($m) {
@@ -435,7 +413,6 @@ class SimpleDocumenterTag {
  * @version 2015/Mar/07
  */
 class SimpleDocumenterUtil {
-
     /**
      * @param array|SimpleDocumenterTagList $list The list to be filtered.
      * @param callable|NULL $callable A filtering function, or NULL.

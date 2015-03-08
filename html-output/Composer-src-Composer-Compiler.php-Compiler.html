@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Class SimpleDocumenterNode Documentation</title>
+    <title>Class \Composer\Compiler Documentation</title>
     <meta charset="UTF-8"/>
     <style>
       @font-face {
@@ -240,7 +240,7 @@
   </head>
   <body>
     <div class="heading">
-      <div class="h1"><h1>SimpleDocumenterNode</h1></div>
+      <div class="h1"><h1>\Composer\Compiler</h1></div>
       <div class="context">API Documentation</div>
       <div class="clear"></div>
     </div>
@@ -249,151 +249,185 @@
         <h2 style="margin-top:0">Tags</h2>
         <div class="class-tag" style="display:">
           <div class="tag">Description:</div>
-          <div class="value">A SimpleDocumenterNode encapsulates a Reflection object and the pairs<br/>of ( Tag name =&gt; SimpleDocumenterTag[] ) from a php doc comment parse.<br/></div>
+          <div class="value">The Compiler class compiles composer into a phar<br/></div>
           <div class="clear"></div>
         </div>
         <div class="class-tag" style="display:">
           <div class="tag">@author</div>
-          <div class="value">Joel Dalley</div>
+          <div class="value">Fabien Potencier <fabien@symfony.com>, Jordi Boggiano <j.boggiano@seld.be>
+</div>
           <div class="clear"></div>
         </div>
-        <div class="class-tag" style="display:">
+        <div class="class-tag" style="display:none">
           <div class="tag">@version</div>
-          <div class="value">2015/Mar/06
-</div>
+          <div class="value"></div>
           <div class="clear"></div>
         </div>
       </div>
       <div style="display:none"><h2>Constants</h2></div>
-      <div style="display:"><h2>Properties</h2><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
-    <div style="display:" class="type">array</div>
-    <div class="name">$struct</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note">Entries in the array are pairs of<br/>                   ( Tag name =&gt; SimpleDocumenterTag[] ).<br/></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div></div>
+      <div style="display:none"><h2>Properties</h2></div>
       <div style="display:"><h2>Methods</h2><div class="method">
   <div class="method-sig">
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">__construct</span>(<span style="display:" class="param-type">object</span><span
-      style="display:" class="param-name">$reflector</span>, <span style="display:" class="param-type">array</span><span
-      style="display:" class="param-name">$struct</span>)
+      <span class="name">compile</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$pharFile</span>)
     </div>
-    <div class="return" style="display:">
-      return <span class="return-type">SimpleDocumenterNode</span>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
     </div>
     <div class="clear"></div>
   </div>
-  <div class="method-note" style="display:none">
+  <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">object</div>
-  <div style="display:" class="name">$reflector</div>
-  <div class="note">A Reflection(Class|Method|Property) object.</div>
-  <div class="clear"></div>
-</div><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">array</div>
-  <div style="display:" class="name">$struct</div>
-  <div class="note">Pairs of ( Tag name =&gt; SimpleDocumenterTag[] ).</div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">SimpleDocumenterNode</div>
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">reflector</span>()
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">object</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">object</div>
-    <div class="note">A Reflection(Class|Method|Property) object.</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">tagList</span>(<span style="display:" class="param-type">string</span><span
-      style="display:" class="param-name">$name</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">SimpleDocumenterTagList</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
+    <div class="note">Compiles composer into a single phar file<br/></div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
   <div style="display:" class="type">string</div>
-  <div style="display:" class="name">$name</div>
-  <div class="note">A phpdoc tag name, e.g., '@var'.</div>
+  <div style="display:" class="name">$pharFile</div>
+  <div class="note">The full path to the file to create<br/></div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:"><div class="method-tag">
   <div class="tag">@throws</div> 
-  <div class="type">InvalidArgumentException</div>
-  <div class="note">If $name isn't a supported tag name.</div>
+  <div class="type">\RuntimeException</div>
+  <div class="note"></div>
   <div class="clear"></div>
 </div></div>
   </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">addFile</span>()
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">addComposerBin</span>()
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">stripWhitespace</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$source</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">string</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Removes whitespace from a PHP source string while preserving line numbers.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$source</div>
+  <div class="note">A PHP string</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
-    <div class="type">SimpleDocumenterTagList</div>
-    <div class="note">Contains zero or more SimpleDocumenterTags
-                                matching the given tag name.
+    <div class="type">string</div>
+    <div class="note">The PHP string with the whitespace removed
 </div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">getStub</span>()
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>

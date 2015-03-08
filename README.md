@@ -8,11 +8,20 @@ Examples
 
 SimpleDocumenter + an HTML procedure produced the following API documentation Web pages:
 
-[Class: SimpleDocumenter](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenter.html)<br/>
-[Class: SimpleDocumenterNode](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterNode.html)<br/>
-[Class: SimpleDocumenterTagList](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTagList.html)<br/>
-[Class: SimpleDocumenterTag](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTag.html)<br/>
-[Class: SimpleDocumenterUtil](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterUtil.html)
+<b>SimpleDocumenter Classes</b>
+
+[SimpleDocumenter](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenter.html)<br/>[SimpleDocumenterNode](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterNode.html)<br/>[SimpleDocumenterTagList](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTagList.html)<br/>[SimpleDocumenterTag](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterTag.html)<br/>[SimpleDocumenterUtil](https://joeldalley.github.io/php-SimpleDocumenter/html-output/SimpleDocumenter.php-SimpleDocumenterUtil.html)<br/>[Test](https://joeldalley.github.io/php-SimpleDocumenter/html-output/test-classes-Test.class.php-Test.html)
+
+<b>Vendor Classes</b>
+
+<i>Composer</i>
+[\Composer\Composer](https://joeldalley.github.io/php-SimpleDocumenter/html-output/Composer-src-Composer-Composer.php-Composer.html)<br/>[\Composer\Compiler](https://joeldalley.github.io/php-SimpleDocumenter/html-output/Composer-src-Composer-Compiler.php-Compiler.html)<br/>[\Composer\Json\JsonFile](https://joeldalley.github.io/php-SimpleDocumenter/html-output/Composer-src-Composer-Json-JsonFile.php-JsonFile.html)<br/>[\Composer\Autoload\ClassLoader](https://joeldalley.github.io/php-SimpleDocumenter/html-output/Composer-src-Composer-Autoload-ClassLoader.php-ClassLoader.html)<br/>[\Composer\Autoload\ClassMapGenerator](https://joeldalley.github.io/php-SimpleDocumenter/html-output/Composer-src-Composer-Autoload-ClassMapGenerator.php-ClassMapGenerator.html)<br/>[\Composer\EventDispatcher\EventDispatcher](https://joeldalley.github.io/php-SimpleDocumenter/html-output/Composer-src-Composer-EventDispatcher-EventDispatcher.php-EventDispatcher.html)
+
+<i>phpDocumentor2</i>
+[\phpDocumentor\Bootstrap](https://joeldalley.github.io/php-SimpleDocumenter/html-output/phpDocumentor2-src-phpDocumentor-Bootstrap.php-Bootstrap.html)<br/>[\phpDocumentor\Compiler\Compiler](https://joeldalley.github.io/php-SimpleDocumenter/html-output/phpDocumentor2-src-phpDocumentor-Compiler-Compiler.php-Compiler.html)<br/>[\phpDocumentor\Transformer\Transformation](https://joeldalley.github.io/php-SimpleDocumenter/html-output/phpDocumentor2-src-phpDocumentor-Transformer-Transformation.php-Transformation.html)
+
+<i>CodeIgniter</i>
+[CI_Controller](https://joeldalley.github.io/php-SimpleDocumenter/html-output/CodeIgniter-system-core-Controller.php-CI_Controller.html)<br/>[CI_Model](https://joeldalley.github.io/php-SimpleDocumenter/html-output/CodeIgniter-system-core-Model.php-CI_Model.html)<br/>[CI_Router](https://joeldalley.github.io/php-SimpleDocumenter/html-output/CodeIgniter-system-core-Router.php-CI_Router.html)<br/>[CI_Loader](https://joeldalley.github.io/php-SimpleDocumenter/html-output/CodeIgniter-system-core-Loader.php-CI_Loader.html)<br/>[CI_Input](https://joeldalley.github.io/php-SimpleDocumenter/html-output/CodeIgniter-system-core-Input.php-CI_Input.html)
 
 See [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)
 
@@ -25,13 +34,20 @@ perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/ph
 Example Script
 ==============
 ```php
-require 'SimpleDocumenter.php';
+<?php
+/**
+ * README.md example.
+ * @author Joel Dalley
+ * @version 2015/Mar/07
+ */
+
+require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenter');
 
+// Only the public methods.
 $filter = function($node) { return $node->reflector()->isPublic(); };
 $nodes = $documenter->methodNodes($filter);
 
-// Loop on public methods.
 foreach ($nodes as $name => $node) {
     // $return is NULL if the tag list is empty, otherwise 
     // it's the first SimpleDocumenterTag in the tag list.
@@ -64,8 +80,15 @@ SimpleDocumenter is a single file with no dependencies, and as of this writing i
 
 <b>Callback Filtering</b>
 ```php
+<?php
+/**
+ * README.md example.
+ * @author Joel Dalley
+ * @version 2015/Mar/07
+ */
+
 // Show only methods with no @return tag, or which specify return type 'void'.
-require 'SimpleDocumenter.php';
+require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenterTag');
 
 $voidOrUndefined = function($node) {
@@ -83,7 +106,7 @@ foreach ($documenter->methodNodes($voidOrUndefined) as $name => $node) {
 
 <b>Trade-offs</b>
 
-SimpleDocumenter only works on classes.  It can't analyze functions in the global namespace.
+SimpleDocumenter only works on classes. It can't analyze functions in the global namespace.
 
 Copyright & License
 ===================

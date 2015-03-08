@@ -1,0 +1,55 @@
+SimpleDocumenter
+================
+
+SimpleDocumenter is a zero-dependency phpdoc comment analyzer, packaged as a single file.
+
+Examples
+========
+
+SimpleDocumenter + an HTML procedure produced the following API documentation Web pages:
+
+<b>SimpleDocumenter Classes</b>
+
+{simple-documenter-html-examples}
+
+<b>Vendor Classes</b>
+
+{vendor-html-examples}
+
+See [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)
+
+Add SimpleDocumenter To Your Project
+====================================
+```
+perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php"'
+```
+
+Example Script
+==============
+```php
+{example-1}
+```
+
+For a more complex use case, see [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)
+
+Why SimpleDocumenter?
+=====================
+
+<b>Small and Simple</b>
+
+SimpleDocumenter is a single file with no dependencies, and as of this writing is under 400 source lines of code.
+
+<b>Callback Filtering</b>
+```php
+{example-2}
+```
+
+<b>Trade-offs</b>
+
+SimpleDocumenter only works on classes. It can't analyze functions in the global namespace.
+
+Copyright & License
+===================
+
+php-SimpleDocumenter is copyright &copy; Joel Dalley 2015.<br/>
+php-SimpleDocumenter is distributed under the same license as Perl.

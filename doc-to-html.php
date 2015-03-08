@@ -4,26 +4,65 @@
  * @author Joel Dalley
  * @version 2015/Feb/28
  */
-
 error_reporting(E_ALL);
-require_once 'SimpleDocumenter.php';
 
+$CI_DIR = '../CodeIgniter';
+$PHPDOC_DIR = '../phpDocumentor2/src';
+$COMPOSER_DIR = '../Composer/src/Composer';
+
+// Pairs of (File => Namespace|NULL) to generate docs for.
 $config = array(
-    'Test' => 'test-classes/Test.class.php',
-    'SimpleDocumenter' => 'SimpleDocumenter.php'
+    'SimpleDocumenter.php'        => NULL,
+    'test-classes/Test.class.php' => NULL,
     );
 
-foreach ($config as $class => $file) {
+// Generate some vendor class documentation, if the *_DIR paths are found.
+if (file_exists($COMPOSER_DIR)) {
+    set_include_path(get_include_path() . ":$COMPOSER_DIR");
+    $config["$COMPOSER_DIR/Composer.php"]                        = '\Composer';
+    $config["$COMPOSER_DIR/Compiler.php"]                        = '\Composer';
+    $config["$COMPOSER_DIR/Json/JsonFile.php"]                   = '\Composer\Json';
+    $config["$COMPOSER_DIR/Autoload/ClassLoader.php"]            = '\Composer\Autoload';
+    $config["$COMPOSER_DIR/Autoload/ClassMapGenerator.php"]      = '\Composer\Autoload';
+    $config["$COMPOSER_DIR/EventDispatcher/EventDispatcher.php"] = '\Composer\EventDispatcher';
+}
+if (file_exists($PHPDOC_DIR)) {
+    set_include_path(get_include_path() . ":$PHPDOC_DIR");
+    $config["$PHPDOC_DIR/phpDocumentor/Bootstrap.php"] = '\phpDocumentor';
+    $config["$PHPDOC_DIR/phpDocumentor/Compiler/Compiler.php"] = '\phpDocumentor\Compiler';
+    $config["$PHPDOC_DIR/phpDocumentor/Transformer/Transformation.php"] 
+        = '\phpDocumentor\Transformer';
+}
+if (file_exists($CI_DIR)) {
+    define('BASEPATH', TRUE);
+    set_include_path(get_include_path() . ":$CI_DIR");
+    $config["$CI_DIR/system/core/Controller.php"] = NULL;
+    $config["$CI_DIR/system/core/Model.php"] = NULL;
+    $config["$CI_DIR/system/core/Router.php"] = NULL;
+    $config["$CI_DIR/system/core/Loader.php"] = NULL;
+    $config["$CI_DIR/system/core/Input.php"] = NULL;
+}
+
+// For each config entry, require its php file, extract classes from the file,
+// parse the php doc comments from each class, and write API docs to an HTML file.
+foreach ($config as $file => $namespace) {
     require_once $file;
-    $classes = get_php_classes(file_get_contents($file));
-    foreach ($classes as $class) {
-        $name = str_replace('/', '-', $file);
+
+    foreach (classes(file_get_contents($file)) as $class) {
+        $name = str_replace(array('../', '/'), array('', '-'), $file);
         $outfile = "html-output/$name-$class.html";
-        file_put_contents($outfile, document($class));
-        echo "Wrote file $outfile\n";
+        echo "Writing file $outfile\n";
+
+        $fullClass = $namespace ? "$namespace\\$class" : $class;
+
+        file_put_contents($outfile, document($fullClass));
+        isset($config[$outfile]) or $config[$outfile] = array();
+        $config[$outfile][] = $fullClass;
+        unset($config[$file]);
     }
 }
 
+// Takes a class name and returns a Web page HTML string.
 function document($className) {
     $documenter = new SimpleDocumenter($className);
     $classNode = $documenter->classNode();
@@ -50,7 +89,7 @@ function document($className) {
             $exmplHtml = '';
             foreach ($node->tagList('@example') as $exmpl) {
                 $exmplHtml .= template('example', array(
-                    '{note}' => htmlentities("$exmpl")
+                    '{note}' => br(htmlentities("$exmpl"))
                 ));
             }
 
@@ -62,7 +101,7 @@ function document($className) {
             $propsHtml .= template('property', array(
                 '{icon}'         => icon($refl),
                 '{show-note}'    => show($var->note),
-                '{note}'         => $var->note,
+                '{note}'         => br(htmlentities($var->note)),
                 '{show-type}'    => show($var->type),
                 '{type}'         => $var->type,
                 '{name}'         => $var->name,
@@ -83,7 +122,6 @@ function document($className) {
                 '{type}'      => $param->type,
                 '{show-name}' => show($param->name),
                 '{name}'      => $param->name,
-                '{note}'      => $param->note
             ));
         }
  
@@ -91,14 +129,14 @@ function document($className) {
         foreach ($node->tagList('@throws') as $throws) {
             $throwsHtml .= template('throws', array(
                 '{type}' => $throws->type,
-                '{note}' => htmlentities($throws->note)
+                '{note}' => br(htmlentities($throws->note))
             ));
         }
 
         $exmplHtml = '';
         foreach ($node->tagList('@example') as $exmpl) {
             $exmplHtml .= template('example', array(
-                '{note}' => htmlentities("$exmpl")
+                '{note}' => br(htmlentities("$exmpl"))
             ));
         }
 
@@ -109,7 +147,7 @@ function document($className) {
                 '{name}'      => $param->name,
                 '{show-type}' => show($param->type),
                 '{type}'      => $param->type,
-                '{note}'      => htmlentities($param->note)
+                '{note}'      => br(htmlentities($param->note))
             ));
         }
 
@@ -119,7 +157,7 @@ function document($className) {
             '{icon}'         => icon($node->reflector()),
             '{name}'         => $name,
             '{show-note}'    => show($note && "$note"),
-            '{note}'         => $note ? "$note" : '',
+            '{note}'         => $note ? br(htmlentities("$note")) : '',
             '{show-return}'  => show($return && "$return"),
             '{type}'         => $return ? $return->type : '',
             '{return-note}'  => $return ? $return->note : '',
@@ -147,7 +185,7 @@ function document($className) {
         '{show-author}'     => show($authors),
         '{author}'          => $authors,
         '{show-note}'       => show($note && "$note"),
-        '{note}'            => $note ? "$note" : '',
+        '{note}'            => $note ? br(htmlentities("$note")) : '',
         '{show-props}'      => show($propsHtml),
         '{props}'           => $propsHtml,
         '{show-constants}'  => show($constHtml),
@@ -157,7 +195,6 @@ function document($className) {
     ));
 }
 
-
 function template($name, $replace = array()) {
     $tmpl = file_get_contents("templates/$name.html");
     foreach ($replace as $placeholder => $value) {
@@ -166,11 +203,13 @@ function template($name, $replace = array()) {
     return trim($tmpl);
 }
 
+function br($str) { return preg_replace('/[\r\n]/', '<br/>', $str); }
+
 function show($val) { return empty($val) ? 'none' : ''; }
 
 function icon($refl) { return $refl->isPublic() ? 'open' : 'closed'; }
 
-function get_php_classes($text) {
+function classes($text) {
     $tokens = token_get_all($text);
     $count = count($tokens);
     $classes = array();

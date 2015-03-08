@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Class Test Documentation</title>
+    <title>Class \Composer\Autoload\ClassLoader Documentation</title>
     <meta charset="UTF-8"/>
     <style>
       @font-face {
@@ -240,7 +240,7 @@
   </head>
   <body>
     <div class="heading">
-      <div class="h1"><h1>Test</h1></div>
+      <div class="h1"><h1>\Composer\Autoload\ClassLoader</h1></div>
       <div class="context">API Documentation</div>
       <div class="clear"></div>
     </div>
@@ -249,176 +249,29 @@
         <h2 style="margin-top:0">Tags</h2>
         <div class="class-tag" style="display:">
           <div class="tag">Description:</div>
-          <div class="value">Test php doc comments in various states of well-formedness.<br/></div>
+          <div class="value">ClassLoader implements a PSR-0 class loader<br/><br/>See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md<br/><br/>    $loader = new \Composer\Autoload\ClassLoader();<br/><br/>    // register classes with namespaces<br/>    $loader-&gt;add('Symfony\Component', __DIR__.'/component');<br/>    $loader-&gt;add('Symfony',           __DIR__.'/framework');<br/><br/>    // activate the autoloader<br/>    $loader-&gt;register();<br/><br/>    // to enable searching the include path (eg. for PEAR packages)<br/>    $loader-&gt;setUseIncludePath(true);<br/><br/>In this example, if you try to use a class in the Symfony\Component<br/>namespace or one of its children (Symfony\Component\Console for instance),<br/>the autoloader will first look for the class under the component/<br/>directory, and it will then fallback to the framework/ directory if not<br/>found before giving up.<br/><br/>This class is loosely based on the Symfony UniversalClassLoader.<br/></div>
           <div class="clear"></div>
         </div>
         <div class="class-tag" style="display:">
           <div class="tag">@author</div>
-          <div class="value">Joel Dalley</div>
+          <div class="value">Fabien Potencier <fabien@symfony.com>, Jordi Boggiano <j.boggiano@seld.be>
+</div>
           <div class="clear"></div>
         </div>
-        <div class="class-tag" style="display:">
+        <div class="class-tag" style="display:none">
           <div class="tag">@version</div>
-          <div class="value">2015/Mar/03</div>
+          <div class="value"></div>
           <div class="clear"></div>
         </div>
       </div>
-      <div style="display:"><h2>Constants</h2><div class="constant">
-  <span class="name">A</span> = <span class="value">1</span>
-</div><div class="constant">
-  <span class="name">B</span> = <span class="value">2</span>
-</div></div>
-      <div style="display:"><h2>Properties</h2><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:none" class="type"></div>
-    <div class="name">$aa</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:none" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:none" class="type"></div>
-    <div class="name">$aaa</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:none" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:" class="type">int</div>
-    <div class="name">$b</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:none" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:none" class="type"></div>
-    <div class="name">$c</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:none" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:none" class="type"></div>
-    <div class="name">$d</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note">This is an int.</div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:" class="type">int</div>
-    <div class="name">$e</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note">  This is an int.</div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:" class="type">int</div>
-    <div class="name">$f</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note">This is an int.</div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:" class="type">int</div>
-    <div class="name">$g</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note">This is an int.<br/></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="property">
-  <div class="var">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div style="display:" class="type">int</div>
-    <div class="name">$h</div>
-    <div class="clear"></div>
-  </div>
-  <div style="display:" class="prop-note">
-    <div class="desc-label">Description:</div> 
-    <div class="note">This is an int.<br/>            A second line about $h.<br/></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="property-tagset" style="display:none"></div>
-  </div>
-  <div class="footer"></div>
-</div></div>
+      <div style="display:none"><h2>Constants</h2></div>
+      <div style="display:none"><h2>Properties</h2></div>
       <div style="display:"><h2>Methods</h2><div class="method">
   <div class="method-sig">
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">a</span>()
+      <span class="name">getPrefixes</span>()
     </div>
     <div class="return" style="display:none">
       return <span class="return-type"></span>
@@ -447,7 +300,7 @@
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">aa</span>()
+      <span class="name">getPrefixesPsr4</span>()
     </div>
     <div class="return" style="display:none">
       return <span class="return-type"></span>
@@ -476,39 +329,10 @@
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">b</span>()
+      <span class="name">getFallbackDirs</span>()
     </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:none">
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">c</span>()
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
     </div>
     <div class="clear"></div>
   </div>
@@ -522,9 +346,9 @@
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return" style="display:">
+  <div class="method-return" style="display:none">
     <div class="tag">@return</div> 
-    <div class="type">void</div>
+    <div class="type"></div>
     <div class="note"></div>
     <div class="clear"></div>
   </div>
@@ -534,11 +358,69 @@
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">d</span>(<span style="display:none" class="param-type"></span><span
-      style="display:none" class="param-name"></span>)
+      <span class="name">getFallbackDirsPsr4</span>()
     </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">getClassMap</span>()
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">addClassMap</span>(<span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$classMap</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
     </div>
     <div class="clear"></div>
   </div>
@@ -550,17 +432,17 @@
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div style="display:none" class="type"></div>
-  <div style="display:none" class="name"></div>
-  <div class="note"></div>
+  <div style="display:" class="type">array</div>
+  <div style="display:" class="name">$classMap</div>
+  <div class="note">Class to filename map<br/></div>
   <div class="clear"></div>
 </div></div>
     <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
-  <div class="method-return" style="display:">
+  <div class="method-return" style="display:none">
     <div class="tag">@return</div> 
-    <div class="type">void</div>
+    <div class="type"></div>
     <div class="note"></div>
     <div class="clear"></div>
   </div>
@@ -570,264 +452,425 @@
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">e</span>(<span style="display:" class="param-type">int</span><span
-      style="display:none" class="param-name"></span>)
+      <span class="name">add</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$prefix</span>, <span style="display:" class="param-type">array|string</span><span
+      style="display:" class="param-name">$paths</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$prepend</span>)
     </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:none" class="name"></div>
-  <div class="note"></div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">f</span>(<span style="display:none" class="param-type"></span><span
-      style="display:" class="param-name">$a</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:none" class="type"></div>
-  <div style="display:" class="name">$a</div>
-  <div class="note"></div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">g</span>(<span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$a</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$a</div>
-  <div class="note"></div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">h</span>(<span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$a</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:none">
-    <div class="desc-label">Description:</div> 
-    <div class="note"></div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$a</div>
-  <div class="note">A is an integer.</div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note">Nothing to return here.
-</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">i</span>(<span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$a</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
     </div>
     <div class="clear"></div>
   </div>
   <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note">With a comment.</div>
+    <div class="note">Registers a set of PSR-0 directories for a given prefix, either<br/>appending or prepending to the ones previously set for this prefix.<br/></div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$a</div>
-  <div class="note">A is an integer.<br/>           Here's a second line about $a.</div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note">Nothing to return here.
-</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">j</span>(<span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$a</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:">
-    <div class="desc-label">Description:</div> 
-    <div class="note">With a mult-line comment.<br/>Here's line 2.</div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$a</div>
-  <div class="note">A is an integer.<br/>              Here is a second line about $a.</div>
-  <div class="clear"></div>
-</div></div>
-    <div class="method-tagset" style="display:none"></div>
-    <div class="method-tagset" style="display:none"></div>
-  </div>
-  <div class="method-return" style="display:">
-    <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note">Nothing to return here.
-</div>
-    <div class="clear"></div>
-  </div>
-  <div class="footer"></div>
-</div><div class="method">
-  <div class="method-sig">
-    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
-    <div class="function">
-      <span class="function">function</span>
-      <span class="name">jj</span>(<span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$a</span>, <span style="display:" class="param-type">int[]</span><span
-      style="display:" class="param-name">$b</span>)
-    </div>
-    <div class="return" style="display:">
-      return <span class="return-type">void</span>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="method-note" style="display:">
-    <div class="desc-label">Description:</div> 
-    <div class="note">With a mult-line comment.<br/>Here's line 2.</div>
-    <div class="clear"></div>
-  </div>
-  <div class="tagsets" style="display:">
-    <div class="method-tagset" style="display:"><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$a</div>
-  <div class="note">A is an integer.</div>
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$prefix</div>
+  <div class="note"> The prefix</div>
   <div class="clear"></div>
 </div><div class="param-tag">
   <div class="tag">@param</div> 
-  <div style="display:" class="type">int[]</div>
-  <div style="display:" class="name">$b</div>
-  <div class="note">An array of is an integers.</div>
+  <div style="display:" class="type">array|string</div>
+  <div style="display:" class="name">$paths</div>
+  <div class="note">  The PSR-0 root directories</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$prepend</div>
+  <div class="note">Whether to prepend the directories<br/></div>
   <div class="clear"></div>
 </div></div>
-    <div class="method-tagset" style="display:"><div class="example-tag">
-  <div class="tag">@example</div> 
-  <div class="note pre">Two line comment.<br/>    Here is line 2.</div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">addPsr4</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$prefix</span>, <span style="display:" class="param-type">array|string</span><span
+      style="display:" class="param-name">$paths</span>, <span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$prepend</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Registers a set of PSR-4 directories for a given namespace, either<br/>appending or prepending to the ones previously set for this namespace.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$prefix</div>
+  <div class="note"> The prefix/namespace, with trailing '\\'</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array|string</div>
+  <div style="display:" class="name">$paths</div>
+  <div class="note">  The PSR-0 base directories</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$prepend</div>
+  <div class="note">Whether to prepend the directories<br/></div>
   <div class="clear"></div>
 </div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:"><div class="method-tag">
+  <div class="tag">@throws</div> 
+  <div class="type">\InvalidArgumentException</div>
+  <div class="note"></div>
+  <div class="clear"></div>
+</div></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">set</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$prefix</span>, <span style="display:" class="param-type">array|string</span><span
+      style="display:" class="param-name">$paths</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Registers a set of PSR-0 directories for a given prefix,<br/>replacing any others previously set for this prefix.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$prefix</div>
+  <div class="note">The prefix</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array|string</div>
+  <div style="display:" class="name">$paths</div>
+  <div class="note"> The PSR-0 base directories<br/></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">setPsr4</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$prefix</span>, <span style="display:" class="param-type">array|string</span><span
+      style="display:" class="param-name">$paths</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Registers a set of PSR-4 directories for a given namespace,<br/>replacing any others previously set for this namespace.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$prefix</div>
+  <div class="note">The prefix/namespace, with trailing '\\'</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">array|string</div>
+  <div style="display:" class="name">$paths</div>
+  <div class="note"> The PSR-4 base directories<br/></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:"><div class="method-tag">
+  <div class="tag">@throws</div> 
+  <div class="type">\InvalidArgumentException</div>
+  <div class="note"></div>
+  <div class="clear"></div>
+</div></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">setUseIncludePath</span>(<span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$useIncludePath</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Turns on searching the include path for class files.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$useIncludePath</div>
+  <div class="note"></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">getUseIncludePath</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Can be used to check if the autoloader uses the include path to check<br/>for classes.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note">Nothing to return here.
+    <div class="type">bool</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">setClassMapAuthoritative</span>(<span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$classMapAuthoritative</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Turns off searching the prefix and fallback directories for classes<br/>that have not been registered with the class map.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$classMapAuthoritative</div>
+  <div class="note"></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">isClassMapAuthoritative</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">bool</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Should class lookup fail if not found in the current class map?<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">bool</div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">register</span>(<span style="display:" class="param-type">bool</span><span
+      style="display:" class="param-name">$prepend</span>)
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Registers this instance as an autoloader.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">bool</div>
+  <div style="display:" class="name">$prepend</div>
+  <div class="note">Whether to prepend the autoloader or not<br/></div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">unregister</span>()
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Unregisters this instance as an autoloader.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">loadClass</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$class</span>)
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">bool|null</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:">
+    <div class="desc-label">Description:</div> 
+    <div class="note">Loads the given class or interface.<br/></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:">
+    <div class="method-tagset" style="display:"><div class="param-tag">
+  <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$class</div>
+  <div class="note">The name of the class</div>
+  <div class="clear"></div>
+</div></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">bool|null</div>
+    <div class="note">True if loaded, null otherwise
 </div>
     <div class="clear"></div>
   </div>
@@ -837,51 +880,64 @@
     <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
     <div class="function">
       <span class="function">function</span>
-      <span class="name">k</span>(<span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$a</span>, <span style="display:" class="param-type">int</span><span
-      style="display:" class="param-name">$b</span>)
+      <span class="name">findFile</span>(<span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$class</span>)
     </div>
     <div class="return" style="display:">
-      return <span class="return-type">void</span>
+      return <span class="return-type">string|false</span>
     </div>
     <div class="clear"></div>
   </div>
   <div class="method-note" style="display:">
     <div class="desc-label">Description:</div> 
-    <div class="note">With a mult-line comment.<br/>Here's line 2.</div>
+    <div class="note">Finds the path to the file where the class is defined.<br/></div>
     <div class="clear"></div>
   </div>
   <div class="tagsets" style="display:">
     <div class="method-tagset" style="display:"><div class="param-tag">
   <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$a</div>
-  <div class="note">A is an integer.</div>
-  <div class="clear"></div>
-</div><div class="param-tag">
-  <div class="tag">@param</div> 
-  <div style="display:" class="type">int</div>
-  <div style="display:" class="name">$b</div>
-  <div class="note">A is an integer.<br/></div>
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$class</div>
+  <div class="note">The name of the class<br/></div>
   <div class="clear"></div>
 </div></div>
-    <div class="method-tagset" style="display:"><div class="example-tag">
-  <div class="tag">@example</div> 
-  <div class="note pre">A simple example.</div>
-  <div class="clear"></div>
-</div><div class="example-tag">
-  <div class="tag">@example</div> 
-  <div class="note pre">A more complex example.<br/>   - Indented.<br/>       (a) multi-level indent.<br/><br/>           * This<br/><br/>           * That<br/><br/>   - Back to this level.<br/></div>
-  <div class="clear"></div>
-</div></div>
+    <div class="method-tagset" style="display:none"></div>
     <div class="method-tagset" style="display:none"></div>
   </div>
   <div class="method-return" style="display:">
     <div class="tag">@return</div> 
-    <div class="type">void</div>
-    <div class="note">Nothing to return here.
-
+    <div class="type">string|false</div>
+    <div class="note">The path if found, false otherwise
 </div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
+    <div class="function">
+      <span class="function">function</span>
+      <span class="name">findFileWithExtension</span>()
+    </div>
+    <div class="return" style="display:none">
+      return <span class="return-type"></span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:none">
+    <div class="tag">@return</div> 
+    <div class="type"></div>
+    <div class="note"></div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>

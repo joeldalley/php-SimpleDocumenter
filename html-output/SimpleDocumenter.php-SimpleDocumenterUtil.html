@@ -295,8 +295,8 @@
       <span class="prefix" style="display:"> static</span>
       <span class="function">function</span>
       <span class="name">filter</span>(<span style="display:" class="param-type">array|SimpleDocumenterTagList</span><span
-      style="display:" class="param-name">$list</span>, <span style="display:" class="param-type">callable|NULL</span><span
-      style="display:" class="param-name">$callable</span>)
+      style="display:" class="param-name">$list</span>, <span style="display:" class="param-type">Closure|NULL</span><span
+      style="display:" class="param-name">$filter</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">array|SimpleDocumenterTagList</span>
@@ -317,8 +317,8 @@
   <div class="clear"></div>
 </div><div class="param-tag">
   <div class="tag">@param</div> 
-  <div style="display:" class="type">callable|NULL</div>
-  <div style="display:" class="name">$callable</div>
+  <div style="display:" class="type">Closure|NULL</div>
+  <div style="display:" class="name">$filter</div>
   <div class="note">A filtering function, or NULL.</div>
   <div class="clear"></div>
 </div></div>
@@ -331,7 +331,7 @@
     <div class="tag">@return</div> 
     <div class="type">array|SimpleDocumenterTagList</div>
     <div class="note">The given list, which may have
-                                      been filtered by $callable.
+                                      been filtered by $filter.
 </div>
     <div class="clear"></div>
   </div>

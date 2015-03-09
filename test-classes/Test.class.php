@@ -169,5 +169,5 @@ abstract class Test {
      * Abstract and static.
      * @return void
      */
-    public abstract static function p();
+    public abstract static function p(Callable $c);
 }

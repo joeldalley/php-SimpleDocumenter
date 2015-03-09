@@ -14,7 +14,11 @@ $repl = array(
     '{simple-documenter-html-examples}' => NULL,
     '{vendor-html-examples}'            => NULL,
     '{example-1}'                       => example(1),
+    '{example-1-output}'                => exampleExec(1),
     '{example-2}'                       => example(2),
+    '{example-2-output}'                => exampleExec(2),
+    '{example-3}'                       => example(3),
+    '{example-3-output}'                => exampleExec(3),
     '{sloc}'                            => sloc('SimpleDocumenter.php'),
     );
 
@@ -57,6 +61,12 @@ file_put_contents('README.md', trim($tmpl));
 
 function example($num) {
     return trim(file_get_contents("examples/example-$num.php"));
+}
+
+function exampleExec($num) {
+    $dir = __DIR__ . '/examples';
+    $file = "example-$num.php";
+    return trim(shell_exec("cd $dir && php $file"));
 }
 
 function mdlink($class, $file) {

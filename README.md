@@ -51,19 +51,21 @@ foreach ($nodes as $name => $node) {
     $return = $node->tagList('@return')->first(); 
     $type = $return && $return->type ? $return->type : 'Not Documented';
 
-    $paramCount = $node->tagList('@param')->count(); // int, 0 or more.
+    $count = $node->tagList('@param')->count(); // int, 0 or more.
 
     print "The method `$name`";
-    $paramCount and print " has $paramCount parameters, and";
+    $count and print " has $count parameters, and";
     print " returns type `$type`.\n";
 }
+```
 
-// Outputs:
-// The method `__construct` has 1 parameters, and returns type `SimpleDocumenter`.
-// The method `classNode` returns type `SimpleDocumenterNode`.
-// The method `constantNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
-// The method `propertyNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
-// The method `methodNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
+<b>Outputs:</b>
+```
+The method `__construct` has 1 parameters, and returns type `SimpleDocumenter`.
+The method `classNode` returns type `SimpleDocumenterNode`.
+The method `constantNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
+The method `propertyNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
+The method `methodNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
 ```
 
 For a more complex use case, see [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)
@@ -73,7 +75,7 @@ Why SimpleDocumenter?
 
 <b>Absolute Portability</b>
 
-SimpleDocumenter is a single file with no dependencies, and is only 380 source lines of code.
+SimpleDocumenter is a single file with no dependencies, and is only 396 source lines of code.
 
 As such, portability is absolute. A local copy of SimpleDocumenter can be gotten by copying & pasting 
 the [source file](https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php).
@@ -87,10 +89,10 @@ the [source file](https://raw.githubusercontent.com/joeldalley/php-SimpleDocumen
  * @version 2015/Mar/07
  */
 
-// Show only methods with no @return tag, or which specify return type 'void'.
 require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('SimpleDocumenterTag');
 
+// Show only methods with no @return tag, or which specify return type 'void'.
 $voidOrUndefined = function($node) {
     $return = $node->tagList('@return')->first();
     return !$return || $return->type == 'void';
@@ -98,10 +100,52 @@ $voidOrUndefined = function($node) {
 foreach ($documenter->methodNodes($voidOrUndefined) as $name => $node) {
     print "{$name}() either returns void or has no @return doc comment tag.\n";
 }
+```
 
-// Outputs:
-// __set() either returns void or has no @return doc comment tag.
-// analyzeText() either returns void or has no @return doc comment tag.
+<b>Outputs:</b>
+```
+__set() either returns void or has no @return doc comment tag.
+analyzeText() either returns void or has no @return doc comment tag.
+```
+
+SimpleDocumenterNode::from() makes it easy to filter inheritance heirarchies:
+
+```php
+<?php
+/**
+ * README.md example.
+ * @author Joel Dalley
+ * @version 2015/Mar/08
+ */
+
+// Simple inheritance heirarchry: Animal -> Mammal -> Primate.
+class Animal                 { const ANIMAL       = TRUE; public function move() {} }
+class Mammal  extends Animal { const WARM_BLOODED = TRUE; public function shed() {} }
+class Primate extends Mammal { const HAS_THUMBS   = TRUE; public function grasp() {} }
+
+require '../SimpleDocumenter.php';
+$documenter = new SimpleDocumenter('Primate');
+
+// Only the nodes whose constants are defined in / methods 
+// & properties are declared in the child class, 'Primate'.
+$primate = function($node) { return $node->from() == 'Primate'; };
+
+echo "Primate defines the following constants: ",
+     implode(', ', array_keys($documenter->constantNodes($primate))), "\n",
+     "All constants available in Primate: ",
+     implode(', ', array_keys($documenter->constantNodes())), "\n",
+     "Primate declares the following methods: ",
+     implode(', ', array_keys($documenter->methodNodes($primate))), "\n",
+     "All methods available in Primate: ",
+     implode(', ', array_keys($documenter->methodNodes())), "\n";
+```
+
+<b>Outputs:</b>
+```
+Primate defines the following constants: HAS_THUMBS
+All constants available in Primate: HAS_THUMBS, WARM_BLOODED, ANIMAL
+Primate declares the following methods: grasp
+All methods available in Primate: grasp, shed, move
 ```
 
 <b>Trade-offs</b>

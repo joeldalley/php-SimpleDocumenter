@@ -7,34 +7,25 @@
  * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenter {
-    const BRANCH_CLASS   = 'class';
-    const BRANCH_CONST   = 'constants';
-    const BRANCH_PROPS   = 'properties';
-    const BRANCH_METHODS = 'methods';
+    const CLASSNODE  = 1;
+    const CONSTANTS  = 2;
+    const PROPERTIES = 3;
+    const METHODS    = 4;
 
-    /** @var array $tree Pairs of ( BRANCH_x => SimpleDocumenterNode[] ). */
+    /** @var array $tree Structure in which SimpleDocumenterNodes are stored. */
     private $tree = array(               
-        self::BRANCH_CLASS   => NULL,
-        self::BRANCH_METHODS => array(),
-        self::BRANCH_PROPS   => array(),
-        self::BRANCH_CONST   => array()
+        self::CLASSNODE  => NULL,
+        self::METHODS    => array(),
+        self::PROPERTIES => array(),
+        self::CONSTANTS  => array()
         );
 
-    /** @var string[] $tags The phpdoc tags this module pays attention to. */
+    /** @var string[] $tags The phpdoc tags SimpleDocumenter processes. */
     private static $tags = array(
-        '@access', '@author', '@const', '@example', '@package', 
+        '@access', '@author', '@const', '@example', '@link', '@package',
         '@param', '@return', '@see', '@throws', '@var', '@version',
-        '@link'
         );
     
-    /** @var string[] $commentTrims Regexps that trim doc comments. */
-    private static $commentTrims = array(
-        '/^[[:space:]]*\/\*\*[[:space:]]*/',
-        '/^[[:space:]]*\*\/[[:space:]]*$/',
-        '/^[[:space:]]*\/\*\*$/',
-        '/\*\/[[:space:]]*$/'
-        );
-
 
     ////////////////////////////////////////////////////////////////
     // Interface.
@@ -55,24 +46,38 @@ class SimpleDocumenter {
         }
 
         $refl = new ReflectionClass($class);
-        $this->tree[self::BRANCH_CLASS] = $this->node($refl);
+        $this->tree[self::CLASSNODE] = $this->node($refl, $class);
 
         foreach ($refl->getProperties() as $_) {
-            $this->tree[self::BRANCH_PROPS]["\${$_->name}"] = $this->node($_);
+            $from = $_->getDeclaringClass()->name;
+            $this->tree[self::PROPERTIES]['$'.$_->name] = $this->node($_, $from);
         }
 
         foreach ($refl->getMethods() as $_) {
-            $this->tree[self::BRANCH_METHODS][$_->name] = $this->node($_);
+            $from = $_->getDeclaringClass()->name;
+            $this->tree[self::METHODS][$_->name] = $this->node($_, $from);
         }
 
+        // Instead of going through node(), just inline SimpleDocumenterNode
+        // assembly right here, for constants. This procedure differs from 
+        // the node() procedure, in that contants are much simpler to analyze,
+        // except we have to walk the anscestor tree to determine in which 
+        // class a given constant is actually defined ("from").
         foreach ($refl->getConstants() as $name => $value) {
-            $struct = array('@const' => array(new SimpleDocumenterTag(array(
+            list($temp, $from) = array($refl, $class);
+            while ($from == $class && $parent = $temp->getParentClass()) {
+                $parentNames = array_keys($parent->getConstants());
+                in_array($name, $parentNames) and $from = $parent->name;
+                $temp = $parent;
+            }
+            $pairs = array('@const' => array(new SimpleDocumenterTag(array(
                 'tag'   => '@const',
                 'name'  => $name,
-                'value' => $value
+                'value' => $value,
+                'from'  => $from
             ))));
-            $node = new SimpleDocumenterNode($refl, $struct);
-            $this->tree[self::BRANCH_CONST][$name] = $node;
+            $node = new SimpleDocumenterNode($refl, $from, $pairs);
+            $this->tree[self::CONSTANTS][$name] = $node;
         }
     }
 
@@ -80,96 +85,99 @@ class SimpleDocumenter {
      * @return SimpleDocumenterNode A node containing the tags found in
      *                              any doc comment for the class itself.
      */
-    public function classNode() { return $this->tree[self::BRANCH_CLASS]; }
+    public function classNode() { return $this->tree[self::CLASSNODE]; }
 
     /**
-     * @param callable|NULL $filter Optional filter function, where each filter
-     *                              argument is a SimpleDocumenterNode.
+     * @param Closure|NULL $filter Optional filter function, where each filter
+     *                             argument is a SimpleDocumenterNode.
      * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
      *                                constants, possibly filtered.
      */
-    public function constantNodes($filter = NULL) { 
-        // Filter here will be some kind of anscestor check.
-        return $this->tree[self::BRANCH_CONST]; 
-    }
-
-    /**
-     * @param callable|NULL $filter Optional filter function, where each filter
-     *                              argument is a SimpleDocumenterNode.
-     * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
-     *                                properties, possibly filtered.
-     */
-    public function propertyNodes($filter = NULL) { 
-        $nodes = $this->tree[self::BRANCH_PROPS]; 
+    public function constantNodes(Closure $filter = NULL) {
+        $nodes = $this->tree[self::CONSTANTS]; 
         return SimpleDocumenterUtil::filter($nodes, $filter);
     }
 
     /**
-     * @param callable|NULL $filter Optional filter function, where each filter
-     *                              argument is a SimpleDocumenterNode.
+     * @param Closure|NULL $filter Optional filter function, where each filter
+     *                             argument is a SimpleDocumenterNode.
+     * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
+     *                                properties, possibly filtered.
+     */
+    public function propertyNodes(Closure $filter = NULL) { 
+        $nodes = $this->tree[self::PROPERTIES]; 
+        return SimpleDocumenterUtil::filter($nodes, $filter);
+    }
+
+    /**
+     * @param Closure|NULL $filter Optional filter function, where each filter
+     *                             argument is a SimpleDocumenterNode.
      * @return SimpleDocumenterNode[] Nodes containing the parsed class's 
      *                                methods, possibly filtered.
      */
-    public function methodNodes($filter = NULL) {
-        $nodes = $this->tree[self::BRANCH_METHODS]; 
+    public function methodNodes(Closure $filter = NULL) {
+        $nodes = $this->tree[self::METHODS];
         return SimpleDocumenterUtil::filter($nodes, $filter);
     }
 
     /**
      * @param object $reflector A Reflection(Class|Method|Property) object.
+     * @param string $from The class in which the node object is defined.
      * @return SimpleDocumenterNode A node containing all of the parsed phpdoc
      *                              tags from the given Reflection object's
      *                              getDocComment() string.
      */
-    private function node($reflector) {
+    private function node($reflector, $from) {
         // Initialize the data structure of a SimpleDocumenterNode.
         $keys = array_merge(self::$tags, array('@note'));
         $values = array_fill(0, count($keys), array());
-        $struct = array_combine($keys, $values);
+        $pairs = array_combine($keys, $values);
 
         // Trim and split doc comment; most parsing is done per-line.
-        $comment = $reflector->getDocComment();
-        $comment = preg_replace(self::$commentTrims, '', $comment);
-        $lines = preg_split('/[\r\n]/', $comment);
+        $lines = preg_split('/[\r\n]/', preg_replace(array(
+            '/^[[:space:]]*\/\*\*[[:space:]]*/',
+            '/^[[:space:]]*\*\/[[:space:]]*$/',
+            '/^[[:space:]]*\/\*\*$/',
+            '/\*\/[[:space:]]*$/'
+        ), '', $reflector->getDocComment()));
 
         // Loop state variables.
         list($idx, $tag) = array(0, '@note');
 
         while (count($lines)) {
-            $_ = array_shift($lines);
-
-            // Trim line.
+            $_ = array_shift($lines); // Single line; trim some more...
             $_ = preg_replace('/^[[:blank:]]*\*([[:blank:]]|)/', '', $_);
             $_ = preg_replace('/[[:space:]]*$/', '', $_);
 
             // Entering a new occurrence of a tag:
             $isTag = '/^(' . implode('|', self::$tags) . ')(\s|)/';
             if (preg_match($isTag, $_, $match)) {
-                isset($struct[$tag][$idx]) 
-                    and $struct[$tag][$idx]->analyzeText();
+                isset($pairs[$tag][$idx]) 
+                    and $pairs[$tag][$idx]->analyzeText();
                 $tag = $match[1];
-                $idx = count($struct[$tag]);
+                $idx = count($pairs[$tag]);
                 $_ = preg_replace($isTag, '', $_);
             }
 
-            if (!isset($struct[$tag][$idx])) { 
-                $struct[$tag][$idx] = new SimpleDocumenterTag($tag);
+            if (!isset($pairs[$tag][$idx])) { 
+                $pairs[$tag][$idx] = new SimpleDocumenterTag($tag);
             }
-            elseif (strlen($struct[$tag][$idx]->text)) {
+            elseif (strlen($pairs[$tag][$idx]->text)) {
                 $_ = "\n$_"; // Replace horz. space from preg_split.
             }
 
-            $struct[$tag][$idx]->text = $struct[$tag][$idx]->text . $_;
-            count($lines) < 2 and $struct[$tag][$idx]->analyzeText();
+            $pairs[$tag][$idx]->text = $pairs[$tag][$idx]->text . $_;
+            count($lines) < 2 and $pairs[$tag][$idx]->analyzeText();
         }
 
-        return new SimpleDocumenterNode($reflector, $struct);
+        return new SimpleDocumenterNode($reflector, $from, $pairs);
     }
 }
 
 /**
- * A SimpleDocumenterNode encapsulates a Reflection object and the pairs
- * of ( Tag name => SimpleDocumenterTag[] ) from a php doc comment parse.
+ * Encapsulates a Reflection object, the class in which the node object
+ * was defined, and the pairs of ( Node name => SimpleDocumenterTags[] )
+ * which embody a parsed php doc comment.
  *
  * @author Joel Dalley
  * @version 2015/Mar/06
@@ -177,27 +185,35 @@ class SimpleDocumenter {
  */
 class SimpleDocumenterNode {
 
+    /** @param string $from The class in which the node object was defined. */
+    private $from;
+
     /** @param object $reflector A Reflection(Class|Method|Property) object. */
     private $reflector;
 
     /**
-     * @var array $struct Entries in the array are pairs of 
+     * @var array $pairs Entries in the array are pairs of 
      *                    ( Tag name => SimpleDocumenterTag[] ).
      */
-    private $struct;
+    private $pairs;
 
     /**
      * @param object $reflector A Reflection(Class|Method|Property) object.
-     * @param array $struct Pairs of ( Tag name => SimpleDocumenterTag[] ).
+     * @param string $from The class in which the node object was defined.
+     * @param array $pairs Pairs of ( Tag name => SimpleDocumenterTag[] ).
      * @return SimpleDocumenterNode
      */
-    public function __construct($reflector, $struct = array()) {
+    public function __construct($reflector, $from, $pairs) {
         $this->reflector = $reflector;
-        $this->struct = $struct;
+        $this->from = $from;
+        $this->pairs = $pairs;
     }
 
     /** @return object A Reflection(Class|Method|Property) object. */
     public function reflector() { return $this->reflector; }
+
+    /** @return string The class in which the node object was defined. */
+    public function from() { return $this->from; }
 
     /**
      * @param string $name A phpdoc tag name, e.g., '@var'.
@@ -207,12 +223,12 @@ class SimpleDocumenterNode {
      */
     public function tagList($name) {
         $name = (string) $name;
-        if (!isset($this->struct[$name])) {
+        if (!isset($this->pairs[$name])) {
             throw new InvalidArgumentException("No tag `$name`");
         }
 
         $refl = $this->reflector();
-        return new SimpleDocumenterTagList($refl, $this->struct[$name]);
+        return new SimpleDocumenterTagList($refl, $this->pairs[$name]);
     }
 }
 
@@ -418,18 +434,18 @@ class SimpleDocumenterTag {
 class SimpleDocumenterUtil {
     /**
      * @param array|SimpleDocumenterTagList $list The list to be filtered.
-     * @param callable|NULL $callable A filtering function, or NULL.
+     * @param Closure|NULL $filter A filtering function, or NULL.
      * @return array|SimpleDocumenterTagList The given list, which may have
-     *                                       been filtered by $callable.
+     *                                       been filtered by $filter.
      */
-    public static function filter($list, $callable = NULL) {
-        if (!is_callable($callable)) { 
-            return $list; 
+    public static function filter($list, Closure $filter = NULL) {
+        if (!($filter instanceof Closure)) {
+            return $list;
         }
 
         $filtered = array();
         foreach ($list as $idx => $entry) {
-            $callable($entry) and $filtered[$idx] = $entry; 
+            $filter($entry) and $filtered[$idx] = $entry; 
         }
         return $list instanceof SimpleDocumenterTagList
              ? new SimpleDocumenterTagList($list->reflector(), $filtered)

@@ -262,7 +262,7 @@
       <div class="class-tags" style="display:">
         <div style="display:">
           <div class="tag">Description:</div>
-          <div class="value">A SimpleDocumenterNode encapsulates a Reflection object and the pairs<br/>of ( Tag name =&gt; SimpleDocumenterTag[] ) from a php doc comment parse.<br/></div>
+          <div class="value">Encapsulates a Reflection object, the class in which the node object<br/>was defined, and the pairs of ( Node name =&gt; SimpleDocumenterTags[] )<br/>which embody a parsed php doc comment.<br/></div>
           <div class="clear"></div>
         </div>
         <div style="display:">
@@ -291,7 +291,7 @@
   <div class="var">
     <div class="icon"><img class="icon" src="assets/lock-closed.png"/></div>
     <div style="display:" class="type">array</div>
-    <div class="name">$struct</div>
+    <div class="name">$pairs</div>
     <div class="clear"></div>
   </div>
   <div style="display:" class="prop-note">
@@ -311,8 +311,9 @@
       <span class="prefix" style="display:none"></span>
       <span class="function">function</span>
       <span class="name">__construct</span>(<span style="display:" class="param-type">object</span><span
-      style="display:" class="param-name">$reflector</span>, <span style="display:" class="param-type">array</span><span
-      style="display:" class="param-name">$struct</span>)
+      style="display:" class="param-name">$reflector</span>, <span style="display:" class="param-type">string</span><span
+      style="display:" class="param-name">$from</span>, <span style="display:" class="param-type">array</span><span
+      style="display:" class="param-name">$pairs</span>)
     </div>
     <div class="return" style="display:">
       return <span class="return-type">SimpleDocumenterNode</span>
@@ -333,8 +334,14 @@
   <div class="clear"></div>
 </div><div class="param-tag">
   <div class="tag">@param</div> 
+  <div style="display:" class="type">string</div>
+  <div style="display:" class="name">$from</div>
+  <div class="note">The class in which the node object was defined.</div>
+  <div class="clear"></div>
+</div><div class="param-tag">
+  <div class="tag">@param</div> 
   <div style="display:" class="type">array</div>
-  <div style="display:" class="name">$struct</div>
+  <div style="display:" class="name">$pairs</div>
   <div class="note">Pairs of ( Tag name =&gt; SimpleDocumenterTag[] ).</div>
   <div class="clear"></div>
 </div></div>
@@ -379,6 +386,38 @@
     <div class="tag">@return</div> 
     <div class="type">object</div>
     <div class="note">A Reflection(Class|Method|Property) object.</div>
+    <div class="clear"></div>
+  </div>
+  <div class="footer"></div>
+</div><div class="method">
+  <div class="method-sig">
+    <div class="icon"><img class="icon" src="assets/lock-open.png"/></div>
+    <div class="function">
+      <span class="prefix" style="display:none"></span>
+      <span class="function">function</span>
+      <span class="name">from</span>()
+    </div>
+    <div class="return" style="display:">
+      return <span class="return-type">string</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="method-note" style="display:none">
+    <div class="desc-label">Description:</div> 
+    <div class="note"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="tagsets" style="display:none">
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+    <div class="method-tagset" style="display:none"></div>
+  </div>
+  <div class="method-return" style="display:">
+    <div class="tag">@return</div> 
+    <div class="type">string</div>
+    <div class="note">The class in which the node object was defined.</div>
     <div class="clear"></div>
   </div>
   <div class="footer"></div>

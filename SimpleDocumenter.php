@@ -439,16 +439,15 @@ class SimpleDocumenterUtil {
      *                                       been filtered by $filter.
      */
     public static function filter($list, Closure $filter = NULL) {
-        if (!($filter instanceof Closure)) {
-            return $list;
+        if (!is_null($filter)) {
+            $filtered = array();
+            foreach ($list as $idx => $entry) {
+                $filter($entry) and $filtered[$idx] = $entry; 
+            }
+            $list = $list instanceof SimpleDocumenterTagList
+                  ? new SimpleDocumenterTagList($list->reflector(), $filtered)
+                  : $filtered;
         }
-
-        $filtered = array();
-        foreach ($list as $idx => $entry) {
-            $filter($entry) and $filtered[$idx] = $entry; 
-        }
-        return $list instanceof SimpleDocumenterTagList
-             ? new SimpleDocumenterTagList($list->reflector(), $filtered)
-             : $filtered;
+        return $list;
     }
 }

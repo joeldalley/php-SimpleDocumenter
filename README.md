@@ -28,8 +28,8 @@ Add SimpleDocumenter To Your Project
 perl -MLWP::Simple -e 'getprint "https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php"'
 ```
 
-Example Script
-==============
+Basic Usage
+===========
 ```php
 <?php
 /**

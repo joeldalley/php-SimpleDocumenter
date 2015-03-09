@@ -53,19 +53,19 @@ foreach ($nodes as $name => $node) {
 
     $count = $node->tagList('@param')->count(); // int, 0 or more.
 
-    print "The method `$name`";
+    print "The method, $name,";
     $count and print " has $count parameters, and";
-    print " returns type `$type`.\n";
+    print " returns type $type.\n";
 }
 ```
 
 <b>Outputs:</b>
 ```
-The method `__construct` has 1 parameters, and returns type `SimpleDocumenter`.
-The method `classNode` returns type `SimpleDocumenterNode`.
-The method `constantNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
-The method `propertyNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
-The method `methodNodes` has 1 parameters, and returns type `SimpleDocumenterNode[]`.
+The method, __construct, has 1 parameters, and returns type SimpleDocumenter.
+The method, classNode, returns type SimpleDocumenterNode.
+The method, constantNodes, has 1 parameters, and returns type SimpleDocumenterNode[].
+The method, propertyNodes, has 1 parameters, and returns type SimpleDocumenterNode[].
+The method, methodNodes, has 1 parameters, and returns type SimpleDocumenterNode[].
 ```
 
 For a more complex use case, see [doc-to-html.php](https://github.com/joeldalley/php-SimpleDocumenter/blob/master/doc-to-html.php)

@@ -20,7 +20,7 @@ foreach ($nodes as $name => $node) {
 
     $count = $node->tagList('@param')->count(); // int, 0 or more.
 
-    print "The method `$name`";
+    print "The method, $name,";
     $count and print " has $count parameters, and";
-    print " returns type `$type`.\n";
+    print " returns type $type.\n";
 }

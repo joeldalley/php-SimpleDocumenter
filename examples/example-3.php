@@ -11,17 +11,19 @@ class Mammal  extends Animal { const HAS_HAIR   = TRUE;  public function shed() 
 class Primate extends Mammal { const HAS_THUMBS = TRUE;  public function grasp() {} }
 
 require '../SimpleDocumenter.php';
-$documenter = new SimpleDocumenter('Primate');
+$doc = new SimpleDocumenter('Primate');
 
-// Only the nodes whose constants are defined in / methods 
-// & properties are declared in the child class, 'Primate'.
+// Only the nodes whose constants are defined in--or methods 
+// and properties are declared in--the child class, 'Primate'.
 $primate = function($node) { return $node->from() == 'Primate'; };
 
-echo "Primate defines the following constants: ",
-     implode(', ', array_keys($documenter->constantNodes($primate))), "\n",
-     "All constants available in Primate: ",
-     implode(', ', array_keys($documenter->constantNodes())), "\n",
-     "Primate declares the following methods: ",
-     implode(', ', array_keys($documenter->methodNodes($primate))), "\n",
-     "All methods available in Primate: ",
-     implode(', ', array_keys($documenter->methodNodes())), "\n";
+$pairs = array(
+    'Primate defines the following constants' => $doc->constantNodes($primate),
+    'All constants available in Primate'      => $doc->constantNodes(),
+    'Primate declares the following methods'  => $doc->methodNodes($primate),
+    'All methods available in Primate'        => $doc->methodNodes()
+    );
+
+foreach ($pairs as $phrase => $nodes) {
+    print "$phrase: " . implode(', ', array_keys($nodes)) . "\n";
+}

@@ -119,9 +119,9 @@ SimpleDocumenterNode::from() makes it easy to filter inheritance heirarchies:
  */
 
 // Simple inheritance heirarchry: Animal -> Mammal -> Primate.
-class Animal                 { const ANIMAL       = TRUE; public function move() {} }
-class Mammal  extends Animal { const WARM_BLOODED = TRUE; public function shed() {} }
-class Primate extends Mammal { const HAS_THUMBS   = TRUE; public function grasp() {} }
+class Animal                 { const VEGETABLE  = FALSE; public function move()  {} }
+class Mammal  extends Animal { const HAS_HAIR   = TRUE;  public function shed()  {} }
+class Primate extends Mammal { const HAS_THUMBS = TRUE;  public function grasp() {} }
 
 require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('Primate');
@@ -143,7 +143,7 @@ echo "Primate defines the following constants: ",
 <b>Outputs:</b>
 ```
 Primate defines the following constants: HAS_THUMBS
-All constants available in Primate: HAS_THUMBS, WARM_BLOODED, ANIMAL
+All constants available in Primate: HAS_THUMBS, HAS_HAIR, VEGETABLE
 Primate declares the following methods: grasp
 All methods available in Primate: grasp, shed, move
 ```

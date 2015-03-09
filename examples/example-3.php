@@ -6,9 +6,9 @@
  */
 
 // Simple inheritance heirarchry: Animal -> Mammal -> Primate.
-class Animal                 { const ANIMAL       = TRUE; public function move() {} }
-class Mammal  extends Animal { const WARM_BLOODED = TRUE; public function shed() {} }
-class Primate extends Mammal { const HAS_THUMBS   = TRUE; public function grasp() {} }
+class Animal                 { const VEGETABLE  = FALSE; public function move()  {} }
+class Mammal  extends Animal { const HAS_HAIR   = TRUE;  public function shed()  {} }
+class Primate extends Mammal { const HAS_THUMBS = TRUE;  public function grasp() {} }
 
 require '../SimpleDocumenter.php';
 $documenter = new SimpleDocumenter('Primate');

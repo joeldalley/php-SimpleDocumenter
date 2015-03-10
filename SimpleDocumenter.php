@@ -49,8 +49,9 @@ class SimpleDocumenter {
         $this->tree[self::CLASSNODE] = $this->node($refl, $class);
 
         foreach ($refl->getProperties() as $_) {
+            $name = '$' . $_->name;
             $from = $_->getDeclaringClass()->name;
-            $this->tree[self::PROPERTIES]['$'.$_->name] = $this->node($_, $from);
+            $this->tree[self::PROPERTIES][$name] = $this->node($_, $from);
         }
 
         foreach ($refl->getMethods() as $_) {
@@ -71,10 +72,9 @@ class SimpleDocumenter {
                 $temp = $parent;
             }
             $pairs = array('@const' => array(new SimpleDocumenterTag(array(
-                'tag'   => '@const',
-                'name'  => $name,
-                'value' => $value,
-                'from'  => $from
+                SimpleDocumenterTag::FIELD_TAG   => '@const',
+                SimpleDocumenterTag::FIELD_NAME  => $name,
+                SimpleDocumenterTag::FIELD_VALUE => $value,
             ))));
             $node = new SimpleDocumenterNode($refl, $from, $pairs);
             $this->tree[self::CONSTANTS][$name] = $node;
@@ -128,10 +128,10 @@ class SimpleDocumenter {
      *                              getDocComment() string.
      */
     private function node($reflector, $from) {
-        // Initialize the data structure of a SimpleDocumenterNode.
+        // Initialize pairs of (Tag name => array()), which will
+        // constitute the internal data structure of a SimpleDocumenterNode.
         $keys = array_merge(self::$tags, array('@note'));
-        $values = array_fill(0, count($keys), array());
-        $pairs = array_combine($keys, $values);
+        $pairs = array_combine($keys, array_fill(0, count($keys), array()));
 
         // Trim and split doc comment; most parsing is done per-line.
         $lines = preg_split('/[\r\n]/', preg_replace(array(
@@ -141,25 +141,24 @@ class SimpleDocumenter {
             '/\*\/[[:space:]]*$/'
         ), '', $reflector->getDocComment()));
 
-        // Loop state variables.
+        // While loop variables.
         list($idx, $tag) = array(0, '@note');
+        $regex = '/^(' . implode('|', self::$tags) . ')(\s|)/';
 
         while (count($lines)) {
             $_ = array_shift($lines); // Single line; trim some more...
             $_ = preg_replace('/^[[:blank:]]*\*([[:blank:]]|)/', '', $_);
             $_ = preg_replace('/[[:space:]]*$/', '', $_);
 
-            // Entering a new occurrence of a tag:
-            $isTag = '/^(' . implode('|', self::$tags) . ')(\s|)/';
-            if (preg_match($isTag, $_, $match)) {
-                isset($pairs[$tag][$idx]) 
-                    and $pairs[$tag][$idx]->analyzeText();
+            // Look for a new tag, & udpate state vars, upon entering one.
+            if (preg_match($regex, $_, $match)) {
+                isset($pairs[$tag][$idx]) and $pairs[$tag][$idx]->analyze();
                 $tag = $match[1];
                 $idx = count($pairs[$tag]);
-                $_ = preg_replace($isTag, '', $_);
+                $_ = preg_replace($regex, '', $_);
             }
 
-            if (!isset($pairs[$tag][$idx])) { 
+            if (!isset($pairs[$tag][$idx])) {
                 $pairs[$tag][$idx] = new SimpleDocumenterTag($tag);
             }
             elseif (strlen($pairs[$tag][$idx]->text)) {
@@ -167,7 +166,7 @@ class SimpleDocumenter {
             }
 
             $pairs[$tag][$idx]->text = $pairs[$tag][$idx]->text . $_;
-            count($lines) < 2 and $pairs[$tag][$idx]->analyzeText();
+            count($lines) < 2 and $pairs[$tag][$idx]->analyze();
         }
 
         return new SimpleDocumenterNode($reflector, $from, $pairs);
@@ -334,12 +333,12 @@ class SimpleDocumenterTagList implements Iterator {
  * @link https://github.com/joeldalley/php-SimpleDocumenter
  */
 class SimpleDocumenterTag {
-    const FIELD_TAG = 'tag';
-    const FIELD_TEXT = 'text';
-    const FIELD_NAME = 'name';
+    const FIELD_TAG   = 'tag';
+    const FIELD_TEXT  = 'text';
+    const FIELD_NAME  = 'name';
     const FIELD_VALUE = 'value';
-    const FIELD_TYPE = 'type';
-    const FIELD_NOTE = 'note';
+    const FIELD_TYPE  = 'type';
+    const FIELD_NOTE  = 'note';
 
     /** @var array $fields Object fields. */
     private $fields = array(
@@ -369,7 +368,7 @@ class SimpleDocumenterTag {
 
     /**
      * @param string $field A FIELD_x field name.
-     * @return string The field value. Default is empty string.
+     * @return string The field value. The default is an empty string.
      */
     public function __get($field) {
         $has = array_key_exists($field, $this->fields);
@@ -396,7 +395,7 @@ class SimpleDocumenterTag {
      * For instance, '@param' might have a type, a name and a descriptive note.
      * @return void
      */
-    public function analyzeText() {
+    public function analyze() {
         $config = array('@param', '@var', '@return', '@throws');
 
         if (is_null($this->text) || !in_array($this->tag, $config)) {

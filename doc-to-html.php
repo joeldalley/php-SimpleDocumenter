@@ -28,19 +28,19 @@ if (file_exists($COMPOSER_DIR)) {
 }
 if (file_exists($PHPDOC_DIR)) {
     set_include_path(get_include_path() . ":$PHPDOC_DIR");
-    $config["$PHPDOC_DIR/phpDocumentor/Bootstrap.php"] = '\phpDocumentor';
+    $config["$PHPDOC_DIR/phpDocumentor/Bootstrap.php"]         = '\phpDocumentor';
     $config["$PHPDOC_DIR/phpDocumentor/Compiler/Compiler.php"] = '\phpDocumentor\Compiler';
     $config["$PHPDOC_DIR/phpDocumentor/Transformer/Transformation.php"] 
-        = '\phpDocumentor\Transformer';
+                                                               = '\phpDocumentor\Transformer';
 }
 if (file_exists($CI_DIR)) {
     define('BASEPATH', TRUE);
     set_include_path(get_include_path() . ":$CI_DIR");
     $config["$CI_DIR/system/core/Controller.php"] = NULL;
-    $config["$CI_DIR/system/core/Model.php"] = NULL;
-    $config["$CI_DIR/system/core/Router.php"] = NULL;
-    $config["$CI_DIR/system/core/Loader.php"] = NULL;
-    $config["$CI_DIR/system/core/Input.php"] = NULL;
+    $config["$CI_DIR/system/core/Model.php"]      = NULL;
+    $config["$CI_DIR/system/core/Router.php"]     = NULL;
+    $config["$CI_DIR/system/core/Loader.php"]     = NULL;
+    $config["$CI_DIR/system/core/Input.php"]      = NULL;
 }
 
 // For each config entry, require its php file, extract classes from the file,
@@ -51,11 +51,10 @@ foreach ($config as $file => $namespace) {
     foreach (classes(file_get_contents($file)) as $class) {
         $name = str_replace(array('../', '/'), array('', '-'), $file);
         $outfile = "html-output/$name-$class.html";
+        $fullClass = $namespace ? "$namespace\\$class" : $class;
+        file_put_contents($outfile, document($fullClass));
         echo "Writing file $outfile\n";
 
-        $fullClass = $namespace ? "$namespace\\$class" : $class;
-
-        file_put_contents($outfile, document($fullClass));
         isset($config[$outfile]) or $config[$outfile] = array();
         $config[$outfile][] = $fullClass;
         unset($config[$file]);

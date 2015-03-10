@@ -75,7 +75,7 @@ Why SimpleDocumenter?
 
 <b>Absolute Portability</b>
 
-SimpleDocumenter is a single file with no dependencies, and is only 396 source lines of code.
+SimpleDocumenter is a single file with no dependencies, and is only 395 source lines of code.
 
 As such, portability is absolute. A local copy of SimpleDocumenter can be gotten by copying & pasting 
 the [source file](https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php).
@@ -105,7 +105,7 @@ foreach ($documenter->methodNodes($voidOrUndefined) as $name => $node) {
 <b>Outputs:</b>
 ```
 __set() either returns void or has no @return doc comment tag.
-analyzeText() either returns void or has no @return doc comment tag.
+analyze() either returns void or has no @return doc comment tag.
 ```
 
 SimpleDocumenterNode::from() makes it easy to filter inheritance heirarchies:

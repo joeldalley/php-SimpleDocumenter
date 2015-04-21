@@ -57,7 +57,7 @@ the [source file](https://raw.githubusercontent.com/joeldalley/php-SimpleDocumen
 {example-2-output}
 ```
 
-SimpleDocumenterNode::from() makes it easy to filter inheritance heirarchies:
+`SimpleDocumenterNode::from()` makes it easy to filter inheritance heirarchies:
 
 ```php
 {example-3}
@@ -66,6 +66,22 @@ SimpleDocumenterNode::from() makes it easy to filter inheritance heirarchies:
 <b>Outputs:</b>
 ```
 {example-3-output}
+```
+
+<b>Extensibility</b>
+
+Easily add support for tags that are not already in SimpleDocumenter's `$tags` array, using `addTag()`.<br/>
+And just as easily, you can add your own text analyzer functions to precisely direct how any given tag's text gets parsed.<br/>
+(That said, to extend the SimpleDocumenter core, you will have to know all the details about a SimpleDocumenterTag object.)<br/>
+Example:
+
+```php
+{example-4}
+```
+
+<b>Outputs:</b>
+```
+{example-4-output}
 ```
 
 <b>Trade-offs</b>

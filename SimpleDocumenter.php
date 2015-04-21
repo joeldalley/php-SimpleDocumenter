@@ -32,6 +32,14 @@ class SimpleDocumenter {
     ////////////////////////////////////////////////////////////////
 
     /**
+     * @param string $tag A phpdoc comment tag, e.g., '@inherits'.
+     * @return void
+     */
+    public static function addTag($tag) {
+        in_array($tag, self::$tags) or self::$tags[$tag] = (string) $tag;
+    }
+
+    /**
      * Parses the php doc comments of the given class.
      *
      * @param string $class The name of an in-memory class.
@@ -350,6 +358,18 @@ class SimpleDocumenterTag {
         self::FIELD_NOTE  => '',
         );
 
+    /** @var array Pairs of (tag type => Closure). */
+    private static $analyzerMap = array();
+
+    /**
+     * @param string $tag A tag, e.g., '@param'.
+     * @param Closure $sub The text analyzer function for the given tag.
+     * @return void
+     */
+    public static function addAnalyzer($tag, Closure $sub) {
+        self::$analyzerMap[(string) $tag] = $sub;
+    }
+
     /**
      * @param array|string $arg Either a tag name, e.g. '@link', or
      *                          pairs of ( FIELD_x => value ).
@@ -363,6 +383,36 @@ class SimpleDocumenterTag {
         }
         elseif (is_string($arg)) {
             $this->tag = $arg; 
+        }
+
+        // Register a default analyzer for selected tag types.
+        // These are the ones that most likely to have a tag comment 
+        // that looks like, for instance: "array|NULL $foo This is a note about $foo."
+        $typeNameNote = function(SimpleDocumenterTag $obj) {
+            if (is_null($obj->text)) { return; }
+
+            $patterns = array(
+                '/^\s*([\\\\\w\|\[\]]+)\s+(\&?\$\w+)\s?(.*)/s' => function($m) {
+                    return array($m[1], $m[2], $m[3]);
+                },
+                '/^\s*([\\\\\w\|\[\]]+)\s?(.*)/s' => function($m) {
+                    return array($m[1], NULL, $m[2]);
+                },
+                '/^\s*(\&?\$\w+)\s?(.*)/s' => function($m) {
+                    return array(NULL, $m[1], $m[2]);
+                });
+
+            foreach ($patterns as $pat => $sub) {
+                // On match, save parse to object fields & stop looking.
+                if (preg_match($pat, $obj->text, $match)) {
+                    list($obj->type, $obj->name, $obj->note) = $sub($match);
+                    return;
+                }
+            }
+        };
+
+        foreach (array('@param', '@var', '@return', '@throws') as $tag) {
+            self::$analyzerMap[$tag] = $typeNameNote;
         }
     }
 
@@ -390,36 +440,14 @@ class SimpleDocumenterTag {
     public function __toString() { return $this->text; }
 
     /**
-     * Side-effect on object's properties, per the analysis.
-     * Analyze the object's text, looking for pieces within certain tags.
-     * For instance, '@param' might have a type, a name and a descriptive note.
+     * Side-effect on object's properties. Based on the object's tag type,
+     * check for an analyzer method associated with it, and if found, execute it.
      * @return void
      */
     public function analyze() {
-        $config = array('@param', '@var', '@return', '@throws');
-
-        if (is_null($this->text) || !in_array($this->tag, $config)) {
-            return;
-        }
-
-        // Try to find (type, name, note), from tag text.
-        $patterns = array(
-            '/^\s*([\\\\\w\|\[\]]+)\s+(\&?\$\w+)\s?(.*)/s' => function($m) {
-                return array($m[1], $m[2], $m[3]);
-            },
-            '/^\s*([\\\\\w\|\[\]]+)\s?(.*)/s' => function($m) {
-                return array($m[1], NULL, $m[2]);
-            },
-            '/^\s*(\&?\$\w+)\s?(.*)/s' => function($m) {
-                return array(NULL, $m[1], $m[2]);
-            });
-
-        foreach ($patterns as $pat => $sub) {
-            // On match, save parse to object fields & stop looking.
-            if (preg_match($pat, $this->text, $match)) {
-                list($this->type, $this->name, $this->note) = $sub($match);
-                return;
-            }
+        if (isset(self::$analyzerMap[$this->tag])) {
+            $sub = self::$analyzerMap[$this->tag]; 
+            $sub($this);
         }
     }
 }

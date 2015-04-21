@@ -19,6 +19,8 @@ $repl = array(
     '{example-2-output}'                => exampleExec(2),
     '{example-3}'                       => example(3),
     '{example-3-output}'                => exampleExec(3),
+    '{example-4}'                       => example(4),
+    '{example-4-output}'                => exampleExec(4),
     '{sloc}'                            => sloc('SimpleDocumenter.php'),
     );
 

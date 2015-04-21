@@ -61,6 +61,7 @@ foreach ($nodes as $name => $node) {
 
 <b>Outputs:</b>
 ```
+The method, addTag, has 1 parameters, and returns type void.
 The method, __construct, has 1 parameters, and returns type SimpleDocumenter.
 The method, classNode, returns type SimpleDocumenterNode.
 The method, constantNodes, has 1 parameters, and returns type SimpleDocumenterNode[].
@@ -75,7 +76,7 @@ Why SimpleDocumenter?
 
 <b>Absolute Portability</b>
 
-SimpleDocumenter is a single file with no dependencies, and is only 395 source lines of code.
+SimpleDocumenter is a single file with no dependencies, and is only 419 source lines of code.
 
 As such, portability is absolute. A local copy of SimpleDocumenter can be gotten by copying & pasting 
 the [source file](https://raw.githubusercontent.com/joeldalley/php-SimpleDocumenter/master/SimpleDocumenter.php).
@@ -104,11 +105,12 @@ foreach ($documenter->methodNodes($voidOrUndefined) as $name => $node) {
 
 <b>Outputs:</b>
 ```
+addAnalyzer() either returns void or has no @return doc comment tag.
 __set() either returns void or has no @return doc comment tag.
 analyze() either returns void or has no @return doc comment tag.
 ```
 
-SimpleDocumenterNode::from() makes it easy to filter inheritance heirarchies:
+`SimpleDocumenterNode::from()` makes it easy to filter inheritance heirarchies:
 
 ```php
 <?php
@@ -148,6 +150,53 @@ Primate defines the following constants: HAS_THUMBS
 All constants available in Primate: HAS_THUMBS, HAS_HAIR, VEGETABLE
 Primate declares the following methods: grasp
 All methods available in Primate: grasp, shed, move
+```
+
+<b>Extensibility</b>
+
+Easily add support for tags that are not already in SimpleDocumenter's `$tags` array, using `addTag()`.<br/>
+And just as easily, you can add your own text analyzer functions to precisely direct how any given tag's text gets parsed.<br/>
+(That said, to extend the SimpleDocumenter core, you will have to know all the details about a SimpleDocumenterTag object.)<br/>
+Example:
+
+```php
+<?php
+/**
+ * README.md example.
+ * @author Joel Dalley
+ * @version 2015/Apr/21
+ */
+
+require '../SimpleDocumenter.php';
+
+// A silly example, it but gets the point across: You can invent your
+// own phpdoc tags, and you can create and register arbitrary tag 
+// comment analyzer functions.
+class Foo {
+    /** @bar A simple tag comment, with only a note after the tag. */
+     function bar() {}
+}
+
+// So that '@bar' is recognized and treated as a tag:
+SimpleDocumenter::addTag('@bar');
+
+// And add a custom analyzer for '@bar' tag comments:
+SimpleDocumenterTag::addAnalyzer('@bar', function(SimpleDocumenterTag $obj) {
+    if (preg_match('/\s*(.+)/', $obj->text, $match)) {
+        $obj->note = $match[1];
+    }
+});
+
+// Parse Foo, get its 'bar' node, and print that node's '@bar' comment note.
+$documenter = new SimpleDocumenter('Foo');
+$nodes = $documenter->methodNodes();
+$bar = $nodes['bar']->tagList('@bar')->first();
+print "Foo::bar() has this phpdoc note: `{$bar->note}`\n";
+```
+
+<b>Outputs:</b>
+```
+Foo::bar() has this phpdoc note: `A simple tag comment, with only a note after the tag.`
 ```
 
 <b>Trade-offs</b>

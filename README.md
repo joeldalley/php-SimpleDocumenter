@@ -154,10 +154,9 @@ All methods available in Primate: grasp, shed, move
 
 <b>Extensibility</b>
 
-Easily add support for tags that are not already in SimpleDocumenter's `$tags` array, using `addTag()`.<br/>
-And just as easily, you can add your own text analyzer functions to precisely direct how any given tag's text gets parsed.<br/>
+Easily add support for tags that aren't in SimpleDocumenter's default tag list, using `addTag()`.<br/>
+And just as easily, you can add your own text analyzer functions to precisely direct how any given tag's text gets parsed. 
 (That said, to extend the SimpleDocumenter core, you will have to know all the details about a SimpleDocumenterTag object.)<br/>
-Example:
 
 ```php
 <?php
@@ -169,9 +168,9 @@ Example:
 
 require '../SimpleDocumenter.php';
 
-// A silly example, it but gets the point across: You can invent your
-// own phpdoc tags, and you can create and register arbitrary tag 
-// comment analyzer functions.
+// A silly example, it but gets the point across: You can invent your own
+// phpdoc tags (or just add ones that aren't supported by default), and you
+// can create and register arbitrary tag comment analyzer functions for them.
 class Foo {
     /** @bar A simple tag comment, with only a note after the tag. */
      function bar() {}

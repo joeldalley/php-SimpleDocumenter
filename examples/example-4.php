@@ -7,9 +7,9 @@
 
 require '../SimpleDocumenter.php';
 
-// A silly example, it but gets the point across: You can invent your
-// own phpdoc tags, and you can create and register arbitrary tag 
-// comment analyzer functions.
+// A silly example, it but gets the point across: You can invent your own
+// phpdoc tags (or just add ones that aren't supported by default), and you
+// can create and register arbitrary tag comment analyzer functions for them.
 class Foo {
     /** @bar A simple tag comment, with only a note after the tag. */
      function bar() {}

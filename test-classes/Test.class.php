@@ -166,8 +166,8 @@ abstract class Test {
     public abstract function n();
 
     /**
-     * Abstract and static.
+     * Abstract with type signature.
      * @return void
      */
-    public abstract static function p(Callable $c);
+    public abstract function p(Callable $c);
 }
